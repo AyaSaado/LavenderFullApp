@@ -1,7 +1,7 @@
 ﻿using Lavender.Core.EntityDto;
 using Lavender.Core.Shared;
 using Lavender.Services.PatternMakers.Commands.Update;
-using Lavender.Services.ProductionEmps.Update;
+using Lavender.Services.ProductionEmps.Commands.Update;
 using Lavender.Services.Users.Commands.Add;
 using Lavender.Services.Users.Commands.Delete;
 using Lavender.Services.Users.Commands.ForgetPassword;

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using static Lavender.Core.Helper.MappingProfile;
 
-namespace Lavender.Services.ProductionEmps.Update
+namespace Lavender.Services.ProductionEmps.Commands.Update
 {
     public class UpdateProductionEmpHandler : IRequestHandler<UpdateProductionEmpRequest, Result<ProductionEmpDto>>
     {
@@ -34,12 +34,12 @@ namespace Lavender.Services.ProductionEmps.Update
                   $"The User with Id {request.Id} was not found"));
             }
 
-            var head = ((request.HeadId == Guid.Empty ) || (request.HeadId == entity.Head?.Id)) ?
+            var head = request.HeadId == Guid.Empty || request.HeadId == entity.Head?.Id ?
                                        entity.Head :
                                        await _unitOfWork.ProductionEmps.GetOneAsync(p => p.Id == request.HeadId);
 
 
-            var linetype = ((request.LineTypeId == -1) || (request.LineTypeId == entity.LineType.Id)) ?
+            var linetype = request.LineTypeId == -1 || request.LineTypeId == entity.LineType.Id ?
                                      entity.LineType :
                                      await _lineTypeRepository.GetOneAsync(p => p.Id == request.LineTypeId);
 
@@ -53,7 +53,7 @@ namespace Lavender.Services.ProductionEmps.Update
 
             entity.Update(request.FullName, request.PhoneNumber,
                           request.NationalNumber, request.BirthDay
-                        , request.Salary , head , linetype!);
+                        , request.Salary, head, linetype!);
 
 
             if (!request.Password.IsNullOrEmpty())
@@ -72,7 +72,7 @@ namespace Lavender.Services.ProductionEmps.Update
 
         private async Task<ProductionEmpDto> UpdateEntityinDB(ProductionEmp entity, CancellationToken cancellationToken)
         {
-             _unitOfWork.ProductionEmps.Update(entity);
+            _unitOfWork.ProductionEmps.Update(entity);
             await _unitOfWork.Save(cancellationToken);
             return Mapping.Mapper.Map<ProductionEmpDto>(entity);
         }

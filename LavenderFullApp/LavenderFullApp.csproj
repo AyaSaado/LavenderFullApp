@@ -36,6 +36,7 @@
   <ItemGroup>
     <Folder Include="LavanderSignalR\Chat\" />
     <Folder Include="LavanderSignalR\Notification\" />
+    <Folder Include="Usage\" />
   </ItemGroup>
 
 </Project>

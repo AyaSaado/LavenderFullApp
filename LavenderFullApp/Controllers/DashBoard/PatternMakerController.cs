@@ -7,6 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace LavenderFullApp.Controllers.DashBoard
 {
+
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "DashBoard")]

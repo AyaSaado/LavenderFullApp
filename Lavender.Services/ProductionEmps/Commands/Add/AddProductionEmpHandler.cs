@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using static Lavender.Core.Helper.MappingProfile;
 
-namespace Lavender.Services.ProductionEmps.Add
+namespace Lavender.Services.ProductionEmps.Commands.Add
 {
     public class AddProductionEmpHandler : IRequestHandler<AddProductionEmpRequest, Result<ProductionEmpDto>>
     {
@@ -35,9 +35,9 @@ namespace Lavender.Services.ProductionEmps.Add
                 return Result.Failure<ProductionEmpDto>(new Error("400", "Invalid Email Address"));
             }
             var head = await _unitOfWork.ProductionEmps.GetOneAsync(p => p.Id == request.HeadId);
-            var lineType = await _lineTypeRepository.GetOneAsync(l => l.Id == request.LineTypeId); 
-            
-            if(head  == null || lineType == null)
+            var lineType = await _lineTypeRepository.GetOneAsync(l => l.Id == request.LineTypeId);
+
+            if (head == null || lineType == null)
             {
                 return Result.Failure<ProductionEmpDto>(new Error("404", "Some provided entities are not found"));
             }
@@ -47,8 +47,8 @@ namespace Lavender.Services.ProductionEmps.Add
                 FullName = request.FullName,
                 Email = request.Email,
                 UserName = request.UserName,
-                Head =  head,
-                LineType = lineType, 
+                Head = head,
+                LineType = lineType,
                 BirthDay = request.BirthDay,
                 ImageProfileUrl = await _fileServices.Upload(request.ImageProfile),
                 NationalNumber = request.NationalNumber,
@@ -58,14 +58,14 @@ namespace Lavender.Services.ProductionEmps.Add
 
             IdentityResult IsAdd = await _unitOfWork.Users.AddWithRole(productionemp, request.Role, request.Password);
 
-            if(IsAdd.Succeeded)
+            if (IsAdd.Succeeded)
             {
                 await _unitOfWork.Save(cancellationToken);
 
                 var @new = Mapping.Mapper.Map<ProductionEmpDto>(productionemp);
 
                 @new.Role = request.Role;
-       
+
                 return @new;
 
             }

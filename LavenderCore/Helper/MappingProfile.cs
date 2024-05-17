@@ -28,6 +28,10 @@ namespace Lavender.Core.Helper
              
                 CreateMap<PatternMaker, PatternMakerDto>().ForMember(dest => dest.Role, opt => opt.Ignore()).ReverseMap();
 
+                CreateMap<ProductionEmp, ProductionEmpDto>().ForMember(dest => dest.Role, opt => opt.Ignore()).ReverseMap();
+
+                CreateMap<DesigningSection, DesignSectionDto>().ReverseMap();
+
 
                 //CreateMap<X_raysImages, X_raysImagesDto>()
                 //  .ForMember(dest => dest.Image, opt => opt.Ignore())
@@ -46,11 +50,7 @@ namespace Lavender.Core.Helper
                 //    .ForMember(dest => dest.PatientInfoDtos, opt => opt.MapFrom(src => src.PatientInfos))
                 //    .ReverseMap();
 
-
-                
-            
-
-             }
+            }
         }
     }
 }

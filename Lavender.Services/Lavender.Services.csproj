@@ -36,11 +36,11 @@
     <Folder Include="Constants\Command\" />
     <Folder Include="Constants\Queries\" />
     <Folder Include="Actors\Queries\" />
-    <Folder Include="PatternMakers\Queries\" />
     <Folder Include="Designs\Command\" />
     <Folder Include="Designs\Queries\" />
     <Folder Include="Orders\Command\" />
     <Folder Include="Orders\Queries\" />
+    <Folder Include="PatternMakers\Queries\GetAll\" />
     <Folder Include="SewingMachines\Command\" />
     <Folder Include="SewingMachines\Queries\" />
     <Folder Include="Steps\Command\" />
