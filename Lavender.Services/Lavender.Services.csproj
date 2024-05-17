@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.18" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.18" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MimeKit" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lavender.Infrastructure\Lavender.Infrastructure.csproj" />
+    <ProjectReference Include="..\LavenderCore\Lavender.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Actors\Command\Update\" />
+    <Folder Include="Chats\Command\" />
+    <Folder Include="Chats\Queries\" />
+    <Folder Include="Constants\Command\" />
+    <Folder Include="Constants\Queries\" />
+    <Folder Include="Actors\Queries\" />
+    <Folder Include="PatternMakers\Queries\" />
+    <Folder Include="Designs\Command\" />
+    <Folder Include="Designs\Queries\" />
+    <Folder Include="Orders\Command\" />
+    <Folder Include="Orders\Queries\" />
+    <Folder Include="SewingMachines\Command\" />
+    <Folder Include="SewingMachines\Queries\" />
+    <Folder Include="Steps\Command\" />
+    <Folder Include="Steps\Queries\" />
+    <Folder Include="Users\Queries\" />
+  </ItemGroup>
+
+</Project>
