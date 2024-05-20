@@ -30,7 +30,6 @@ namespace Lavender.Core.Helper
 
                 CreateMap<ProductionEmp, ProductionEmpDto>().ForMember(dest => dest.Role, opt => opt.Ignore()).ReverseMap();
 
-                CreateMap<DesigningSection, DesignSectionDto>().ReverseMap();
 
 
                 //CreateMap<X_raysImages, X_raysImagesDto>()

@@ -15,4 +15,10 @@ namespace Lavender.Core.EntityDto
         public string? Role { get; set; }
         public List<DesignSectionDto> DesignSectionDtos { get; set; } = new List<DesignSectionDto>();
     }
+
+    public class DesignSectionDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
+    }
 }
