@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace Lavender.Services.PatternMakers.Commands.Add
 {
-    public class AddPatternMakerRequest : IRequest<Result<PatternMakerDto>>
+    public class AddPatternMakerRequest : IRequest<Result>
     {
         public Guid Id { get; set; }
-        public IFormFile? ImageProfile { get; set; } 
+        public IFormFile? ProfileImage { get; set; } 
         public required string FullName { get; set; }
         public required string Email { get; set; }
         public required string UserName { get; set; }
@@ -16,6 +16,7 @@ namespace Lavender.Services.PatternMakers.Commands.Add
         public decimal Salary {  get; set; } 
         public string PhoneNumber { get; set; } = null!;
         public string? NationalNumber { get; set; }
+        public string? Address { get; set; }
         public DateOnly BirthDay { get; set; }
         public string Role { get; set; } = null!; 
         public List<int> DesignSectionIds { get; set; } = new List<int>();  

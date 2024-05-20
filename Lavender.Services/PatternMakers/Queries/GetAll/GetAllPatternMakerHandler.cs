@@ -3,10 +3,11 @@ using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static Lavender.Core.Helper.MappingProfile;
+using static Lavender.Services.PatternMakers.Queries.GetAll.GetAllPatternMakerRequest;
 
 namespace Lavender.Services.PatternMakers.Queries.GetAll
 {
-    public class GetAllPatternMakerHandler : IRequestHandler<GetAllPatternMakerRequest, List<PatternMakerDto>>
+    public class GetAllPatternMakerHandler : IRequestHandler<GetAllPatternMakerRequest, List<PatternMakerResponse>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -15,13 +16,13 @@ namespace Lavender.Services.PatternMakers.Queries.GetAll
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<PatternMakerDto>> Handle(GetAllPatternMakerRequest request, CancellationToken cancellationToken)
+        public async Task<List<PatternMakerResponse>> Handle(GetAllPatternMakerRequest request, CancellationToken cancellationToken)
         {
-            var entities = await _unitOfWork.PatternMakers.GetAll().ToListAsync(cancellationToken);
+            var result = await _unitOfWork.PatternMakers.GetAll()
+                                                        .Select(PatternMakerResponse.Selector())
+                                                        .ToListAsync(cancellationToken);
 
-            var result = Mapping.Mapper.Map<List<PatternMakerDto>>(entities);
-
-            
+           
             return result;
         }
     }

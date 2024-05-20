@@ -11,7 +11,7 @@ using System.Net.Mail;
 
 namespace Lavender.Services.PatternMakers.Commands.Add
 {
-    public class AddPatternMakerHandler : IRequestHandler<AddPatternMakerRequest, Result<PatternMakerDto>>
+    public class AddPatternMakerHandler : IRequestHandler<AddPatternMakerRequest, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileServices _fileServices;
@@ -21,7 +21,7 @@ namespace Lavender.Services.PatternMakers.Commands.Add
             _fileServices = fileServices;
         }
 
-        public async Task<Result<PatternMakerDto>> Handle(AddPatternMakerRequest request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(AddPatternMakerRequest request, CancellationToken cancellationToken)
         {
     
             try
@@ -30,7 +30,7 @@ namespace Lavender.Services.PatternMakers.Commands.Add
             }
             catch (Exception)
             {
-                return Result.Failure<PatternMakerDto>(new Error("400", "Invalid Email Address"));
+                return Result.Failure(new Error("400", "Invalid Email Address"));
             }
 
             var patternMaker = new PatternMaker()
@@ -39,7 +39,8 @@ namespace Lavender.Services.PatternMakers.Commands.Add
                 Email = request.Email,
                 UserName = request.UserName,
                 BirthDay = request.BirthDay,
-                ImageProfileUrl = await _fileServices.Upload(request.ImageProfile),
+                Address = request.Address,
+                ProfileImageUrl = await _fileServices.Upload(request.ProfileImage),
                 NationalNumber = request.NationalNumber,
                 PhoneNumber = request.PhoneNumber,
                 Salary = request.Salary
@@ -64,15 +65,11 @@ namespace Lavender.Services.PatternMakers.Commands.Add
 
                 await _unitOfWork.MakerSections.AddRangeAsync(makersections);
                 await _unitOfWork.Save(cancellationToken);
-                
-                var @new = Mapping.Mapper.Map<PatternMakerDto>(patternMaker);
-               
-                @new.Role = request.Role;
-                @new.DesignSectionDtos = sections;
               
-                return @new;
+                return Result.Success();
             }
-            return Result.Failure<PatternMakerDto>( new Error("400", string.Join(Environment.NewLine, IsAdd.Errors.Select(e => e.Description)))); 
+
+            return Result.Failure( new Error("400", string.Join(Environment.NewLine, IsAdd.Errors.Select(e => e.Description)))); 
           
         }
     }

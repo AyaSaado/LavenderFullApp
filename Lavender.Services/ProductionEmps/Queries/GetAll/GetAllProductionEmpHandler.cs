@@ -1,12 +1,11 @@
-﻿using Lavender.Core.EntityDto;
-using Lavender.Core.Interfaces.Repository;
+﻿using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Core.Helper.MappingProfile;
+using static Lavender.Services.ProductionEmps.Queries.GetAll.GetAllProductionEmpRequest;
 
 namespace Lavender.Services.ProductionEmps.Queries.GetAll
 {
-    public class GetAllProductionEmpHandler : IRequestHandler<GetAllProductionEmpRequest, List<ProductionEmpDto>>
+    public class GetAllProductionEmpHandler : IRequestHandler<GetAllProductionEmpRequest, List<ProductionEmpResponse>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -15,11 +14,14 @@ namespace Lavender.Services.ProductionEmps.Queries.GetAll
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<ProductionEmpDto>> Handle(GetAllProductionEmpRequest request, CancellationToken cancellationToken)
+        public async Task<List<ProductionEmpResponse>> Handle(GetAllProductionEmpRequest request, CancellationToken cancellationToken)
         {
-            var entities = await _unitOfWork.ProductionEmps.GetAll().ToListAsync(cancellationToken);
+            var result = await _unitOfWork.ProductionEmps
+                                             .GetAll()
+                                             .Select(ProductionEmpResponse.Selector())
+                                             .ToListAsync(cancellationToken);
 
-            return Mapping.Mapper.Map<List<ProductionEmpDto>>(entities);
+            return result;
         }
     }
 }

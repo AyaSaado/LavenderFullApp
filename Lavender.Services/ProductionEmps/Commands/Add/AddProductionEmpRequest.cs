@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace Lavender.Services.ProductionEmps.Commands.Add
 {
-    public class AddProductionEmpRequest : IRequest<Result<ProductionEmpDto>>
+    public class AddProductionEmpRequest : IRequest<Result>
     {
         public Guid Id { get; set; }
-        public IFormFile? ImageProfile { get; set; }
+        public IFormFile? ProfileImage { get; set; }
         public string FullName { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string UserName { get; set; } = null!;
@@ -18,6 +18,7 @@ namespace Lavender.Services.ProductionEmps.Commands.Add
         public decimal Salary { get; set; }
         public string PhoneNumber { get; set; } = null!;
         public string? NationalNumber { get; set; }
+        public string? Address { get; set; }
         public DateOnly BirthDay { get; set; }
         public string Role { get; set; } = null!;
     }
