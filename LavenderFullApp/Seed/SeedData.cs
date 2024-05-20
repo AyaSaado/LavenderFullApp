@@ -16,8 +16,34 @@ namespace LavenderFullApp.Seed
 
             await SeedRoles(context, roleManager);
             await SeedUsers(context, userManager);
+            await SeedLineType(context);
            
         }
+
+        private static async Task SeedLineType(AppDbContext context)
+        {
+            if (context.LineType.Any()) return;
+
+            var lines = new List<LineType>();
+
+
+            lines.Add(new LineType()
+            {
+                Name = "T_Shirt"
+            });
+            lines.Add(new LineType()
+            {
+                Name = "Dress"
+            });
+            lines.Add(new LineType()
+            {
+                Name = "Cajwal"
+            });
+
+            await context.LineType.AddRangeAsync(lines);
+            await context.SaveChangesAsync();
+        }
+
         private static async Task SeedRoles(AppDbContext context, RoleManager<IdentityRole<Guid>> roleManager)
         {
             if (roleManager.Roles.Any()) return;
