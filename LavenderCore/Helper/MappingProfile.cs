@@ -25,12 +25,11 @@ namespace Lavender.Core.Helper
             public AutoMapperProfile()
             {
                 CreateMap<User, UserDto>().ForMember(dest => dest.Role, opt => opt.Ignore()).ReverseMap();
-             
-                CreateMap<PatternMaker, PatternMakerDto>().ForMember(dest => dest.Role, opt => opt.Ignore()).ReverseMap();
+     
+                CreateMap<DesigningSection, DesignSectionDto>().ReverseMap();
 
-                CreateMap<ProductionEmp, ProductionEmpDto>().ForMember(dest => dest.Role, opt => opt.Ignore()).ReverseMap();
-
-
+                CreateMap<LineType, LineTypeDto>().ReverseMap();
+                CreateMap<ProductionEmp, ProductionHeadDto>().ReverseMap();
 
                 //CreateMap<X_raysImages, X_raysImagesDto>()
                 //  .ForMember(dest => dest.Image, opt => opt.Ignore())
