@@ -19,12 +19,12 @@ namespace LavenderFullApp.Controllers.DashBoard
             _mediator = mediator;
         }
 
-        [HttpPost("Add")]
+        [HttpPost("AddDesignSections")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<ProductionEmpDto>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Add(AddProductionEmpRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Add([FromBody] AddProductionEmpRequest command, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
         }
 

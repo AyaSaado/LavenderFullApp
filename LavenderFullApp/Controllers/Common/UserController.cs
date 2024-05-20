@@ -1,12 +1,15 @@
 ﻿using Lavender.Core.EntityDto;
 using Lavender.Core.Shared;
 using Lavender.Services.PatternMakers.Commands.Update;
+using Lavender.Services.PatternMakers.Queries.GetAll;
 using Lavender.Services.ProductionEmps.Commands.Update;
+using Lavender.Services.ProductionEmps.Queries.GetAll;
 using Lavender.Services.Users.Commands.Add;
 using Lavender.Services.Users.Commands.Delete;
 using Lavender.Services.Users.Commands.ForgetPassword;
 using Lavender.Services.Users.Commands.Login;
 using Lavender.Services.Users.Commands.RefreshToken;
+using Lavender.Services.Users.Commands.Update;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +39,7 @@ namespace LavenderFullApp.Controllers.Common
             var result = await _mediator.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
+
 
         [HttpPost("RefreshToken")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<TokenDto>))]
@@ -67,6 +71,16 @@ namespace LavenderFullApp.Controllers.Common
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
 
+        [HttpPut("UpdateUser")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<UserDto>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update([FromBody] UpdateUserRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+        }
+
+
         [HttpDelete("DeleteUser")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<UserDto>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
@@ -79,20 +93,40 @@ namespace LavenderFullApp.Controllers.Common
         [HttpPut("UpdatePatternMaker")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<PatternMakerDto>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(UpdatePatternMakerRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update([FromBody] UpdatePatternMakerRequest command, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
         }
 
         [HttpPut("UpdateProductionEmp")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<ProductionEmpDto>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(UpdateProductionEmpRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update([FromBody] UpdateProductionEmpRequest command, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
         }
+
+
+        [HttpGet("GetAllProductionEmps")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ProductionEmpDto>))]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllProductionEmpRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+          
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetAllPatternMakers")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<PatternMakerDto>))]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllPatternMakerRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+
 
     }
 }

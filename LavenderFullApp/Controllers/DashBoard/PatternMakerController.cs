@@ -20,15 +20,17 @@ namespace LavenderFullApp.Controllers.DashBoard
             _mediator = mediator;
         }
 
-        [HttpPost("Add")]
+        [HttpPost("AddDesignSections")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<PatternMakerDto>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Add(AddPatternMakerRequest command , CancellationToken cancellationToken)
+        public async Task<IActionResult> Add([FromBody] AddPatternMakerRequest command , CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
         }
 
 
+
+    
     }
 }
