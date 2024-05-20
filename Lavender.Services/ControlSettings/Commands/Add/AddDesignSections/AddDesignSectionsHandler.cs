@@ -1,14 +1,13 @@
-﻿using Azure.Core;
-using Lavender.Core.Entities;
+﻿using Lavender.Core.Entities;
 using Lavender.Core.EntityDto;
 using Lavender.Core.Interfaces.Repository;
 using Lavender.Core.Shared;
 using MediatR;
 using static Lavender.Core.Helper.MappingProfile;
 
-namespace Lavender.Services.DesignSections.Commands.Add
+namespace Lavender.Services.ControlSettings.Commands.Add.AddDesignSections
 {
-    public class AddDesignSectionsHandler : IRequestHandler<AddDesignSectionsRequest, Result<List<DesignSectionDto>>>
+    public class AddDesignSectionsHandler : IRequestHandler<AddDesignSectionsRequest, bool>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -17,11 +16,11 @@ namespace Lavender.Services.DesignSections.Commands.Add
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<List<DesignSectionDto>>> Handle(AddDesignSectionsRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AddDesignSectionsRequest request, CancellationToken cancellationToken)
         {
             var entities = new List<DesigningSection>();
-           
-            foreach(var entity in request.DesignSectionsName)
+
+            foreach (var entity in request.DesignSectionsName)
             {
                 entities.Add(new DesigningSection() { Name = entity });
             }
@@ -30,12 +29,13 @@ namespace Lavender.Services.DesignSections.Commands.Add
             {
                 await _unitOfWork.DesignSections.AddRangeAsync(entities);
                 await _unitOfWork.Save(cancellationToken);
-                
-                return Mapping.Mapper.Map<List<DesignSectionDto>>(entities);
 
-            }catch(Exception) 
+                return true;
+
+            }
+            catch (Exception)
             {
-                return Result.Failure<List<DesignSectionDto>>(new Error("400" , "Adding Failed"));
+                return false;
             }
 
         }

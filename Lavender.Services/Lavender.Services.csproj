@@ -40,7 +40,6 @@
     <Folder Include="Designs\Queries\" />
     <Folder Include="Orders\Command\" />
     <Folder Include="Orders\Queries\" />
-    <Folder Include="PatternMakers\Queries\GetAll\" />
     <Folder Include="SewingMachines\Command\" />
     <Folder Include="SewingMachines\Queries\" />
     <Folder Include="Steps\Command\" />

@@ -20,7 +20,7 @@ namespace Lavender.Services.Users.Commands.Login
 
         public async Task<Result<TokenRequest.Respone>> Handle(TokenRequest.Request request, CancellationToken cancellationToken)
         {
-            var UserExist = await _userManager.FindByEmailAsync(request.UserName);
+            var UserExist = await _userManager.FindByNameAsync(request.UserName);
 
 
             if (UserExist == null)
