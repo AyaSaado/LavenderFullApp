@@ -796,6 +796,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("date");
 
@@ -843,6 +846,9 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ProfileImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -1016,17 +1022,11 @@ namespace Lavender.Infrastructure.Migrations
                 {
                     b.HasBaseType("Lavender.Core.Entities.User");
 
-                    b.Property<string>("ImageProfileUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
                     b.ToTable("AspNetUsers", t =>
                         {
-                            t.Property("ImageProfileUrl")
-                                .HasColumnName("PatternMaker_ImageProfileUrl");
-
                             t.Property("Salary")
                                 .HasColumnName("PatternMaker_Salary");
                         });
@@ -1040,9 +1040,6 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<Guid?>("HeadId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ImageProfileUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LineTypeId")
                         .HasColumnType("int");

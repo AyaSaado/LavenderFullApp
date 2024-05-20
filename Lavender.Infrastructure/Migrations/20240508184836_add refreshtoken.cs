@@ -12,7 +12,7 @@ namespace Lavender.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "ImageProfileUrl",
+                name: "ProfileImageUrl",
                 table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -58,7 +58,7 @@ namespace Lavender.Infrastructure.Migrations
                 name: "RefreshToken");
 
             migrationBuilder.DropColumn(
-                name: "ImageProfileUrl",
+                name: "ProfileImageUrl",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(

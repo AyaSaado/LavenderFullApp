@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lavender.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240508184836_add refreshtoken")]
-    partial class addrefreshtoken
+    [Migration("20240520153558_rename field")]
+    partial class renamefield
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -799,6 +799,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("date");
 
@@ -819,6 +822,9 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -1019,17 +1025,11 @@ namespace Lavender.Infrastructure.Migrations
                 {
                     b.HasBaseType("Lavender.Core.Entities.User");
 
-                    b.Property<string>("ProfileImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
                     b.ToTable("AspNetUsers", t =>
                         {
-                            t.Property("ProfileImageUrl")
-                                .HasColumnName("PatternMaker_ImageProfileUrl");
-
                             t.Property("Salary")
                                 .HasColumnName("PatternMaker_Salary");
                         });
@@ -1043,9 +1043,6 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<Guid?>("HeadId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ProfileImageUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LineTypeId")
                         .HasColumnType("int");
