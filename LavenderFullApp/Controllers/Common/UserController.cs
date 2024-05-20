@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
+using static Lavender.Services.PatternMakers.Queries.GetAll.GetAllPatternMakerRequest;
+using static Lavender.Services.ProductionEmps.Queries.GetAll.GetAllProductionEmpRequest;
 
 namespace LavenderFullApp.Controllers.Common
 {
@@ -71,6 +73,7 @@ namespace LavenderFullApp.Controllers.Common
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
 
+
         [HttpPut("UpdateUser")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<UserDto>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
@@ -91,26 +94,26 @@ namespace LavenderFullApp.Controllers.Common
         }
 
         [HttpPut("UpdatePatternMaker")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<PatternMakerDto>))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody] UpdatePatternMakerRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update([FromForm] UpdatePatternMakerRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
         [HttpPut("UpdateProductionEmp")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<ProductionEmpDto>))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody] UpdateProductionEmpRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update([FromForm] UpdateProductionEmpRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
 
         [HttpGet("GetAllProductionEmps")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ProductionEmpDto>))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ProductionEmpResponse>))]
         public async Task<IActionResult> GetAll([FromQuery] GetAllProductionEmpRequest request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
@@ -120,7 +123,7 @@ namespace LavenderFullApp.Controllers.Common
 
 
         [HttpGet("GetAllPatternMakers")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<PatternMakerDto>))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<PatternMakerResponse>))]
         public async Task<IActionResult> GetAll([FromQuery] GetAllPatternMakerRequest request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);

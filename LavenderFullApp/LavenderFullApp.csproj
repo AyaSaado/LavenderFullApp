@@ -40,6 +40,7 @@
   <ItemGroup>
     <Folder Include="LavanderSignalR\Chat\" />
     <Folder Include="LavanderSignalR\Notification\" />
+    <Folder Include="wwwroot\" />
     <Folder Include="Usage\" />
   </ItemGroup>
 

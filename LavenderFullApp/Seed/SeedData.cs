@@ -46,13 +46,13 @@ namespace LavenderFullApp.Seed
 
         private static async Task SeedRoles(AppDbContext context, RoleManager<IdentityRole<Guid>> roleManager)
         {
-            if (roleManager.Roles.Any()) return;
+            //if (roleManager.Roles.Any()) return;
 
-            var Roles = Enum.GetValues(typeof(LavanderRoles)).Cast<LavanderRoles>().Select(a => a.ToString());
-            foreach (var Role in Roles)
-            {
-                await roleManager.CreateAsync(new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = Role });
-            }
+            //var Roles = Enum.GetValues(typeof(LavanderRoles)).Cast<LavanderRoles>().Select(a => a.ToString());
+            //foreach (var Role in Roles)
+            //{
+                await roleManager.CreateAsync(new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = LavanderRoles.Worker.ToString() });
+          //  }
             await context.SaveChangesAsync();
 
         }

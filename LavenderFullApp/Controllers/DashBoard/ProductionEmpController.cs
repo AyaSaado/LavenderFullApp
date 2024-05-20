@@ -1,5 +1,4 @@
-﻿using Lavender.Core.EntityDto;
-using Lavender.Core.Shared;
+﻿using Lavender.Core.Shared;
 using Lavender.Services.ProductionEmps.Commands.Add;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +18,14 @@ namespace LavenderFullApp.Controllers.DashBoard
             _mediator = mediator;
         }
 
-        [HttpPost("AddDesignSections")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<ProductionEmpDto>))]
+        [HttpPost("AddProductionEmp")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Add([FromBody] AddProductionEmpRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Add([FromForm] AddProductionEmpRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
+          
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
  
