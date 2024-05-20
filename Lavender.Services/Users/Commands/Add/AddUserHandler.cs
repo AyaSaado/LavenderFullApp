@@ -1,24 +1,26 @@
 ﻿using Lavender.Core.Shared;
 using Lavender.Core.Entities;
-using Lavender.Core.EntityDto;
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
+using Lavender.Core.Interfaces.Files;
 
 namespace Lavender.Services.Users.Commands.Add
 {
-    public class AddUserHandler : IRequestHandler<AddUserRequest, Result<UserDto>>
+    public class AddUserHandler : IRequestHandler<AddUserRequest, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<User> _userManager;
-        public AddUserHandler(IUnitOfWork unitOfWork, UserManager<User> userManager)
+        private readonly IFileServices _fileServices;
+        public AddUserHandler(IUnitOfWork unitOfWork, UserManager<User> userManager, IFileServices fileServices)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+            _fileServices = fileServices;
         }
 
-        public async Task<Result<UserDto>> Handle(AddUserRequest request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(AddUserRequest request, CancellationToken cancellationToken)
         {
      
             try
@@ -27,7 +29,7 @@ namespace Lavender.Services.Users.Commands.Add
             }
             catch(Exception)
             {
-                return Result.Failure<UserDto>(new Error("400", "Invalid Email Address"));
+                return Result.Failure(new Error("400", "Invalid Email Address"));
             }
            
 
@@ -36,9 +38,11 @@ namespace Lavender.Services.Users.Commands.Add
                 FullName = request.FullName,
                 Email = request.Email,
                 UserName = request.UserName,
+                ProfileImageUrl = await _fileServices.Upload(request.ProfileImage),
                 BirthDay = request.BirthDay,
                 NationalNumber = request.NationalNumber,
-                PhoneNumber = request.PhoneNumber,      
+                PhoneNumber = request.PhoneNumber,  
+                Address = request.Address,
             };
 
             IdentityResult IsAdd = await _unitOfWork.Users.AddWithRole(user, request.Role, request.Password);
@@ -47,12 +51,9 @@ namespace Lavender.Services.Users.Commands.Add
             {
                 await _unitOfWork.Save(cancellationToken);
 
-                var @new = (UserDto)HandlerServices.Map<User, UserDto>(user);
-                var rs = await _userManager.GetRolesAsync(user);
-                @new.Role = rs.First();
-                return @new;
+                return Result.Success();
             }
-            return Result.Failure<UserDto>(new Error("400", IsAdd.Errors.First().Description));
+            return Result.Failure(new Error("400", IsAdd.Errors.First().Description));
 
 
         }

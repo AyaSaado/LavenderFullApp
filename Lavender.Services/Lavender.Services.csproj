@@ -44,7 +44,6 @@
     <Folder Include="SewingMachines\Queries\" />
     <Folder Include="Steps\Command\" />
     <Folder Include="Steps\Queries\" />
-    <Folder Include="Users\Queries\" />
   </ItemGroup>
 
 </Project>

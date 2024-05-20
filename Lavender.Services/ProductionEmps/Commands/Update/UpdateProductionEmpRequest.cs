@@ -7,7 +7,7 @@ namespace Lavender.Services.ProductionEmps.Commands.Update
     public class UpdateProductionEmpRequest : IRequest<Result>
     {
         public Guid Id { get; set; }
-        public IFormFile? ImageProfile { get; set; }
+        public IFormFile? ProfileImage { get; set; }
         public string FullName { get; set; } = null!;
         public string? Password { get; set; }
         public decimal Salary { get; set; }

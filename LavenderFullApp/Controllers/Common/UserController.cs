@@ -65,27 +65,27 @@ namespace LavenderFullApp.Controllers.Common
 
 
         [HttpPost("AddUser(Register)")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<UserDto>))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddUser([FromBody] AddUserRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddUser([FromForm] AddUserRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
 
         [HttpPut("UpdateUser")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<UserDto>))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody] UpdateUserRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update([FromForm] UpdateUserRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
 
         [HttpDelete("DeleteUser")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<UserDto>))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete([FromBody] DeleteUserRequest command, CancellationToken cancellationToken)
         {

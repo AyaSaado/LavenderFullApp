@@ -13,5 +13,16 @@ namespace Lavender.Core.Entities
         public string? NationalNumber { get; set; }
         public DateOnly BirthDay { get; set; }
         public string? Address { get; set; }
+
+        public void Update(string fullName, string? phoneNumber,
+                        string? nationalNumber, DateOnly birthDay,
+                        string? address)
+        {
+            FullName = fullName;
+            PhoneNumber = phoneNumber;
+            NationalNumber = nationalNumber;
+            BirthDay = birthDay;
+            Address = address;
+        }
     }
 }

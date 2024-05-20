@@ -31,11 +31,11 @@ namespace Lavender.Services.ProductionEmps.Commands.Update
             }
 
 
-            if (request.ImageProfile != null)
+            if (request.ProfileImage != null)
             {
                 _fileServices.Delete(entity.ProfileImageUrl);
 
-                entity.ProfileImageUrl = await _fileServices.Upload(request.ImageProfile);
+                entity.ProfileImageUrl = await _fileServices.Upload(request.ProfileImage);
             }
 
             entity.Update(request.FullName, request.PhoneNumber,

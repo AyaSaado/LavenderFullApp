@@ -24,10 +24,15 @@ namespace Lavender.Infrastructure.Files
 
             return await _upload(file);
         }
-        public async Task<List<string>> Upload(List<IFormFile> files)
+        public async Task<List<string>> Upload(List<IFormFile>? files)
         {
+            if (files?.Count == 0 )
+            {
+                return new List<string>();
+            }
+
             List<string?> paths = new();
-            foreach (var file in files)
+            foreach (var file in files!)
             {
                 paths.Add(await Upload(file));
             }
@@ -65,9 +70,14 @@ namespace Lavender.Infrastructure.Files
                 File.Delete(temp);
             }
         }
-        public void Delete(List<string> path)
+        public void Delete(List<string>? path)
         {
-            foreach (var p in path)
+
+            if (path?.Count == 0)
+            {
+                return;
+            }
+            foreach (var p in path!)
             {
                 Delete(p);
             }
