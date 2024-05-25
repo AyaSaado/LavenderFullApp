@@ -6,6 +6,7 @@ namespace Lavender.Core.Interfaces.Repository
     {
         IQueryable<T> GetAll(int pageNumber = 1, int pageSize = 10);
         Task<T?> GetOneAsync(Expression<Func<T,bool>> predicate);
+      //  Task<TResult?> GetOneAsync(Expression<Func<T, bool>> filter, Expression<Func<T, T>> selector);
         IQueryable<T> Find(Expression<Func<T, bool>> predicate);
         Task<bool> AddAsync(T entity);
         Task<bool> AddRangeAsync(IEnumerable<T> entities);
@@ -13,7 +14,6 @@ namespace Lavender.Core.Interfaces.Repository
         bool UpdateRange(IEnumerable<T> entities);
         bool Remove(T entity);
         bool RemoveRange(IEnumerable<T> entities);
-
 
 
     }

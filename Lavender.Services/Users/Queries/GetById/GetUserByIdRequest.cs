@@ -1,13 +1,14 @@
 ﻿using Lavender.Core.Entities;
+using Lavender.Core.Shared;
 using MediatR;
 using System.Linq.Expressions;
-using static Lavender.Services.Users.Queries.GetAll.GetAllUsersRequest;
+using static Lavender.Services.Users.Queries.GetById.GetUserByIdRequest;
 
-namespace Lavender.Services.Users.Queries.GetAll
+namespace Lavender.Services.Users.Queries.GetById
 {
-    public class GetAllUsersRequest : IRequest<List<UserResponse>>
+    public class GetUserByIdRequest : IRequest<Result<UserResponse>>
     {
-        public string? Role { get; set; }
+        public Guid Id { get; set; }
 
         public class UserResponse
         {
@@ -21,7 +22,7 @@ namespace Lavender.Services.Users.Queries.GetAll
             public string? Address { get; set; }
             public DateOnly BirthDay { get; set; }
 
-            public static Expression<Func<User, UserResponse>> Selector() => p
+            public static Expression<Func<User?, UserResponse>> Selector() => p
                => new()
                {
                    Id = p.Id,
@@ -33,7 +34,7 @@ namespace Lavender.Services.Users.Queries.GetAll
                    PhoneNumber = p.PhoneNumber,
                    Address = p.Address,
                    ProfileImageUrl = p.ProfileImageUrl,
-                   
+
                };
 
         }

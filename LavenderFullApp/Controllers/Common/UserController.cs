@@ -2,14 +2,18 @@
 using Lavender.Core.Shared;
 using Lavender.Services.PatternMakers.Commands.Update;
 using Lavender.Services.PatternMakers.Queries.GetAll;
+using Lavender.Services.PatternMakers.Queries.GetById;
 using Lavender.Services.ProductionEmps.Commands.Update;
 using Lavender.Services.ProductionEmps.Queries.GetAll;
+using Lavender.Services.ProductionEmps.Queries.GetById;
 using Lavender.Services.Users.Commands.Add;
 using Lavender.Services.Users.Commands.Delete;
 using Lavender.Services.Users.Commands.ForgetPassword;
 using Lavender.Services.Users.Commands.Login;
 using Lavender.Services.Users.Commands.RefreshToken;
 using Lavender.Services.Users.Commands.Update;
+using Lavender.Services.Users.Queries.GetAllMainUsers;
+using Lavender.Services.Users.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +21,8 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
 using static Lavender.Services.PatternMakers.Queries.GetAll.GetAllPatternMakerRequest;
 using static Lavender.Services.ProductionEmps.Queries.GetAll.GetAllProductionEmpRequest;
+using static Lavender.Services.Users.Queries.GetAllMainUsers.GetAllUsersRequest;
+using static Lavender.Services.Users.Queries.GetById.GetUserByIdRequest;
 
 namespace LavenderFullApp.Controllers.Common
 {
@@ -112,13 +118,39 @@ namespace LavenderFullApp.Controllers.Common
         }
 
 
+        [HttpGet("GetAllUsersOfRole")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<AllUserResponse>))]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllUsersRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpGet("GetUserById")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<UserResponse>))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAll([FromQuery] GetUserByIdRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : NotFound(result.Error);
+        }
+
+
         [HttpGet("GetAllProductionEmps")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ProductionEmpResponse>))]
         public async Task<IActionResult> GetAll([FromQuery] GetAllProductionEmpRequest request, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(request, cancellationToken);
-          
+            var result = await _mediator.Send(request, cancellationToken);     
             return Ok(result);
+        }
+
+        [HttpGet("GetProductionEmpById")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<ProductionEmpResponse>))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAll([FromQuery] GetProductionEmpByIdRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : NotFound(result.Error);
         }
 
 
@@ -130,6 +162,13 @@ namespace LavenderFullApp.Controllers.Common
             return Ok(result);
         }
 
-
+        [HttpGet("GetPatternMakerById")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<PatternMakerResponse>))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get([FromQuery] GetPatternMakerByIdRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : NotFound(result.Error);
+        }
     }
 }

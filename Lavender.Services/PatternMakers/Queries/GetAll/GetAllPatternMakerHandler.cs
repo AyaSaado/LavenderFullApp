@@ -1,8 +1,6 @@
-﻿using Lavender.Core.EntityDto;
-using Lavender.Core.Interfaces.Repository;
+﻿using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Core.Helper.MappingProfile;
 using static Lavender.Services.PatternMakers.Queries.GetAll.GetAllPatternMakerRequest;
 
 namespace Lavender.Services.PatternMakers.Queries.GetAll

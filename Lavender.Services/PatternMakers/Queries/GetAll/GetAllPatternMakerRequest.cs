@@ -1,7 +1,6 @@
 ﻿using Lavender.Core.Entities;
 using Lavender.Core.EntityDto;
 using MediatR;
-using static Lavender.Services.ControlSettings.Queries.GetAllLineTypes.GetAllLineTypesRequest;
 using System.Linq.Expressions;
 using static Lavender.Core.Helper.MappingProfile;
 using static Lavender.Services.PatternMakers.Queries.GetAll.GetAllPatternMakerRequest;
