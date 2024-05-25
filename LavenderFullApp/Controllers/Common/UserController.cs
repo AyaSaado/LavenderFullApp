@@ -6,6 +6,7 @@ using Lavender.Services.PatternMakers.Queries.GetById;
 using Lavender.Services.ProductionEmps.Commands.Update;
 using Lavender.Services.ProductionEmps.Queries.GetAll;
 using Lavender.Services.ProductionEmps.Queries.GetById;
+using Lavender.Services.ProductionEmps.Queries.GetEmpsOfManager;
 using Lavender.Services.Users.Commands.Add;
 using Lavender.Services.Users.Commands.Delete;
 using Lavender.Services.Users.Commands.ForgetPassword;
@@ -144,10 +145,19 @@ namespace LavenderFullApp.Controllers.Common
             return Ok(result);
         }
 
+        [HttpGet("GetEmpsOfProductionManager")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ProductionEmpResponse>))]
+        public async Task<IActionResult> GetAll([FromQuery] GetEmpsOfManagerRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+
+
         [HttpGet("GetProductionEmpById")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<ProductionEmpResponse>))]
         [SwaggerResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAll([FromQuery] GetProductionEmpByIdRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Get([FromQuery] GetProductionEmpByIdRequest request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : NotFound(result.Error);
