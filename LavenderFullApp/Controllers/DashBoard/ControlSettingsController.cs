@@ -1,5 +1,7 @@
 ﻿using Lavender.Services.ControlSettings.Commands.Add.AddDesignSections;
 using Lavender.Services.ControlSettings.Commands.Add.AddLineTypes;
+using Lavender.Services.ControlSettings.Commands.Delete.DeleteDesignSections;
+using Lavender.Services.ControlSettings.Commands.Delete.DeleteLineTypes;
 using Lavender.Services.ControlSettings.Commands.Update.UpdateDesignSections;
 using Lavender.Services.ControlSettings.Commands.Update.UpdateLineTypes;
 using MediatR;
@@ -40,6 +42,15 @@ namespace LavenderFullApp.Controllers.DashBoard
             return result ? Ok() : NotFound();
         }
 
+        [HttpDelete("DeleteDesignSections")]
+        [SwaggerResponse(StatusCodes.Status204NoContent)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete([FromBody] DeleteDesignSectionsRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? NoContent() : BadRequest();
+        }
+
 
         [HttpPost("AddLineTypes")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
@@ -60,5 +71,17 @@ namespace LavenderFullApp.Controllers.DashBoard
             return result ? Ok() : NotFound();
         }
 
+
+        [HttpDelete("DeleteLineTypes")]
+        [SwaggerResponse(StatusCodes.Status204NoContent)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete([FromBody] DeleteLineTypesRequest command , CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? NoContent() : BadRequest();
+        }
+
+
+        
     }
 }
