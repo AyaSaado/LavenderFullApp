@@ -4,6 +4,7 @@ using Lavender.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lavender.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240530200035_nullable actor in order")]
+    partial class nullableactorinorder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -402,8 +405,14 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("date");
+
                     b.Property<int>("ItemSizeId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -527,13 +536,10 @@ namespace Lavender.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("ActorId")
+                    b.Property<Guid?>("ActorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DeliveryDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Feedback")
@@ -548,14 +554,8 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("OrderState")
-                        .HasColumnType("int");
-
                     b.Property<int>("OrderType")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -1245,9 +1245,7 @@ namespace Lavender.Infrastructure.Migrations
                 {
                     b.HasOne("Lavender.Core.Entities.Actor", "Actor")
                         .WithMany("Orders")
-                        .HasForeignKey("ActorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ActorId");
 
                     b.HasOne("Lavender.Core.Entities.Item", "Item")
                         .WithMany("Orders")

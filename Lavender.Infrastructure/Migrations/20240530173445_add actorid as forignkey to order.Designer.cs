@@ -4,6 +4,7 @@ using Lavender.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lavender.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240530173445_add actorid as forignkey to order")]
+    partial class addactoridasforignkeytoorder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,12 +112,12 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("WorkQuantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkerId")
+                    b.Property<int>("WorkerIdId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkerId");
+                    b.HasIndex("WorkerIdId");
 
                     b.ToTable("DailyProduction");
                 });
@@ -402,8 +405,14 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("date");
+
                     b.Property<int>("ItemSizeId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -533,9 +542,6 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("date");
-
                     b.Property<string>("Feedback")
                         .HasColumnType("nvarchar(max)");
 
@@ -548,14 +554,8 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("OrderState")
-                        .HasColumnType("int");
-
                     b.Property<int>("OrderType")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -1089,13 +1089,13 @@ namespace Lavender.Infrastructure.Migrations
 
             modelBuilder.Entity("Lavender.Core.Entities.DailyProduction", b =>
                 {
-                    b.HasOne("Lavender.Core.Entities.SewingMachine", "Worker")
+                    b.HasOne("Lavender.Core.Entities.SewingMachine", "WorkerId")
                         .WithMany("DailyProductions")
-                        .HasForeignKey("WorkerId")
+                        .HasForeignKey("WorkerIdId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Worker");
+                    b.Navigation("WorkerId");
                 });
 
             modelBuilder.Entity("Lavender.Core.Entities.Design", b =>
