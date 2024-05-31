@@ -18,6 +18,7 @@ namespace Lavender.Infrastructure.Repository
             MakerSections = new MakerSectionRepository(context);
             ProductionEmps = new ProductionEmpRepository(context);
             PatternMakers = new PatternMakerRepository(context);    
+            Orders = new OrderRepository(context);
         }
 
         public IUserRepository Users {  get; private set; }
@@ -25,6 +26,7 @@ namespace Lavender.Infrastructure.Repository
         public IMakerSectionRepository MakerSections { get; private set; }
         public IProductionEmpRepository ProductionEmps { get; private set; }
         public IPatternMakerRepository PatternMakers { get; private set; }
+        public IOrderRepository Orders { get; private set; }
 
         public async void Dispose()
         {
