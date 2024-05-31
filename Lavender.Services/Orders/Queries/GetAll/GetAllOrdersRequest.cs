@@ -1,0 +1,39 @@
+﻿using Lavender.Core.Entities;
+using Lavender.Core.Enum;
+using MediatR;
+using System.Linq.Expressions;
+using static Lavender.Services.Orders.Queries.GetAll.GetAllOrdersRequest;
+
+namespace Lavender.Services.Orders.Queries.GetAll
+{
+    public class GetAllOrdersRequest : IRequest<List<OrdersResponse>>
+    {
+        public Guid ActorId { get; set; }
+        public OrderState OrderState { get; set; }
+
+        public class OrdersResponse
+        {
+            public int Id { get; set; }
+            public DateOnly OrderDate { get; set; }
+            public DateOnly DeliveryDate { get; set; }
+            public Ordertype OrderType { get; set; }
+            public Guid ActorId { get; set; }
+            public int ItemId { get; set; }
+            public int ItemTypeId { get; set; }
+
+            public static Expression<Func<Order, OrdersResponse>> Selector() => o
+             => new()
+             {
+                 Id = o.Id,
+                 ActorId = o.ActorId,
+                 DeliveryDate = o.DeliveryDate,
+                 OrderDate = o.OrderDate,
+                 OrderType = o.OrderType,
+                 ItemId = o.ItemId,
+                 ItemTypeId = o.ItemTypeId
+             };
+
+        }
+
+    }
+}
