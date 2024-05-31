@@ -1,7 +1,4 @@
-﻿
-
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Lavender.Core.Entities
 {
@@ -13,6 +10,10 @@ namespace Lavender.Core.Entities
         public string Title { get; set; } = null!;
         public decimal Height  { get; set; }
         public decimal Discount { get; set; }
+        public Guid? ProductionLineId { get; set; }
+        public Guid? TailorId { get; set; }
+        public Guid DesignerId { get; set; }
+        public int OrderId { get; set; }
         public ProductionEmp? ProductionLine { get; set; }
         public PatternMaker? Tailor { get; set; }
         public PatternMaker Designer { get; set; } = null!;

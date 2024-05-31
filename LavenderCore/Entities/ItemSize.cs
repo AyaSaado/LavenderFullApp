@@ -11,6 +11,7 @@ namespace Lavender.Core.Entities
         [Key]
         public int Id { get; set; }
         public Size Size { get; set; }
+        public int OrderId { get; set; }
         public Order Order { get; set; } = null!;
         public ICollection<ItemSizeWithColor> ItemSizeWithColors { get; set; } = new List<ItemSizeWithColor>();
 

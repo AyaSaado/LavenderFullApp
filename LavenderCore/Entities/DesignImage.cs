@@ -12,6 +12,7 @@ namespace Lavender.Core.Entities
         public string Url { get; set; } = null!;
         public string Description { get; set; } = null!;
         public ImageType ImageType { get; set; }
+        public int DesignId { get; set; }
         public Design Design { get; set; } = null!;
         
     }

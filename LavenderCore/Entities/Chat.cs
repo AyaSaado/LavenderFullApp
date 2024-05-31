@@ -10,6 +10,7 @@ namespace Lavender.Core.Entities
         [Key]
         public int Id { get; set; }
         public ChatType ChatType { get; set; }
+        public int DesignId { get; set; }
         public Design Design { get; set; } = null!;
         public ICollection<Message> Messages { get; set; } = new List<Message>();
     }

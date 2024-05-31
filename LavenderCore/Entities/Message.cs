@@ -13,6 +13,7 @@ namespace Lavender.Core.Entities
         public string? URL { get; set; } 
         public DateTime SentTime { get; set; }
         public bool IsSeen { get; set; }
+        public int ChatId { get; set; }
         public Chat Chat { get; set; } = null!;  
         
     }

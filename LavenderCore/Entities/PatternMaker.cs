@@ -1,5 +1,4 @@
-﻿using System.Net.Mail;
-
+﻿
 namespace Lavender.Core.Entities
 {
     public class PatternMaker : User

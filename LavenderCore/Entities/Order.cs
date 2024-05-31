@@ -12,12 +12,17 @@ namespace Lavender.Core.Entities
         public DateOnly DeliveryDate { get; set; }
         public string? Feedback { get; set; }
         public Ordertype OrderType{ get; set; }
+        public Guid ActorId { get; set; }
+        public int ItemId { get; set; }
+        public int ItemTypeId { get; set; }
         public Actor Actor { get; set; } = null!;
         public Item Item { get; set; } = null!;
-        public ItemType ItemType { get; set; } = null!;   
+        public ItemType ItemType { get; set; } = null!;
+        public OrderState OrderState { get; set; }
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
         public  ICollection<ItemSize> ItemSizes { get; set; } = new List<ItemSize>();
         public  ICollection<Payment> Payments { get; set; } = new List<Payment>();
-       
-
+     
     }
 }

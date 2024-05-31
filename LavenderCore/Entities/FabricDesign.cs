@@ -12,7 +12,9 @@ namespace Lavender.Core.Entities
         public decimal FabricHeight { get; set;}
         public string Purpose { get; set; } = null!;
         public string Color { get; set; } = null!;
+        public int FabricTypeId { get; set; }
         public FabricType FabricType { get; set; } = null!;
+        public int DesignId { get; set; }
         public Design Design { get; set; } = null!; 
 
     }
