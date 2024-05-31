@@ -31,6 +31,12 @@ namespace Lavender.Core.Helper
                 CreateMap<LineType, LineTypeDto>().ReverseMap();
                 CreateMap<ProductionEmp, ProductionHeadDto>().ReverseMap();
 
+                CreateMap<ItemSizeWithColor, ItemSizeWithColorDto>().ReverseMap();
+
+                CreateMap<ItemSize, ItemSizeDto>()
+                    .ForMember(dest => dest.ItemSizeWithColorDtos, opt => opt.MapFrom(src => src.ItemSizeWithColors))
+                    .ReverseMap();
+
                 //CreateMap<X_raysImages, X_raysImagesDto>()
                 //  .ForMember(dest => dest.Image, opt => opt.Ignore())
                 //  .ReverseMap();
