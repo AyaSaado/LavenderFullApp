@@ -33,22 +33,17 @@ namespace Lavender.Services.ProductionEmps.Commands.Add
                 return Result.Failure(new Error("400", "Invalid Email Address"));
             }
            
-            var head = await _unitOfWork.ProductionEmps.GetOneAsync(p => p.Id == request.HeadId);
-            
-            var lineType = await _lineTypeRepository.GetOneAsync(l => l.Id == request.LineTypeId);
+         
 
-            if ( ((request.HeadId != null) && (head == null)) || lineType == null)
-            {
-                return Result.Failure(new Error("404", "Some provided entities are not found"));
-            }
+          
 
             var productionemp = new ProductionEmp()
             {
                 FullName = request.FullName,
                 Email = request.Email,
                 UserName = request.UserName,
-                Head = head,
-                LineType = lineType,
+                HeadId = request.HeadId,
+                LineTypeId = request.LineTypeId,
                 BirthDay = request.BirthDay,
                 Address = request.Address,
                 ProfileImageUrl = await _fileServices.Upload(request.ProfileImage),

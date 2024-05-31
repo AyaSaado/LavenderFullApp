@@ -1,5 +1,4 @@
-﻿using Lavender.Core.EntityDto;
-using Lavender.Core.Shared;
+﻿using Lavender.Core.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 

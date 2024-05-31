@@ -11,12 +11,10 @@ namespace Lavender.Services.Users.Commands.Add
     public class AddUserHandler : IRequestHandler<AddUserRequest, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<User> _userManager;
         private readonly IFileServices _fileServices;
-        public AddUserHandler(IUnitOfWork unitOfWork, UserManager<User> userManager, IFileServices fileServices)
+        public AddUserHandler(IUnitOfWork unitOfWork, IFileServices fileServices)
         {
             _unitOfWork = unitOfWork;
-            _userManager = userManager;
             _fileServices = fileServices;
         }
 
@@ -30,21 +28,21 @@ namespace Lavender.Services.Users.Commands.Add
             catch(Exception)
             {
                 return Result.Failure(new Error("400", "Invalid Email Address"));
+   
             }
-           
 
-            var user = new User()
-            {
-                FullName = request.FullName,
-                Email = request.Email,
-                UserName = request.UserName,
-                ProfileImageUrl = await _fileServices.Upload(request.ProfileImage),
-                BirthDay = request.BirthDay,
-                NationalNumber = request.NationalNumber,
-                PhoneNumber = request.PhoneNumber,  
-                Address = request.Address,
-            };
-
+           var user = new Actor()
+               {
+                   FullName = request.FullName,
+                   Email = request.Email,
+                   UserName = request.UserName,
+                   ProfileImageUrl = await _fileServices.Upload(request.ProfileImage),
+                   BirthDay = request.BirthDay,
+                   NationalNumber = request.NationalNumber,
+                   PhoneNumber = request.PhoneNumber,
+                   Address = request.Address,
+               };
+       
             IdentityResult IsAdd = await _unitOfWork.Users.AddWithRole(user, request.Role, request.Password);
 
             if (IsAdd.Succeeded)
