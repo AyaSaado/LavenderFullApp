@@ -3,7 +3,7 @@ using Lavender.Core.Entities;
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Add.AddLineTypes
+namespace Lavender.Services.ControlSettings
 {
     public class AddLineTypesHandler : IRequestHandler<AddLineTypesRequest, bool>
     {

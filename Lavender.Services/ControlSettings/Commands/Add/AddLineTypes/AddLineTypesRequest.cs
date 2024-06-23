@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Add.AddLineTypes
+namespace Lavender.Services.ControlSettings
 {
     public class AddLineTypesRequest : IRequest<bool>
     {
