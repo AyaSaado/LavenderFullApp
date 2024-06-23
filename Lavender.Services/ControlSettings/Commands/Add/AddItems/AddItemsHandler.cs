@@ -2,7 +2,7 @@
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Add.AddItems
+namespace Lavender.Services.ControlSettings
 {
     public class AddItemsHandler : IRequestHandler<AddItemsRequest, bool>
     {
