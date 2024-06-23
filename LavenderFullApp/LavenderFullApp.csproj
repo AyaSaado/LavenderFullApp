@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\DashBoard\NewFolder\" />
     <Folder Include="LavanderSignalR\Chat\" />
     <Folder Include="LavanderSignalR\Notification\" />
     <Folder Include="wwwroot\" />
