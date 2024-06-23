@@ -1,35 +1,19 @@
-﻿using Lavender.Core.EntityDto;
-using Lavender.Core.Shared;
-using Lavender.Services.PatternMakers.Commands.Update;
-using Lavender.Services.PatternMakers.Queries.GetAll;
-using Lavender.Services.PatternMakers.Queries.GetById;
-using Lavender.Services.ProductionEmps.Commands.Update;
-using Lavender.Services.ProductionEmps.Queries.GetAll;
-using Lavender.Services.ProductionEmps.Queries.GetById;
-using Lavender.Services.ProductionEmps.Queries.GetEmpsOfManager;
-using Lavender.Services.Users.Commands.Add;
-using Lavender.Services.Users.Commands.Delete;
-using Lavender.Services.Users.Commands.ForgetPassword;
-using Lavender.Services.Users.Commands.Login;
-using Lavender.Services.Users.Commands.RefreshToken;
-using Lavender.Services.Users.Commands.Update;
-using Lavender.Services.Users.Queries.GetAllMainUsers;
-using Lavender.Services.Users.Queries.GetById;
+﻿using Lavender.Core.Shared;
+using Lavender.Services.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
-using static Lavender.Services.PatternMakers.Queries.GetAll.GetAllPatternMakerRequest;
-using static Lavender.Services.ProductionEmps.Queries.GetAll.GetAllProductionEmpRequest;
-using static Lavender.Services.Users.Queries.GetAllMainUsers.GetAllUsersRequest;
-using static Lavender.Services.Users.Queries.GetById.GetUserByIdRequest;
+using Lavender.Services.ProductionEmps;
+using Lavender.Services.PatternMakers;
 
 namespace LavenderFullApp.Controllers.Common
 {
-    [ApiExplorerSettings(GroupName = "Common")]
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "Common")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -39,26 +23,7 @@ namespace LavenderFullApp.Controllers.Common
             _mediator = mediator;
         }
 
-        [AllowAnonymous]
-        [HttpPost("Login")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<TokenDto>))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Login([FromQuery] TokenRequest.Request command, CancellationToken cancellationToken)
-        {
-            var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
-        }
-
-
-        [HttpPost("RefreshToken")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<TokenDto>))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest command, CancellationToken cancellationToken)
-        {
-            var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
-        }
-
+       
 
         [HttpGet("ForgetPassword")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(string))]
@@ -130,6 +95,7 @@ namespace LavenderFullApp.Controllers.Common
         [HttpGet("GetUserById")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result<UserResponse>))]
         [SwaggerResponse(StatusCodes.Status404NotFound)]
+
         public async Task<IActionResult> GetAll([FromQuery] GetUserByIdRequest request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
