@@ -1,13 +1,4 @@
-﻿using Lavender.Services.ControlSettings.Commands.Add.AddDesignSections;
-using Lavender.Services.ControlSettings.Commands.Add.AddItems;
-using Lavender.Services.ControlSettings.Commands.Add.AddLineTypes;
-using Lavender.Services.ControlSettings.Commands.Add.AddtemTypes;
-using Lavender.Services.ControlSettings.Commands.Delete.DeleteDesignSections;
-using Lavender.Services.ControlSettings.Commands.Delete.DeleteItems;
-using Lavender.Services.ControlSettings.Commands.Delete.DeleteItemTypes;
-using Lavender.Services.ControlSettings.Commands.Delete.DeleteLineTypes;
-using Lavender.Services.ControlSettings.Commands.Update.UpdateDesignSections;
-using Lavender.Services.ControlSettings.Commands.Update.UpdateLineTypes;
+﻿using Lavender.Services.ControlSettings;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,6 +8,7 @@ namespace LavenderFullApp.Controllers.DashBoard
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "DashBoard")]
+
     public class ControlSettingsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -119,6 +111,64 @@ namespace LavenderFullApp.Controllers.DashBoard
         [SwaggerResponse(StatusCodes.Status204NoContent)]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete([FromBody] DeleteItemTypesRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? NoContent() : BadRequest();
+        }
+
+
+        [HttpPost("AddFabrics")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Add([FromBody] AddFabricsRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? Ok() : BadRequest();
+        }
+
+
+        [HttpPut("UpdateFabrics")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update([FromBody] UpdateFabricsRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? Ok() : NotFound();
+        }
+
+        [HttpDelete("DeleteFabrics")]
+        [SwaggerResponse(StatusCodes.Status204NoContent)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete([FromBody] DeleteFabricsRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? NoContent() : BadRequest();
+        }
+
+
+        [HttpPost("AddAccessories")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Add([FromBody] AddAccessoriesRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? Ok() : BadRequest();
+        }
+
+
+        [HttpPut("UpdateAccessories")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update([FromBody] UpdateAccessoriesRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? Ok() : NotFound();
+        }
+
+        [HttpDelete("DeleteAccessories")]
+        [SwaggerResponse(StatusCodes.Status204NoContent)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete([FromBody] DeleteAccessoriesRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
             return result ? NoContent() : BadRequest();

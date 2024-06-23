@@ -1,5 +1,6 @@
-﻿using Lavender.Services.Orders.Command.AddFeedBack;
+﻿using Lavender.Services.Orders;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
