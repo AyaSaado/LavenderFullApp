@@ -1,16 +1,14 @@
-﻿using Lavender.Services.Orders.Queries.GetAll;
-using Lavender.Services.Orders.Queries.GetById;
+﻿using Lavender.Services.Orders;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using static Lavender.Services.Orders.Queries.GetAll.GetAllOrdersRequest;
-using static Lavender.Services.Orders.Queries.GetById.GetOrderByIdRequest;
 
 namespace LavenderFullApp.Controllers.Common
 {
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "Common")]
+    
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -1,20 +1,15 @@
-﻿using Lavender.Services.ControlSettings.Queries.GetAllDesignSections;
-using Lavender.Services.ControlSettings.Queries.GetAllItems;
-using Lavender.Services.ControlSettings.Queries.GetAllItemTypes;
-using Lavender.Services.ControlSettings.Queries.GetAllLineTypes;
+﻿using Lavender.Core.EntityDto;
+using Lavender.Services.ControlSettings;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using static Lavender.Services.ControlSettings.Queries.GetAllDesignSections.GetAllDesignSectionsRequest;
-using static Lavender.Services.ControlSettings.Queries.GetAllItems.GetAllItemsRequest;
-using static Lavender.Services.ControlSettings.Queries.GetAllItemTypes.GetAllItemTypesRequest;
-using static Lavender.Services.ControlSettings.Queries.GetAllLineTypes.GetAllLineTypesRequest;
 
 namespace LavenderFullApp.Controllers.Common
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] 
     [ApiExplorerSettings(GroupName = "Common")]
     [ApiController]
+  
     public class ControlDataController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -53,6 +48,24 @@ namespace LavenderFullApp.Controllers.Common
         [HttpGet("GetAllItemTypes")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(ItemTypesResponse))]
         public async Task<IActionResult> GetAll([FromQuery] GetAllItemTypesRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetAllFabrics")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(FabricTypeResponse))]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllFabricsRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetAllAccessories")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(ControlData))]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllAccessoriesRequest request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
             return Ok(result);
