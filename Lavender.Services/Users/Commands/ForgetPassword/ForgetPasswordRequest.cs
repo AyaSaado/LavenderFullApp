@@ -2,7 +2,7 @@
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lavender.Services.Users.Commands.ForgetPassword
+namespace Lavender.Services.Users
 {
     public class ForgetPasswordRequest : IRequest<string>
     {

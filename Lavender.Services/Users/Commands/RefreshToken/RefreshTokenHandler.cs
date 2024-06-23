@@ -7,10 +7,9 @@ using Lavender.Core.Entities;
 using Lavender.Core.Interfaces.Jwt;
 using Lavender.Core.Interfaces.Repository;
 using Lavender.Core.Shared;
-using Lavender.Services.Users.Commands.Login;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace Lavender.Services.Users.Commands.RefreshToken
+namespace Lavender.Services.Users
 {
     
     public class RefreshTokenHandler : IRequestHandler<RefreshTokenRequest, Result<TokenRequest.Respone>>
@@ -51,7 +50,7 @@ namespace Lavender.Services.Users.Commands.RefreshToken
                     return Result.Failure<TokenRequest.Respone>(new Error("400", "Invalid Request1"));
 
               
-                var StoredToken = await _refreshTokenRepository.GetOneAsync(r => r.Token == request.RefreshToken);
+                var StoredToken = await _refreshTokenRepository.GetOneAsync(r => r.Token == request.RefreshToken, cancellationToken);
 
                 if (StoredToken == null)
                 {
@@ -69,7 +68,7 @@ namespace Lavender.Services.Users.Commands.RefreshToken
                     return Result.Failure<TokenRequest.Respone>(new Error("400", "Expired RefreshToken"));
                 }
 
-                var user = await _unitOfWork.Users.GetOneAsync(u => u.Id == StoredToken.UserId);
+                var user = await _unitOfWork.Users.GetOneAsync(u => u.Id == StoredToken.UserId, cancellationToken);
 
                 if(user is null)
                 {

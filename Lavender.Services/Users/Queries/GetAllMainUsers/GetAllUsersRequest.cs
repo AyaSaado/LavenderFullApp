@@ -1,9 +1,8 @@
 ﻿using Lavender.Core.Entities;
 using MediatR;
 using System.Linq.Expressions;
-using static Lavender.Services.Users.Queries.GetAllMainUsers.GetAllUsersRequest;
 
-namespace Lavender.Services.Users.Queries.GetAllMainUsers
+namespace Lavender.Services.Users
 {
     public class GetAllUsersRequest : IRequest<List<AllUserResponse>>
     {
@@ -11,7 +10,9 @@ namespace Lavender.Services.Users.Queries.GetAllMainUsers
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
 
-        public class AllUserResponse
+     
+    } 
+    public class AllUserResponse
         {
             public Guid Id { get; set; }
             public string? ProfileImageUrl { get; set; }
@@ -28,5 +29,4 @@ namespace Lavender.Services.Users.Queries.GetAllMainUsers
                };
 
         }
-    }
 }

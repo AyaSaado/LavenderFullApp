@@ -4,7 +4,7 @@ using MediatR;
 using Lavender.Core.Shared;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lavender.Services.Users.Commands.Login
+namespace Lavender.Services.Users
 {
     public class TokenRequest 
     {

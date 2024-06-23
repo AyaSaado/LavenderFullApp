@@ -4,7 +4,7 @@ using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace Lavender.Services.Users.Commands.ForgetPassword
+namespace Lavender.Services.Users
 {
     public class ForgetPasswordHandler : IRequestHandler<ForgetPasswordRequest, string>
     {

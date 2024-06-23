@@ -3,7 +3,7 @@ using Lavender.Core.Shared;
 using Lavender.Core.EntityDto;
 using Microsoft.AspNetCore.Http;
 
-namespace Lavender.Services.Users.Commands.Add
+namespace Lavender.Services.Users
 {
     public class AddUserRequest : IRequest<Result>
     {

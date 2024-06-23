@@ -6,7 +6,7 @@ using Lavender.Core.Interfaces.Repository;
 using Lavender.Core.Shared;
 using Lavender.Core.Interfaces.Files;
 
-namespace Lavender.Services.Users.Commands.Update
+namespace Lavender.Services.Users
 {
     public class UpdateUserHandler : IRequestHandler<UpdateUserRequest, Result>
     {
@@ -22,7 +22,7 @@ namespace Lavender.Services.Users.Commands.Update
 
         public async Task<Result> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.Users.GetOneAsync(d => d.Id == request.Id);
+            var entity = await _unitOfWork.Users.GetOneAsync(d => d.Id == request.Id, cancellationToken);
 
             if (entity is null)
             {

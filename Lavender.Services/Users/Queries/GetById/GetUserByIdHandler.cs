@@ -2,9 +2,8 @@
 using Lavender.Core.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Services.Users.Queries.GetById.GetUserByIdRequest;
 
-namespace Lavender.Services.Users.Queries.GetById
+namespace Lavender.Services.Users
 {
     public class GetUserByIdHandler : IRequestHandler<GetUserByIdRequest, Result<UserResponse>>
     {

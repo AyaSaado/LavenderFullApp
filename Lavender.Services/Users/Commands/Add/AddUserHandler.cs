@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using Lavender.Core.Interfaces.Files;
 
-namespace Lavender.Services.Users.Commands.Add
+namespace Lavender.Services.Users
 {
     public class AddUserHandler : IRequestHandler<AddUserRequest, Result>
     {

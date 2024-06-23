@@ -2,9 +2,8 @@
 
 using MediatR;
 using Lavender.Core.Shared;
-using Lavender.Services.Users.Commands.Login;
 
-namespace Lavender.Services.Users.Commands.RefreshToken
+namespace Lavender.Services.Users
 {
     public class RefreshTokenRequest : IRequest<Result<TokenRequest.Respone>>
     {

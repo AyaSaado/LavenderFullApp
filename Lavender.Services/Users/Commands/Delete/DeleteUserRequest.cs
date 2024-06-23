@@ -2,7 +2,7 @@
 
 using MediatR;
 
-namespace Lavender.Services.Users.Commands.Delete
+namespace Lavender.Services.Users
 {
     public class DeleteUserRequest : IRequest<bool>
     {

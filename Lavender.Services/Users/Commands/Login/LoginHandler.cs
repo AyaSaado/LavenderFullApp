@@ -5,7 +5,7 @@ using Lavender.Core.Interfaces.Jwt;
 using Lavender.Core.Interfaces.Repository;
 using Lavender.Core.Shared;
 
-namespace Lavender.Services.Users.Commands.Login
+namespace Lavender.Services.Users
 {
     public class LoginHandler : IRequestHandler<TokenRequest.Request, Result<TokenRequest.Respone>>
     {

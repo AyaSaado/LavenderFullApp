@@ -4,9 +4,8 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using static Lavender.Services.Users.Queries.GetAllMainUsers.GetAllUsersRequest;
 
-namespace Lavender.Services.Users.Queries.GetAllMainUsers
+namespace Lavender.Services.Users
 {
     public class GetAllUsersHandler : IRequestHandler<GetAllUsersRequest, List<AllUserResponse>>
     {

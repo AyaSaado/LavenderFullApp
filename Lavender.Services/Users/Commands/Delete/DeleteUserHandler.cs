@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Lavender.Core.Interfaces.Files;
 using Lavender.Core.Interfaces.Repository;
 
-namespace Lavender.Services.Users.Commands.Delete
+namespace Lavender.Services.Users
 {
     public class DeleteUserHandler : IRequestHandler<DeleteUserRequest, bool>
     {

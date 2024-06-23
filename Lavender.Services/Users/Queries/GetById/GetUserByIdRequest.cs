@@ -2,15 +2,16 @@
 using Lavender.Core.Shared;
 using MediatR;
 using System.Linq.Expressions;
-using static Lavender.Services.Users.Queries.GetById.GetUserByIdRequest;
 
-namespace Lavender.Services.Users.Queries.GetById
+namespace Lavender.Services.Users
 {
     public class GetUserByIdRequest : IRequest<Result<UserResponse>>
     {
         public Guid Id { get; set; }
 
-        public class UserResponse
+    
+    }
+    public class UserResponse
         {
             public Guid Id { get; set; }
             public string? ProfileImageUrl { get; set; }
@@ -38,5 +39,4 @@ namespace Lavender.Services.Users.Queries.GetById
                };
 
         }
-    }
 }
