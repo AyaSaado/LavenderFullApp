@@ -5,7 +5,7 @@ using Lavender.Core.Shared;
 using MediatR;
 using static Lavender.Core.Helper.MappingProfile;
 
-namespace Lavender.Services.ControlSettings.Commands.Add.AddDesignSections
+namespace Lavender.Services.ControlSettings
 {
     public class AddDesignSectionsHandler : IRequestHandler<AddDesignSectionsRequest, bool>
     {

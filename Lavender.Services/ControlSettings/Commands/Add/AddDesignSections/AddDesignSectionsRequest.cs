@@ -2,7 +2,7 @@
 using Lavender.Core.Shared;
 using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Add.AddDesignSections
+namespace Lavender.Services.ControlSettings
 {
     public class AddDesignSectionsRequest : IRequest<bool>
     {
