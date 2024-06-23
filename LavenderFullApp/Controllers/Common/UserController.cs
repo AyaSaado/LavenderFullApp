@@ -74,6 +74,17 @@ namespace LavenderFullApp.Controllers.Common
             return result.IsSuccess ? Ok() : BadRequest(result.Error);
         }
 
+        [HttpPost("AddProductionEmp")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Add([FromForm] AddProductionEmpRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+
+            return result.IsSuccess ? Ok() : BadRequest(result.Error);
+        }
+
+
         [HttpPut("UpdateProductionEmp")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
