@@ -1,6 +1,4 @@
-﻿
-
-using Lavender.Core.Enum;
+﻿using Lavender.Core.Enum;
 using System.ComponentModel.DataAnnotations;
 
 namespace Lavender.Core.Entities
