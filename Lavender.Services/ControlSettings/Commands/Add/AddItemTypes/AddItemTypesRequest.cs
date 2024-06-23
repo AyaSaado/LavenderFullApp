@@ -1,7 +1,7 @@
 ﻿
 using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Add.AddtemTypes
+namespace Lavender.Services.ControlSettings
 {
     public class AddItemTypesRequest : IRequest<bool>
     {
