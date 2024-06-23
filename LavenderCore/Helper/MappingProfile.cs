@@ -37,23 +37,18 @@ namespace Lavender.Core.Helper
                     .ForMember(dest => dest.ItemSizeWithColorDtos, opt => opt.MapFrom(src => src.ItemSizeWithColors))
                     .ReverseMap();
 
-                //CreateMap<X_raysImages, X_raysImagesDto>()
-                //  .ForMember(dest => dest.Image, opt => opt.Ignore())
-                //  .ReverseMap();
+                
+                CreateMap<DesignImage, DesignImageDto>().ReverseMap();
 
-                //CreateMap<ContractImages, ContractImagesDto>()
-                //  .ForMember(dest => dest.Image, opt => opt.Ignore())
-                //  .ReverseMap();
+                CreateMap<FabricDesign, FabricDesignDto>().ReverseMap();
+                
+                CreateMap<DesignAccessory, DesignAccessoryDto>().ReverseMap();
 
-                //CreateMap<PatientInfo, PatientInfoDto>()
-                //    .ReverseMap();
+                CreateMap<FabricType, ControlData>().ReverseMap();
 
-                //CreateMap<Patient, PatientDto>()
-                //    .ForMember(dest => dest.ContractImagesDtos, opt => opt.MapFrom(src => src.ContractImages))
-                //    .ForMember(dest => dest.X_RaysImagesDtos, opt => opt.MapFrom(src => src.X_RaysImages))
-                //    .ForMember(dest => dest.PatientInfoDtos, opt => opt.MapFrom(src => src.PatientInfos))
-                //    .ReverseMap();
+                CreateMap<Accessory, ControlData>().ReverseMap();
 
+                CreateMap<DesigningSection , ControlData>().ReverseMap();
             }
         }
     }
