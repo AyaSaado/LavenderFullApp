@@ -3,7 +3,7 @@ using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using static Lavender.Core.Helper.MappingProfile;
 
-namespace Lavender.Services.Orders.Command.Update
+namespace Lavender.Services.Orders
 {
     public class UpdateOrderHandler : IRequestHandler<UpdateOrderRequest, bool>
     {
@@ -16,7 +16,7 @@ namespace Lavender.Services.Orders.Command.Update
 
         public async Task<bool> Handle(UpdateOrderRequest request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.Orders.GetOneAsync(o => o.Id == request.Id);
+            var order = await _unitOfWork.Orders.GetOneAsync(o => o.Id == request.Id, cancellationToken);
 
             if (order == null)
             {

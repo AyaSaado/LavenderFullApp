@@ -2,7 +2,7 @@
 using Lavender.Core.Enum;
 using MediatR;
 
-namespace Lavender.Services.Orders.Command.Update
+namespace Lavender.Services.Orders
 {
     public class UpdateOrderRequest : IRequest<bool>
     {

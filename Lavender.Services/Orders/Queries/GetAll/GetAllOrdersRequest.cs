@@ -2,16 +2,17 @@
 using Lavender.Core.Enum;
 using MediatR;
 using System.Linq.Expressions;
-using static Lavender.Services.Orders.Queries.GetAll.GetAllOrdersRequest;
 
-namespace Lavender.Services.Orders.Queries.GetAll
+namespace Lavender.Services.Orders
 {
     public class GetAllOrdersRequest : IRequest<List<OrdersResponse>>
     {
         public Guid ActorId { get; set; }
         public OrderState OrderState { get; set; }
 
-        public class OrdersResponse
+      
+    }  
+    public class OrdersResponse
         {
             public int Id { get; set; }
             public DateOnly OrderDate { get; set; }
@@ -35,5 +36,4 @@ namespace Lavender.Services.Orders.Queries.GetAll
 
         }
 
-    }
 }

@@ -3,7 +3,7 @@ using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using static Lavender.Core.Helper.MappingProfile;
 
-namespace Lavender.Services.Orders.Command.AddFeedBack
+namespace Lavender.Services.Orders
 {
     public class AddFeedBackHandler : IRequestHandler<AddFeedBackRequest, bool>
     {
@@ -16,7 +16,7 @@ namespace Lavender.Services.Orders.Command.AddFeedBack
 
         public async Task<bool> Handle(AddFeedBackRequest request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.Orders.GetOneAsync(o => o.Id == request.OrderId);
+            var order = await _unitOfWork.Orders.GetOneAsync(o => o.Id == request.OrderId, cancellationToken);
 
             if (order == null)
             {

@@ -3,7 +3,7 @@ using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using static Lavender.Core.Helper.MappingProfile;
 
-namespace Lavender.Services.Orders.Command.Add
+namespace Lavender.Services.Orders
 {
     public class AddOrderHandler : IRequestHandler<AddOrderRequest, bool>
     {

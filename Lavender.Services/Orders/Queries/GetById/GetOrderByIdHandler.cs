@@ -2,9 +2,8 @@
 using Lavender.Core.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Services.Orders.Queries.GetById.GetOrderByIdRequest;
 
-namespace Lavender.Services.Orders.Queries.GetById
+namespace Lavender.Services.Orders
 {
     public class GetOrderByIdHandler : IRequestHandler<GetOrderByIdRequest, Result<OrderResponse>>
     {

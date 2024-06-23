@@ -2,7 +2,7 @@
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 
-namespace Lavender.Services.Orders.Command.Delete
+namespace Lavender.Services.Orders
 {
     public class DeleteOrderHandler : IRequestHandler<DeleteOrderRequest, bool>
     {
@@ -15,7 +15,7 @@ namespace Lavender.Services.Orders.Command.Delete
 
         public async Task<bool> Handle(DeleteOrderRequest request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.Orders.GetOneAsync(o => o.Id == request.OrderId);
+            var order = await _unitOfWork.Orders.GetOneAsync(o => o.Id == request.OrderId, cancellationToken);
             if (order == null) 
             {
                 return false;

@@ -1,7 +1,7 @@
 ﻿
 using MediatR;
 
-namespace Lavender.Services.Orders.Command.Delete
+namespace Lavender.Services.Orders
 {
     public class DeleteOrderRequest : IRequest<bool>
     {

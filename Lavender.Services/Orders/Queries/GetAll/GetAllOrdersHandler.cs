@@ -1,9 +1,8 @@
 ﻿using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Services.Orders.Queries.GetAll.GetAllOrdersRequest;
 
-namespace Lavender.Services.Orders.Queries.GetAll
+namespace Lavender.Services.Orders
 {
     public class GetAllOrdersHandler : IRequestHandler<GetAllOrdersRequest, List<OrdersResponse>>
     {

@@ -5,15 +5,16 @@ using Lavender.Core.Shared;
 using MediatR;
 using System.Linq.Expressions;
 using static Lavender.Core.Helper.MappingProfile;
-using static Lavender.Services.Orders.Queries.GetById.GetOrderByIdRequest;
-
-namespace Lavender.Services.Orders.Queries.GetById
+namespace Lavender.Services.Orders
 {
     public class GetOrderByIdRequest : IRequest<Result<OrderResponse>>
     {
         public int OrderId { get; set; }
 
-        public class OrderResponse
+      
+
+    } 
+    public class OrderResponse
         {
             public int Id { get; set; }
             public DateOnly OrderDate { get; set; }
@@ -39,6 +40,4 @@ namespace Lavender.Services.Orders.Queries.GetById
              };
 
         }
-
-    }
 }
