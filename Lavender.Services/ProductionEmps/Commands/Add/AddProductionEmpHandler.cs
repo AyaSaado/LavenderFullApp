@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 
-namespace Lavender.Services.ProductionEmps.Commands.Add
+namespace Lavender.Services.ProductionEmps
 {
     public class AddProductionEmpHandler : IRequestHandler<AddProductionEmpRequest, Result>
     {

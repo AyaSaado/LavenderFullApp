@@ -3,14 +3,15 @@ using Lavender.Core.EntityDto;
 using MediatR;
 using System.Linq.Expressions;
 using static Lavender.Core.Helper.MappingProfile;
-using static Lavender.Services.ProductionEmps.Queries.GetAll.GetAllProductionEmpRequest;
 
-namespace Lavender.Services.ProductionEmps.Queries.GetAll
+namespace Lavender.Services.ProductionEmps
 {
     public class GetAllProductionEmpRequest : IRequest<List<ProductionEmpResponse>>
     {
 
-        public class ProductionEmpResponse
+      
+    }  
+    public class ProductionEmpResponse
         {
             public Guid Id { get; set; }
             public string? ProfileImageUrl { get; set; }
@@ -44,5 +45,4 @@ namespace Lavender.Services.ProductionEmps.Queries.GetAll
                };
 
         }
-    }
 }

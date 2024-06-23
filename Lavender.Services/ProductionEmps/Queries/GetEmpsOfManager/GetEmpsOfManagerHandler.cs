@@ -1,9 +1,8 @@
 ﻿using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Services.ProductionEmps.Queries.GetAll.GetAllProductionEmpRequest;
 
-namespace Lavender.Services.ProductionEmps.Queries.GetEmpsOfManager
+namespace Lavender.Services.ProductionEmps
 {
     public class GetEmpsOfManagerHandler : IRequestHandler<GetEmpsOfManagerRequest, List<ProductionEmpResponse>>
     {

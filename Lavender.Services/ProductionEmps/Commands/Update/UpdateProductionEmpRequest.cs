@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Lavender.Services.ProductionEmps.Commands.Update
+namespace Lavender.Services.ProductionEmps
 {
     public class UpdateProductionEmpRequest : IRequest<Result>
     {

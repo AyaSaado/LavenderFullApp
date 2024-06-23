@@ -3,9 +3,8 @@ using Lavender.Core.Interfaces.Repository;
 using Lavender.Core.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Services.ProductionEmps.Queries.GetAll.GetAllProductionEmpRequest;
 
-namespace Lavender.Services.ProductionEmps.Queries.GetById
+namespace Lavender.Services.ProductionEmps
 {
     public class GetProductionEmpByIdHandler : IRequestHandler<GetProductionEmpByIdRequest, Result<ProductionEmpResponse>>
     {

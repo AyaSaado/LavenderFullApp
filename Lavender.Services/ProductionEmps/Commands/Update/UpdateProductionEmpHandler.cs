@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Lavender.Services.ProductionEmps.Commands.Update
+namespace Lavender.Services.ProductionEmps
 {
     public class UpdateProductionEmpHandler : IRequestHandler<UpdateProductionEmpRequest, Result>
     {
@@ -21,7 +21,7 @@ namespace Lavender.Services.ProductionEmps.Commands.Update
 
         public async Task<Result> Handle(UpdateProductionEmpRequest request, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.ProductionEmps.GetOneAsync(u => u.Id == request.Id);
+            var entity = await _unitOfWork.ProductionEmps.GetOneAsync(u => u.Id == request.Id, cancellationToken);
 
             if (entity is null)
             {
