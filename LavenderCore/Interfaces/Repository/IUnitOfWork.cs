@@ -8,6 +8,7 @@
         IProductionEmpRepository ProductionEmps { get; } 
         IPatternMakerRepository PatternMakers { get; }
         IOrderRepository Orders { get; }
+        IDesignRepository Designs { get; }
         Task<int> Save(CancellationToken cancellationToken);
     }
 }
