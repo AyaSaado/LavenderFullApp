@@ -2,9 +2,9 @@
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Services.ControlSettings.Queries.GetAllLineTypes.GetAllLineTypesRequest;
 
-namespace Lavender.Services.ControlSettings.Queries.GetAllLineTypes
+
+namespace Lavender.Services.ControlSettings
 {
     public class GetAllLineTypesHandler : IRequestHandler<GetAllLineTypesRequest, List<LineTypeResponse>>
     {

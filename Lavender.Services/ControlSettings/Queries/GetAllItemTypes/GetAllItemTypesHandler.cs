@@ -2,9 +2,8 @@
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Services.ControlSettings.Queries.GetAllItemTypes.GetAllItemTypesRequest;
 
-namespace Lavender.Services.ControlSettings.Queries.GetAllItemTypes
+namespace Lavender.Services.ControlSettings
 {
     public class GetAllItemTypesHandler : IRequestHandler<GetAllItemTypesRequest, List<ItemTypesResponse>>
     {

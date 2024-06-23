@@ -1,9 +1,8 @@
 ﻿using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Services.ControlSettings.Queries.GetAllDesignSections.GetAllDesignSectionsRequest;
 
-namespace Lavender.Services.ControlSettings.Queries.GetAllDesignSections
+namespace Lavender.Services.ControlSettings
 {
     public class GetAllDesignSectionsHandler : IRequestHandler<GetAllDesignSectionsRequest, List<DesignSectionResponse>>
     {
