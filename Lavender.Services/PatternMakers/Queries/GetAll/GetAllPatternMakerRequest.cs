@@ -3,14 +3,15 @@ using Lavender.Core.EntityDto;
 using MediatR;
 using System.Linq.Expressions;
 using static Lavender.Core.Helper.MappingProfile;
-using static Lavender.Services.PatternMakers.Queries.GetAll.GetAllPatternMakerRequest;
 
-namespace Lavender.Services.PatternMakers.Queries.GetAll
+namespace Lavender.Services.PatternMakers
 {
     public class GetAllPatternMakerRequest : IRequest<List<PatternMakerResponse>>
     {
 
-        public class PatternMakerResponse
+       
+    }
+    public class PatternMakerResponse
         {
             public Guid Id { get; set; }
             public string? ProfileImageUrl { get; set; }
@@ -44,6 +45,5 @@ namespace Lavender.Services.PatternMakers.Queries.GetAll
                };
 
         }
-    }
 
 }

@@ -6,7 +6,7 @@ using Lavender.Core.Interfaces.Repository;
 using Lavender.Core.Shared;
 using Lavender.Core.Interfaces.Files;
 
-namespace Lavender.Services.PatternMakers.Commands.Update
+namespace Lavender.Services.PatternMakers
 {
     public class UpdatePatternMakerHandler : IRequestHandler<UpdatePatternMakerRequest, Result>
     {
@@ -20,7 +20,7 @@ namespace Lavender.Services.PatternMakers.Commands.Update
 
         public async Task<Result> Handle(UpdatePatternMakerRequest request, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.PatternMakers.GetOneAsync(u=> u.Id == request.Id);
+            var entity = await _unitOfWork.PatternMakers.GetOneAsync(u=> u.Id == request.Id, cancellationToken);
             
             if (entity is null)
             {

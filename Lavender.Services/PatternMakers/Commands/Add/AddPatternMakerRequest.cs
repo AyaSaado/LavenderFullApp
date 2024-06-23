@@ -3,7 +3,7 @@ using Lavender.Core.Shared;
 using Lavender.Core.EntityDto;
 using Microsoft.AspNetCore.Http;
 
-namespace Lavender.Services.PatternMakers.Commands.Add
+namespace Lavender.Services.PatternMakers
 {
     public class AddPatternMakerRequest : IRequest<Result>
     {

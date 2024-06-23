@@ -9,7 +9,7 @@ using static Lavender.Core.Helper.MappingProfile;
 using Lavender.Core.Entities;
 using System.Net.Mail;
 
-namespace Lavender.Services.PatternMakers.Commands.Add
+namespace Lavender.Services.PatternMakers
 {
     public class AddPatternMakerHandler : IRequestHandler<AddPatternMakerRequest, Result>
     {
@@ -56,7 +56,7 @@ namespace Lavender.Services.PatternMakers.Commands.Add
                 
                 foreach(var id in request.DesignSectionIds)
                 {
-                    var d = await  _unitOfWork.DesignSections.GetOneAsync(d => d.Id == id);    
+                    var d = await  _unitOfWork.DesignSections.GetOneAsync(d => d.Id == id, cancellationToken);    
                    
                     sections.Add(Mapping.Mapper.Map<DesignSectionDto>(d));
 

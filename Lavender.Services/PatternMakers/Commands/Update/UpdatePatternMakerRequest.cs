@@ -5,7 +5,7 @@ using Lavender.Core.Shared;
 using Lavender.Core.EntityDto;
 using Microsoft.AspNetCore.Http;
 
-namespace Lavender.Services.PatternMakers.Commands.Update
+namespace Lavender.Services.PatternMakers
 {
     public class UpdatePatternMakerRequest : IRequest<Result>
     {

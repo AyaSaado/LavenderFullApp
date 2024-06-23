@@ -2,9 +2,8 @@
 using Lavender.Core.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static Lavender.Services.PatternMakers.Queries.GetAll.GetAllPatternMakerRequest;
 
-namespace Lavender.Services.PatternMakers.Queries.GetById
+namespace Lavender.Services.PatternMakers
 {
     public class GetPatternMakerByIdHandler : IRequestHandler<GetPatternMakerByIdRequest, Result<PatternMakerResponse>>
     {
