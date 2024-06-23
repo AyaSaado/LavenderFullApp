@@ -2,7 +2,7 @@
 using Lavender.Core.Shared;
 using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Update.UpdateDesignSections
+namespace Lavender.Services.ControlSettings
 {
     public class UpdateDesignSectionRequest : IRequest<bool>
     {

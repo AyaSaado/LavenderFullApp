@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Update.UpdateLineTypes
+namespace Lavender.Services.ControlSettings
 {
     public class UpdateLineTypeRequest : IRequest<bool> 
     {

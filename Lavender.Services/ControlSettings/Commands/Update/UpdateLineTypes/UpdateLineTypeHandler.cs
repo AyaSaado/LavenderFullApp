@@ -2,7 +2,7 @@
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Update.UpdateLineTypes
+namespace Lavender.Services.ControlSettings
 {
     public class UpdateLineTypeHandler : IRequestHandler<UpdateLineTypeRequest, bool>
     {
@@ -16,7 +16,7 @@ namespace Lavender.Services.ControlSettings.Commands.Update.UpdateLineTypes
 
         public async Task<bool> Handle(UpdateLineTypeRequest request, CancellationToken cancellationToken)
         {
-            var entity = await _lineTyperepository.GetOneAsync(l => l.Id == request.Id);
+            var entity = await _lineTyperepository.GetOneAsync(l => l.Id == request.Id, cancellationToken);
            
             if (entity == null)
             {

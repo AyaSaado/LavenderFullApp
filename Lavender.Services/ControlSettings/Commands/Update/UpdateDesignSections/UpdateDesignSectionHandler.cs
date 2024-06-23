@@ -1,11 +1,7 @@
-﻿using Lavender.Core.Entities;
-using Lavender.Core.EntityDto;
-using Lavender.Core.Interfaces.Repository;
-using Lavender.Core.Shared;
+﻿using Lavender.Core.Interfaces.Repository;
 using MediatR;
-using static Lavender.Core.Helper.MappingProfile;
 
-namespace Lavender.Services.ControlSettings.Commands.Update.UpdateDesignSections
+namespace Lavender.Services.ControlSettings
 {
     public class UpdateDesignSectionHandler : IRequestHandler<UpdateDesignSectionRequest, bool>
     {
@@ -18,7 +14,7 @@ namespace Lavender.Services.ControlSettings.Commands.Update.UpdateDesignSections
 
         public async Task<bool> Handle(UpdateDesignSectionRequest request, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.DesignSections.GetOneAsync(d => d.Id == request.Id);
+            var entity = await _unitOfWork.DesignSections.GetOneAsync(d => d.Id == request.Id ,cancellationToken);
 
             if (entity == null)
             {
