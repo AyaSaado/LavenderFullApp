@@ -1,7 +1,7 @@
 ﻿
 using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Delete.DeleteItems
+namespace Lavender.Services.ControlSettings
 {
     public class DeleteItemsRequest : IRequest<bool>
     {

@@ -3,7 +3,7 @@ using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Lavender.Services.ControlSettings.Commands.Delete.DeleteLineTypes
+namespace Lavender.Services.ControlSettings
 {
     public class DeleteLineTypesHandler : IRequestHandler<DeleteLineTypesRequest, bool>
     {

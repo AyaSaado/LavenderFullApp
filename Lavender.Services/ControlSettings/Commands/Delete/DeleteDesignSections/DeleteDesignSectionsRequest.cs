@@ -1,7 +1,7 @@
 ﻿
 using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Delete.DeleteDesignSections
+namespace Lavender.Services.ControlSettings
 {
     public class DeleteDesignSectionsRequest : IRequest<bool>
     {

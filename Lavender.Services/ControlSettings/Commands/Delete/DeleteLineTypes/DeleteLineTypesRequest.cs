@@ -1,7 +1,7 @@
 ﻿
 using MediatR;
 
-namespace Lavender.Services.ControlSettings.Commands.Delete.DeleteLineTypes
+namespace Lavender.Services.ControlSettings
 {
     public class DeleteLineTypesRequest : IRequest<bool>
     {

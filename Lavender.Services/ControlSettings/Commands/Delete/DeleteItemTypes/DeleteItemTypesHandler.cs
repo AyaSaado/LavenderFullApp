@@ -3,7 +3,7 @@ using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Lavender.Services.ControlSettings.Commands.Delete.DeleteItemTypes
+namespace Lavender.Services.ControlSettings
 {
     public class DeleteItemTypesHandler : IRequestHandler<DeleteItemTypesRequest, bool>
     {

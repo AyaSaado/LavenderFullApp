@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Lavender.Services.ControlSettings.Commands.Delete.DeleteDesignSections
+namespace Lavender.Services.ControlSettings
 {
     public class DeleteDesignSectionsHandler : IRequestHandler<DeleteDesignSectionsRequest, bool>
     {
@@ -15,7 +15,7 @@ namespace Lavender.Services.ControlSettings.Commands.Delete.DeleteDesignSections
 
         public async Task<bool> Handle(DeleteDesignSectionsRequest request, CancellationToken cancellationToken)
         {
-          var entities  = await _unitOfWork.DesignSections.Find(d=> request.Ids.Contains(d.Id))
+           var entities  = await _unitOfWork.DesignSections.Find(d=> request.Ids.Contains(d.Id))
                                                           .ToListAsync(cancellationToken);
 
             try
