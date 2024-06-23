@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LavenderFullApp.Controllers.DashBoard
@@ -6,6 +7,7 @@ namespace LavenderFullApp.Controllers.DashBoard
     [Route("api/[controller]")]
     [ApiExplorerSettings(GroupName = "DashBoard")]
     [ApiController]
+
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;

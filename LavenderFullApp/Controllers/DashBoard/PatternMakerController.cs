@@ -1,6 +1,7 @@
 ﻿using Lavender.Core.Shared;
-using Lavender.Services.PatternMakers.Commands.Add;
+using Lavender.Services.PatternMakers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
