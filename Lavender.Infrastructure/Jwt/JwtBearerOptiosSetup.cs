@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Lavender.Infrastructure.Jwt
 {
-    internal class JwtBearerOptiosSetup : IPostConfigureOptions<JwtBearerOptions>
+    public class JwtBearerOptiosSetup : IPostConfigureOptions<JwtBearerOptions>
     {
         private readonly JwtOptions _jwtOptions;
 
@@ -19,7 +19,7 @@ namespace Lavender.Infrastructure.Jwt
         //public void Configure(JwtBearerOptions options)
         //{
         //    //options.TokenValidationParameters = new()
-        //    //{
+        //    //{ 
         //    //    ValidateIssuerSigningKey = true,
         //    //    ValidateIssuer = false, // for dev
         //    //    ValidateAudience = false, // for dev 
@@ -35,10 +35,19 @@ namespace Lavender.Infrastructure.Jwt
 
         public void PostConfigure(string? name, JwtBearerOptions options)
         {
-            options.TokenValidationParameters.ValidIssuer = _jwtOptions.Issuer;
-            options.TokenValidationParameters.ValidAudience = _jwtOptions.Audience;
-            options.TokenValidationParameters.IssuerSigningKey =
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));
+            options.TokenValidationParameters = new()
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateIssuer = true, 
+                ValidateAudience = true,  
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret)),
+                ValidIssuer = _jwtOptions.Issuer,
+                ValidAudience = _jwtOptions.Audience
+            };
+
+
         }
     }
 }

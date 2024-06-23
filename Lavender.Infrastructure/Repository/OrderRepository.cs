@@ -26,12 +26,12 @@ namespace Lavender.Infrastructure.Repository
                        .ThenInclude(i => i.ItemSizeWithColors); 
         }
 
-        public override Task<Order?> GetOneAsync(Expression<Func<Order, bool>> predicate)
+        public override Task<Order?> GetOneAsync(Expression<Func<Order, bool>> predicate , CancellationToken cancellationToken)
         {
             return base.Find(predicate)
                        .Include(o => o.ItemSizes)
                        .ThenInclude(i => i.ItemSizeWithColors)
-                       .FirstOrDefaultAsync();
+                       .FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

@@ -34,7 +34,6 @@ namespace Lavender.Infrastructure
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
-
             });
 
         }

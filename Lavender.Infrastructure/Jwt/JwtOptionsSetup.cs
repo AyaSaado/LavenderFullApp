@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace Lavender.Infrastructure.Jwt
 {
-    internal class JwtOptionsSetup : IConfigureOptions<JwtOptions>
+    public class JwtOptionsSetup : IConfigureOptions<JwtOptions>
     {
         private readonly IConfiguration _configuration;
         private const string Jwt = "Jwt";

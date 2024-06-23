@@ -23,9 +23,9 @@ namespace Lavender.Infrastructure.Repository
                 .Take(pageSize);
         }
 
-        public virtual async Task<T?> GetOneAsync(Expression<Func<T, bool>> predicate)
+        public virtual async Task<T?> GetOneAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
         {
-            return await GetAll().Where(predicate).FirstOrDefaultAsync();
+            return await GetAll().Where(predicate).FirstOrDefaultAsync(cancellationToken);
         }
         public  virtual IQueryable<T> Find(Expression<Func<T, bool>> predicate)
         {
@@ -50,13 +50,14 @@ namespace Lavender.Infrastructure.Repository
             try
             {
                  _context.Update(entity);
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
 
-            return true;
+           
         }
         public virtual bool UpdateRange(IEnumerable<T> entities)
         {
@@ -65,14 +66,16 @@ namespace Lavender.Infrastructure.Repository
                 foreach(var entity in entities)
                 {
                     _context.Update(entity);
+                   
                 }
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
 
-            return true;
+           
         }
         public virtual bool Remove(T entity)
         {

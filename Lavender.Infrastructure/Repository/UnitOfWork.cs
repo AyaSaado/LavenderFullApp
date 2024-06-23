@@ -19,6 +19,7 @@ namespace Lavender.Infrastructure.Repository
             ProductionEmps = new ProductionEmpRepository(context);
             PatternMakers = new PatternMakerRepository(context);    
             Orders = new OrderRepository(context);
+            Designs = new DesignRepository(context);
         }
 
         public IUserRepository Users {  get; private set; }
@@ -27,6 +28,7 @@ namespace Lavender.Infrastructure.Repository
         public IProductionEmpRepository ProductionEmps { get; private set; }
         public IPatternMakerRepository PatternMakers { get; private set; }
         public IOrderRepository Orders { get; private set; }
+        public IDesignRepository Designs { get; private set; }
 
         public async void Dispose()
         {
