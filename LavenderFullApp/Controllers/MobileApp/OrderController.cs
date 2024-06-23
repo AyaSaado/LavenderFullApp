@@ -1,7 +1,6 @@
-﻿using Lavender.Services.Orders.Command.Add;
-using Lavender.Services.Orders.Command.Delete;
-using Lavender.Services.Orders.Command.Update;
+﻿using Lavender.Services.Orders;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -10,6 +9,7 @@ namespace LavenderFullApp.Controllers.MobileApp
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "MobileApp")]
+
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
