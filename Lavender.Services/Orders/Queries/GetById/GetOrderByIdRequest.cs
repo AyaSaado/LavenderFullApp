@@ -10,9 +10,6 @@ namespace Lavender.Services.Orders
     public class GetOrderByIdRequest : IRequest<Result<OrderResponse>>
     {
         public int OrderId { get; set; }
-
-      
-
     } 
     public class OrderResponse
         {
@@ -26,6 +23,7 @@ namespace Lavender.Services.Orders
             public int ItemTypeId { get; set; }
             public DateOnly StartDate { get; set; }
             public DateOnly EndDate { get; set; }
+            public int GalleryDesignId { get; set; }
             public ICollection<ItemSizeDto> ItemSizeDtos { get; set; } = new List<ItemSizeDto>();
             public static Expression<Func<Order, OrderResponse>> Selector() => o
              => new()
@@ -40,6 +38,7 @@ namespace Lavender.Services.Orders
                  ItemTypeId = o.ItemTypeId,
                  StartDate = o.StartDate,
                  EndDate = o.EndDate,
+                 GalleryDesignId = o.GalleryDesignId,
                  ItemSizeDtos = Mapping.Mapper.Map<List<ItemSizeDto>>(o.ItemSizes)
              };
 

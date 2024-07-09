@@ -24,6 +24,7 @@ namespace Lavender.Services.Orders
             public string? FeedBack { get; set; }
             public DateOnly StartDate { get; set; }
             public DateOnly EndDate { get; set; }
+            public int GalleryDesignId { get; set; }
         public static Expression<Func<Order, OrdersResponse>> Selector() => o
              => new()
              {
@@ -37,6 +38,7 @@ namespace Lavender.Services.Orders
                  FeedBack = o.Feedback,
                  StartDate = o.StartDate,
                  EndDate = o.EndDate,
+                 GalleryDesignId = o.GalleryDesignId,
              };
 
         }

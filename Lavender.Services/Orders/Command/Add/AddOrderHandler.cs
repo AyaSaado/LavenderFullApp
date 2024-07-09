@@ -23,6 +23,7 @@ namespace Lavender.Services.Orders
                 DeliveryDate = request.DeliveryDate,
                 OrderDate = request.OrderDate,
                 OrderType = request.OrderType,
+                GalleryDesignId = request.GalleryDesignId,
                 OrderState = 0
             };
 

@@ -11,7 +11,8 @@ namespace Lavender.Services.Orders
         public Ordertype OrderType { get; set; }
         public Guid ActorId { get; set; }
         public int ItemId { get; set; }
-        public int ItemTypeId { get; set; } 
+        public int ItemTypeId { get; set; }
+        public int GalleryDesignId { get; set; }
         public ICollection<ItemSizeDto> ItemSizeDtos { get; set; } = new List<ItemSizeDto>();
 
     }
