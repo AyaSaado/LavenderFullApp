@@ -27,7 +27,7 @@ namespace Lavender.Services.Designs
                                         request.ProductionLineId, request.TailorId
                                                   , request.DesignerId);
 
-
+            
             foreach (var image in request.DesignImageDtos)
             {
                 if (image.Image is not null)
@@ -37,7 +37,7 @@ namespace Lavender.Services.Designs
                 }
             }
 
-            entity.DesignImages = Mapping.Mapper.Map<List<DesignImage>>(request.DesignImageDtos);
+
 
             try
             {
