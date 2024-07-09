@@ -1,6 +1,6 @@
 ﻿namespace Lavender.Core.Enum
 {
-    public enum LavanderRoles
+    public enum LavenderRoles
     {
         Admin,
         Executive,
