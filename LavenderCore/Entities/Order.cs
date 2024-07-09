@@ -19,6 +19,7 @@ namespace Lavender.Core.Entities
         public Item Item { get; set; } = null!;
         public ItemType ItemType { get; set; } = null!;
         public OrderState OrderState { get; set; }
+        public int GalleryDesignId { get; set; }
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
         public  ICollection<ItemSize> ItemSizes { get; set; } = new List<ItemSize>();
