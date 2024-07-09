@@ -26,7 +26,7 @@ namespace Lavender.Services.PatternMakers
             {
                   return Result.Failure(new Error(
                     "404",
-                    $"The User with Id {request.Id} was not found"));
+                    $"The User with this Id was not found"));
             }
 
 

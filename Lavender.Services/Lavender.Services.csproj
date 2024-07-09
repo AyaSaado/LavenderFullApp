@@ -37,8 +37,6 @@
     <Folder Include="Constants\Command\" />
     <Folder Include="Constants\Queries\" />
     <Folder Include="Actors\Queries\" />
-    <Folder Include="Designs\Queries\GetAll\" />
-    <Folder Include="Designs\Queries\GetById\" />
     <Folder Include="SewingMachines\Command\" />
     <Folder Include="SewingMachines\Queries\" />
     <Folder Include="Steps\Command\" />

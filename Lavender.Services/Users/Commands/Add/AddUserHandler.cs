@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using Lavender.Core.Interfaces.Files;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lavender.Services.Users
 {
@@ -30,8 +31,18 @@ namespace Lavender.Services.Users
                 return Result.Failure(new Error("400", "Invalid Email Address"));
    
             }
+            
+            var UsersWithUserRequest = await _unitOfWork.Users.Find((u => u.UserName == request.UserName))
+                                                             .ToListAsync(cancellationToken);
 
-           var user = new Actor()
+            if (UsersWithUserRequest.Count() > 0)
+            {
+                return Result.Failure(new Error(
+                   "400",
+                   $"The UserName is already exist"));
+            }
+
+            var user = new Actor()
                {
                    FullName = request.FullName,
                    Email = request.Email,

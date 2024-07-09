@@ -23,13 +23,17 @@ namespace Lavender.Services.Users
 
             var entities = await _unitOfWork.Users.Find(u => request.Ids.Contains(u.Id)).ToListAsync();
 
-            if (_unitOfWork.Users.RemoveRange(entities))
+            try
             {
+                _unitOfWork.Users.RemoveRange(entities);
                 await _unitOfWork.Save(cancellationToken);
                 return true;
             }
+            catch (Exception)
+            {
+                return false;
+            }
 
-            return false;
         }
     }
 }

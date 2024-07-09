@@ -28,7 +28,7 @@ namespace Lavender.Services.Users
             {
                 return Result.Failure(new Error(
                   "404",
-                  $"The User with Id {request.Id} was not found"));
+                  $"The User with this Id was not found"));
             }
 
             entity.Update(request.FullName, request.PhoneNumber, request.NationalNumber

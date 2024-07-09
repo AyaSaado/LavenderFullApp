@@ -8,6 +8,7 @@ using Lavender.Core.Interfaces.Files;
 using static Lavender.Core.Helper.MappingProfile;
 using Lavender.Core.Entities;
 using System.Net.Mail;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lavender.Services.PatternMakers
 {
@@ -31,6 +32,16 @@ namespace Lavender.Services.PatternMakers
             catch (Exception)
             {
                 return Result.Failure(new Error("400", "Invalid Email Address"));
+            }
+
+            var UsersWithUserRequest = await _unitOfWork.Users.Find((u => u.UserName == request.UserName))
+                                                 .ToListAsync(cancellationToken);
+
+            if (UsersWithUserRequest.Count() > 0)
+            {
+                return Result.Failure(new Error(
+                   "400",
+                   $"The UserName is already exist"));
             }
 
             var patternMaker = new PatternMaker()
