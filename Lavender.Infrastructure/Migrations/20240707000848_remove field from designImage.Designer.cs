@@ -4,6 +4,7 @@ using Lavender.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lavender.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240707000848_remove field from designImage")]
+    partial class removefieldfromdesignImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,6 +114,7 @@ namespace Lavender.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("DesignPrice")
@@ -910,7 +914,7 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Lavender.Core.Entities.SItemType", "SItemType")
-                        .WithMany("Consumings")
+                        .WithMany()
                         .HasForeignKey("SItemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1264,11 +1268,6 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("ItemSizes");
 
                     b.Navigation("Payments");
-                });
-
-            modelBuilder.Entity("Lavender.Core.Entities.SItemType", b =>
-                {
-                    b.Navigation("Consumings");
                 });
 
             modelBuilder.Entity("Lavender.Core.Entities.SType", b =>

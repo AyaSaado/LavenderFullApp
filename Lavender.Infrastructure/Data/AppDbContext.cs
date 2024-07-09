@@ -21,13 +21,13 @@ namespace Lavender.Infrastructure.Data
         public DbSet<Design> Design { get; set; }
         public DbSet<Actor> Actor { get; set; }
         public DbSet<Consuming> Consuming { get; set; }
-        public  DbSet<Accessory> Accessory { get; set; }
-        public DbSet<DesignAccessory> DesignAccessory { get; set; }
+        //public  DbSet<Accessory> Accessory { get; set; }
+        //public DbSet<DesignAccessory> DesignAccessory { get; set; }
         public DbSet<DesignImage> DesignImage {  get; set; }
         public DbSet<DesigningSection> DesigningSection { get; set; }
-        public DbSet<FabricDesign> FabricDesign { get; set; }
-        public DbSet<FabricType> FabricType { get; set; }
-        public DbSet<Factory> Factory { get; set; }
+        //public DbSet<FabricDesign> FabricDesign { get; set; }
+        //public DbSet<FabricType> FabricType { get; set; }
+        //public DbSet<Factory> Factory { get; set; }
         public DbSet<InspirationImage> InspirationImage { get; set;}
         public DbSet<Item> Item { get; set; }
         public DbSet<ItemSize> ItemSize { get; set; }
@@ -39,7 +39,7 @@ namespace Lavender.Infrastructure.Data
         public DbSet<PatternMaker> PatternMaker { get; set; }
         public DbSet<Payment> Payment { get; set; }
         public DbSet<ProductionEmp> ProductionEmp { get; set; }
-        public DbSet<Purchase> Purchase { get; set; }
+        //public DbSet<Purchase> Purchase { get; set; }
         public DbSet<SItemType> SItemType { get; set; }
         public DbSet<StoreItem> StoreItem { get; set; }
         public DbSet<SType> SType { get; set; }

@@ -4,6 +4,7 @@ using Lavender.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lavender.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240626224602_Remove unNecessary entities")]
+    partial class RemoveunNecessaryentities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,12 +113,6 @@ namespace Lavender.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("DesignPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<Guid>("DesignerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -133,6 +130,10 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<Guid?>("TailorId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -154,6 +155,10 @@ namespace Lavender.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DesignId")
                         .HasColumnType("int");
@@ -187,6 +192,31 @@ namespace Lavender.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DesigningSection");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.Factory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Factory");
                 });
 
             modelBuilder.Entity("Lavender.Core.Entities.InspirationImage", b =>
@@ -480,6 +510,38 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("Plan");
                 });
 
+            modelBuilder.Entity("Lavender.Core.Entities.Purchase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CostOfUnit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("FactoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("SItemTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FactoryId");
+
+                    b.HasIndex("SItemTypeId");
+
+                    b.ToTable("Purchase");
+                });
+
             modelBuilder.Entity("Lavender.Core.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -524,9 +586,6 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("MinAmount")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("STypeId")
                         .HasColumnType("int");
@@ -910,7 +969,7 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Lavender.Core.Entities.SItemType", "SItemType")
-                        .WithMany("Consumings")
+                        .WithMany()
                         .HasForeignKey("SItemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1093,6 +1152,25 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("Step");
                 });
 
+            modelBuilder.Entity("Lavender.Core.Entities.Purchase", b =>
+                {
+                    b.HasOne("Lavender.Core.Entities.Factory", "Factory")
+                        .WithMany("Purchases")
+                        .HasForeignKey("FactoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Lavender.Core.Entities.SItemType", "SItemType")
+                        .WithMany("Purchases")
+                        .HasForeignKey("SItemTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Factory");
+
+                    b.Navigation("SItemType");
+                });
+
             modelBuilder.Entity("Lavender.Core.Entities.RefreshToken", b =>
                 {
                     b.HasOne("Lavender.Core.Entities.User", "User")
@@ -1229,6 +1307,11 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("MakerSections");
                 });
 
+            modelBuilder.Entity("Lavender.Core.Entities.Factory", b =>
+                {
+                    b.Navigation("Purchases");
+                });
+
             modelBuilder.Entity("Lavender.Core.Entities.Item", b =>
                 {
                     b.Navigation("Orders");
@@ -1268,7 +1351,7 @@ namespace Lavender.Infrastructure.Migrations
 
             modelBuilder.Entity("Lavender.Core.Entities.SItemType", b =>
                 {
-                    b.Navigation("Consumings");
+                    b.Navigation("Purchases");
                 });
 
             modelBuilder.Entity("Lavender.Core.Entities.SType", b =>

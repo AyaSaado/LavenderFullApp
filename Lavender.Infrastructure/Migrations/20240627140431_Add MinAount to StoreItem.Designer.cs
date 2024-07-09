@@ -4,6 +4,7 @@ using Lavender.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lavender.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240627140431_Add MinAount to StoreItem")]
+    partial class AddMinAounttoStoreItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,12 +113,6 @@ namespace Lavender.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("DesignPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<Guid>("DesignerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -133,6 +130,10 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<Guid?>("TailorId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -154,6 +155,10 @@ namespace Lavender.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DesignId")
                         .HasColumnType("int");
@@ -525,9 +530,6 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("MinAmount")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("STypeId")
                         .HasColumnType("int");
 
@@ -613,6 +615,9 @@ namespace Lavender.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("MinAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -910,7 +915,7 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Lavender.Core.Entities.SItemType", "SItemType")
-                        .WithMany("Consumings")
+                        .WithMany()
                         .HasForeignKey("SItemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1264,11 +1269,6 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("ItemSizes");
 
                     b.Navigation("Payments");
-                });
-
-            modelBuilder.Entity("Lavender.Core.Entities.SItemType", b =>
-                {
-                    b.Navigation("Consumings");
                 });
 
             modelBuilder.Entity("Lavender.Core.Entities.SType", b =>
