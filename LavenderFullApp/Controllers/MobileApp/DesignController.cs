@@ -9,7 +9,7 @@ namespace LavenderFullApp.Controllers.MobileApp
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "MobileApp")]
- 
+    [Authorize]
     public class DesignController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,7 +22,7 @@ namespace LavenderFullApp.Controllers.MobileApp
         [HttpPost("AddDesign")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Add([FromBody] AddDesignRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Add([FromForm] AddDesignRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
             return result ? Ok() : BadRequest();

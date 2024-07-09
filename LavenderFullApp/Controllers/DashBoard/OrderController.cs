@@ -9,6 +9,7 @@ namespace LavenderFullApp.Controllers.DashBoard
     [Route("api/[controller]")]
     [ApiExplorerSettings(GroupName = "DashBoard")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -6,7 +6,7 @@ namespace LavenderFullApp.Controllers.DashBoard
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "DashBoard")]
- 
+    [Authorize]
     public class DesignController : ControllerBase
     {
     }

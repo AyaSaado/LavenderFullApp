@@ -1,6 +1,7 @@
 ﻿using Lavender.Core.EntityDto;
 using Lavender.Services.ControlSettings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -9,7 +10,7 @@ namespace LavenderFullApp.Controllers.Common
     [Route("api/[controller]")] 
     [ApiExplorerSettings(GroupName = "Common")]
     [ApiController]
-  
+    [Authorize]
     public class ControlDataController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -54,18 +55,18 @@ namespace LavenderFullApp.Controllers.Common
         }
 
 
-        [HttpGet("GetAllFabrics")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(FabricTypeResponse))]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllFabricsRequest request, CancellationToken cancellationToken)
+        [HttpGet("GetAllItemTypesOfStoreRequest")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(STypeResponse))]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllSTypesRequest request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
             return Ok(result);
         }
 
 
-        [HttpGet("GetAllAccessories")]
+        [HttpGet("GetAllStoreItems")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(ControlData))]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllAccessoriesRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllStoreItemsRequest request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
             return Ok(result);

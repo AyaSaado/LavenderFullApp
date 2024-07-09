@@ -1,5 +1,6 @@
 ﻿using Lavender.Services.Orders;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -8,7 +9,8 @@ namespace LavenderFullApp.Controllers.Common
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "Common")]
-    
+    [Authorize]
+
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;

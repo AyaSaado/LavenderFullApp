@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
 using Lavender.Services.ProductionEmps;
 using Lavender.Services.PatternMakers;
+using Microsoft.Extensions.Localization;
 
 namespace LavenderFullApp.Controllers.Common
 {
@@ -18,12 +19,14 @@ namespace LavenderFullApp.Controllers.Common
     {
         private readonly IMediator _mediator;
 
-        public UserController(IMediator mediator)
+        private readonly IStringLocalizer<UserController> _localization;
+        public UserController(IMediator mediator, IStringLocalizer<UserController> localization)
         {
             _mediator = mediator;
+            _localization = localization;
         }
 
-       
+
 
         [HttpGet("ForgetPassword")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(string))]
@@ -36,23 +39,13 @@ namespace LavenderFullApp.Controllers.Common
         }
 
 
-        [HttpPost("AddUser(Register)")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddUser([FromForm] AddUserRequest command, CancellationToken cancellationToken)
-        {
-            var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok() : BadRequest(result.Error);
-        }
-
-
         [HttpPut("UpdateUser")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(Result))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update([FromForm] UpdateUserRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok() : BadRequest(result.Error);
+            return result.IsSuccess ? Ok() : BadRequest(_localization[result.Error.Message]);
         }
 
 
@@ -62,7 +55,7 @@ namespace LavenderFullApp.Controllers.Common
         public async Task<IActionResult> Delete([FromBody] DeleteUserRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return result ? Ok() : BadRequest();
+            return result ? Ok() : BadRequest(_localization["Not Allowed To Remove This User"]);
         }
 
         [HttpPut("UpdatePatternMaker")]
@@ -71,7 +64,7 @@ namespace LavenderFullApp.Controllers.Common
         public async Task<IActionResult> Update([FromForm] UpdatePatternMakerRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok() : BadRequest(result.Error);
+            return result.IsSuccess ? Ok() : BadRequest(_localization[result.Error.Message]);
         }
 
         [HttpPost("AddProductionEmp")]
@@ -81,7 +74,7 @@ namespace LavenderFullApp.Controllers.Common
         {
             var result = await _mediator.Send(command, cancellationToken);
 
-            return result.IsSuccess ? Ok() : BadRequest(result.Error);
+            return result.IsSuccess ? Ok() : BadRequest(_localization[result.Error.Message]);
         }
 
 
@@ -91,7 +84,7 @@ namespace LavenderFullApp.Controllers.Common
         public async Task<IActionResult> Update([FromForm] UpdateProductionEmpRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok() : BadRequest(result.Error);
+            return result.IsSuccess ? Ok() : BadRequest(_localization[result.Error.Message]);
         }
 
 

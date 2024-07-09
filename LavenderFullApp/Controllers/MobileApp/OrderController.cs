@@ -9,7 +9,7 @@ namespace LavenderFullApp.Controllers.MobileApp
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "MobileApp")]
-
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
