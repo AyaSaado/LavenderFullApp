@@ -1,0 +1,14 @@
+{
+  "Adding Failed": "فشل في عملية الإضافة",
+  "Updating Failded": "فشل في عملية التعديل",
+  "Not Found": "غير موجود",
+  "Wrong in Adding Roles": "خطأ في إضافة الأدوار",
+  "Wrong in Updating Role": "خطأ في تعديل الدور",
+  "The User with this Id was not found": "لم يتم العثور على المستخدم بهذا المعرف",
+  "Wrong Password": "عذرًا، كلمة المرور خاطئة",
+  "User Not Found": "عذرًا، لم يتم العثور على اسم المستخدم",
+  "Not Allowed To Remove This User": "غير مسموح بإزالة هذا المستخدم",
+  "The UserName is already exist": "اسم المستخدم موجود مسبقاً"
+
+
+}

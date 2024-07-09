@@ -1,0 +1,12 @@
+{
+  "Adding Failed": "Adding Failed",
+  "Updating Failded": "Updating Failded",
+  "Not Found": "Not Found",
+  "Wrong in Adding Roles": "Wrong in Adding Roles",
+  "Wrong in Updating Role": "Wrong in Updating Role",
+  "The User with this Id was not found": "The User with this Id was not found",
+  "Wrong Password": "Wrong Password",
+  "User Not Found": "User Not Found",
+  "Not Allowed To Remove This User": "Not Allowed To Remove This User",
+  "The UserName is already exist": "The UserName is already exist"
+}
