@@ -1,6 +1,4 @@
-﻿using Lavender.Core.EntityDto;
-using Lavender.Core.Enum;
-using MediatR;
+﻿using MediatR;
 
 namespace Lavender.Services.Orders
 {

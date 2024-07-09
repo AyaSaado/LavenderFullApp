@@ -23,6 +23,7 @@ namespace Lavender.Services.Orders
                 DeliveryDate = request.DeliveryDate,
                 OrderDate = request.OrderDate,
                 OrderType = request.OrderType,
+                OrderState = 0
             };
 
             order.ItemSizes = Mapping.Mapper.Map<List<ItemSize>>(request.ItemSizeDtos);

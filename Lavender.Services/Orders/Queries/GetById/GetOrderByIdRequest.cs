@@ -24,6 +24,8 @@ namespace Lavender.Services.Orders
             public OrderState OrderState { get; set; }
             public int ItemId { get; set; }
             public int ItemTypeId { get; set; }
+            public DateOnly StartDate { get; set; }
+            public DateOnly EndDate { get; set; }
             public ICollection<ItemSizeDto> ItemSizeDtos { get; set; } = new List<ItemSizeDto>();
             public static Expression<Func<Order, OrderResponse>> Selector() => o
              => new()
@@ -36,6 +38,8 @@ namespace Lavender.Services.Orders
                  OrderState = o.OrderState,
                  ItemId = o.ItemId,
                  ItemTypeId = o.ItemTypeId,
+                 StartDate = o.StartDate,
+                 EndDate = o.EndDate,
                  ItemSizeDtos = Mapping.Mapper.Map<List<ItemSizeDto>>(o.ItemSizes)
              };
 
