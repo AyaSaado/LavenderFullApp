@@ -19,7 +19,7 @@ namespace Lavender.Services.ControlSettings
         {
             var entities = new List<ItemType>();
 
-            foreach (var name in request.TypesName)
+            foreach (var name in request.ItemsName)
             {
                 entities.Add(new ItemType() { Name = name });
             }
@@ -30,8 +30,7 @@ namespace Lavender.Services.ControlSettings
                 await _unitOfWork.Save(cancellationToken);
                 return true;
 
-            }
-            catch (Exception)
+            }catch(Exception)
             {
                 return false;
             }
