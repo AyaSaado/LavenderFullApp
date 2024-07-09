@@ -1,4 +1,5 @@
 ﻿using Lavender.Core.Entities;
+using Lavender.Core.Interfaces.Files;
 using Lavender.Core.Interfaces.Repository;
 using Lavender.Core.Shared;
 using MediatR;
@@ -9,10 +10,11 @@ namespace Lavender.Services.Designs
     public class UpdateDesignHandler : IRequestHandler<UpdateDesignRequest, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public UpdateDesignHandler(IUnitOfWork unitOfWork)
+        private readonly IFileServices _fileServices;
+        public UpdateDesignHandler(IUnitOfWork unitOfWork, IFileServices fileServices)
         {
             _unitOfWork = unitOfWork;
+            _fileServices = fileServices;
         }
 
         public async Task<Result> Handle(UpdateDesignRequest request, CancellationToken cancellationToken)
@@ -21,15 +23,21 @@ namespace Lavender.Services.Designs
 
             if (entity == null) return Result.Failure(new Error("404" , "Entity Not Found"));
 
-            entity.Update(request.Title, request.Height, request.Discount,
-                             request.ProductionLineId, request.TailorId
-                                      , request.DesignerId);
+            entity.Update(request.Description, request.Height, request.Discount,request.DesignPrice,
+                                        request.ProductionLineId, request.TailorId
+                                                  , request.DesignerId);
 
+
+            foreach (var image in request.DesignImageDtos)
+            {
+                if (image.Image is not null)
+                {
+                    _fileServices.Delete(image.Url);
+                    image.Url = await _fileServices.Upload(image.Image);
+                }
+            }
 
             entity.DesignImages = Mapping.Mapper.Map<List<DesignImage>>(request.DesignImageDtos);
-            entity.Accessories = Mapping.Mapper.Map<List<DesignAccessory>>(request.DesignAccessoryDtos);
-            entity.Fabrics = Mapping.Mapper.Map<List<FabricDesign>>(request.FabricDesignDtos);
-
 
             try
             {
