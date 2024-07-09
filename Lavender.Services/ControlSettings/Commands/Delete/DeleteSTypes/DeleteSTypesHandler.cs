@@ -5,25 +5,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lavender.Services.ControlSettings
 {
-    public class DeleteFabricsHandler : IRequestHandler<DeleteFabricsRequest, bool>
+    public class DeleteSTypesHandler : IRequestHandler<DeleteSTypesRequest, bool>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ICRUDRepository<FabricType> _fabricTypeRepository;
+        private readonly ICRUDRepository<SType> _sTypeRepository;
 
-        public DeleteFabricsHandler(ICRUDRepository<FabricType> fabricTypeRepository, IUnitOfWork unitOfWork)
+        public DeleteSTypesHandler(ICRUDRepository<SType> sTypeRepository, IUnitOfWork unitOfWork)
         {
-            _fabricTypeRepository = fabricTypeRepository;
+            _sTypeRepository = sTypeRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> Handle(DeleteFabricsRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteSTypesRequest request, CancellationToken cancellationToken)
         {
-            var entities = await _fabricTypeRepository.Find(d => request.Ids.Contains(d.Id))
+            var entities = await _sTypeRepository.Find(d => request.Ids.Contains(d.Id))
                                                           .ToListAsync(cancellationToken);
 
             try
             {
-                _fabricTypeRepository.RemoveRange(entities);
+                _sTypeRepository.RemoveRange(entities);
                 await _unitOfWork.Save(cancellationToken);
                 return true;
             }

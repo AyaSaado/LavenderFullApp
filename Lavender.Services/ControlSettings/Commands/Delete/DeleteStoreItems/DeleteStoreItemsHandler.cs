@@ -5,25 +5,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lavender.Services.ControlSettings
 {
-    public class DeleteAccessoriesHandler : IRequestHandler<DeleteAccessoriesRequest, bool>
+    public class DeleteStoreItemsHandler : IRequestHandler<DeleteStoreItemsRequest, bool>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ICRUDRepository<Accessory> _accessoryRepository;
+        private readonly ICRUDRepository<StoreItem> _storeItemRepository;
 
-        public DeleteAccessoriesHandler(IUnitOfWork unitOfWork, ICRUDRepository<Accessory> accessoryRepository)
+        public DeleteStoreItemsHandler(IUnitOfWork unitOfWork, ICRUDRepository<StoreItem> storeItemRepository)
         {
             _unitOfWork = unitOfWork;
-            _accessoryRepository = accessoryRepository;
+            _storeItemRepository = storeItemRepository;
         }
 
-        public async Task<bool> Handle(DeleteAccessoriesRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteStoreItemsRequest request, CancellationToken cancellationToken)
         {
-            var entities = await _accessoryRepository.Find(d => request.Ids.Contains(d.Id))
+            var entities = await _storeItemRepository.Find(d => request.Ids.Contains(d.Id))
                                                            .ToListAsync(cancellationToken);
 
             try
             {
-                _accessoryRepository.RemoveRange(entities);
+                _storeItemRepository.RemoveRange(entities);
                 await _unitOfWork.Save(cancellationToken);
                 return true;
             }
