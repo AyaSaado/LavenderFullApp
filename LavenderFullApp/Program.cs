@@ -7,6 +7,8 @@ using Lavender.Infrastructure;
 using LavenderFullApp.Seed;
 using static Lavender.Core.Helper.MappingProfile;
 using Lavender.Services;
+using LavenderFullApp.Localization;
+using Microsoft.Extensions.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddLocalization();
+
+builder.Services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
+
+builder.Services.AddMvc()
+.AddDataAnnotationsLocalization(options =>
+{
+    options.DataAnnotationLocalizerProvider = (type, factory) =>
+    factory.Create(typeof(JsonStringLocalizerFactory));
+});
 
 builder.Services.AddSwaggerGen(o =>
 {
@@ -109,6 +121,13 @@ app.UseSwaggerUI(c =>
 
 app.UseStaticFiles();
 app.UseCors("Policy");
+
+var supportedCultures = new[] { "ar-SA", "en-US" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[1])
+    .AddSupportedCultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
