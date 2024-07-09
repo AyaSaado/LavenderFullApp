@@ -3,6 +3,7 @@ using Lavender.Services.Designs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace LavenderFullApp.Controllers.Common
@@ -36,6 +37,16 @@ namespace LavenderFullApp.Controllers.Common
         {
             var result = await _mediator.Send(request, cancellationToken);
             return result is not null ? Ok(result) : NotFound();
+        }
+
+
+        [HttpGet("GetDesignImageUrlRequest")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(string))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get([FromQuery] GetDesignImageUrlRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return !result.IsNullOrEmpty() ? Ok(result) : NotFound();
         }
 
 
