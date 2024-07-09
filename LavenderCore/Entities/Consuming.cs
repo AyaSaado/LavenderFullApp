@@ -11,6 +11,7 @@ namespace Lavender.Core.Entities
         public TypeOfUnit TypeOfUnit { get; set; }
         public DateOnly DateOfDemand { get; set; }
         public int DesignId { get; set; }
+        public int SItemTypeId { get; set; }
         public Design Design { get; set; } = null!;
         public SItemType SItemType { get; set; } = null!;
         
