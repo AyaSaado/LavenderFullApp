@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Lavender.Services.ControlSettings
 {
-    public class GetAllAccessoriesRequest : IRequest<List<ControlData>>
+    public class GetAllStoreItemsRequest : IRequest<List<ControlData>>
     {
 
      

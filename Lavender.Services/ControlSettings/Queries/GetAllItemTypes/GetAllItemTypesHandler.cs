@@ -2,6 +2,7 @@
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Lavender.Services.ControlSettings
 {
@@ -17,7 +18,7 @@ namespace Lavender.Services.ControlSettings
 
         public async Task<List<ItemTypesResponse>> Handle(GetAllItemTypesRequest request, CancellationToken cancellationToken)
         {
-            var result = await _itemTypeRepository.GetAll()
+            var result = await _itemTypeRepository.Find(itype => (request.ItemTypeName.IsNullOrEmpty() || itype.Name.StartsWith(request.ItemTypeName!)))
                                                   .Select(ItemTypesResponse.Selector())
                                                   .ToListAsync(cancellationToken);
             return result;

@@ -7,8 +7,8 @@ namespace Lavender.Services.ControlSettings
 {
     public class GetAllItemTypesRequest : IRequest<List<ItemTypesResponse>>
     {
-      
-      
+        public string? ItemTypeName { get; set; }
+
     }  
        public class ItemTypesResponse
         {
