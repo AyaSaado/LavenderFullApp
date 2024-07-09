@@ -46,13 +46,14 @@ namespace LavenderFullApp.Seed
 
         private static async Task SeedRoles(AppDbContext context, RoleManager<IdentityRole<Guid>> roleManager)
         {
-            //if (roleManager.Roles.Any()) return;
+            if (roleManager.Roles.Any()) return;
 
-            //var Roles = Enum.GetValues(typeof(LavanderRoles)).Cast<LavanderRoles>().Select(a => a.ToString());
-            //foreach (var Role in Roles)
-            //{
-                await roleManager.CreateAsync(new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = LavanderRoles.Worker.ToString() });
-          //  }
+            var Roles = Enum.GetValues(typeof(LavenderRoles)).Cast<LavenderRoles>().Select(a => a.ToString());
+          
+            foreach (var Role in Roles)
+            {
+                await roleManager.CreateAsync(new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = Role });
+            }
             await context.SaveChangesAsync();
 
         }
@@ -69,7 +70,7 @@ namespace LavenderFullApp.Seed
             };
 
             await _userManager.CreateAsync(admin, "popPO1^_^");
-            await _userManager.AddToRoleAsync(admin, nameof(LavanderRoles.Admin));
+            await _userManager.AddToRoleAsync(admin, nameof(LavenderRoles.Admin));
 
             var executive = new User()
             {
@@ -80,7 +81,7 @@ namespace LavenderFullApp.Seed
             };
 
             await _userManager.CreateAsync(executive, "rorPO1^_^");
-            await _userManager.AddToRoleAsync(executive, nameof(LavanderRoles.Executive));
+            await _userManager.AddToRoleAsync(executive, nameof(LavenderRoles.Executive));
 
             var designer = new PatternMaker()
             {
@@ -90,7 +91,7 @@ namespace LavenderFullApp.Seed
                 UserName = "Designer1",
             };
             await _userManager.CreateAsync(designer, "rorPO1^_^");
-            await _userManager.AddToRoleAsync(designer, nameof(LavanderRoles.Designer));
+            await _userManager.AddToRoleAsync(designer, nameof(LavenderRoles.Designer));
             
             var tailor = new PatternMaker()
             {
@@ -100,7 +101,7 @@ namespace LavenderFullApp.Seed
                 UserName = "Tailor1",
             };
             await _userManager.CreateAsync(tailor, "rorPO1^_^");
-            await _userManager.AddToRoleAsync(tailor, nameof(LavanderRoles.Tailor));
+            await _userManager.AddToRoleAsync(tailor, nameof(LavenderRoles.Tailor));
 
 
         }
