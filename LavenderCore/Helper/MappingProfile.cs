@@ -46,6 +46,13 @@ namespace Lavender.Core.Helper
                 CreateMap<StoreItem, ControlData>().ReverseMap();
 
                 CreateMap<DesigningSection , ControlData>().ReverseMap();
+
+                CreateMap<Step, ControlData>().ReverseMap();
+                
+                CreateMap<Consuming, ConsumingDto>().ReverseMap();
+
+                CreateMap<Plan, PlanDto>().ReverseMap();
+
             }
         }
     }
