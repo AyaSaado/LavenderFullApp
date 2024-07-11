@@ -15,6 +15,8 @@ namespace Lavender.Core.Entities
         public Guid ActorId { get; set; }
         public int ItemId { get; set; }
         public int ItemTypeId { get; set; }
+        public Guid? ProductionLineId { get; set; }
+        public ProductionEmp? ProductionLine { get; set; }
         public Actor Actor { get; set; } = null!;
         public Item Item { get; set; } = null!;
         public ItemType ItemType { get; set; } = null!;
@@ -24,6 +26,7 @@ namespace Lavender.Core.Entities
         public DateOnly EndDate { get; set; }
         public  ICollection<ItemSize> ItemSizes { get; set; } = new List<ItemSize>();
         public  ICollection<Payment> Payments { get; set; } = new List<Payment>();
-     
+        public ICollection<Consuming> Consumings { get; set; } = new List<Consuming>();
+
     }
 }

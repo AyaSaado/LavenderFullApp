@@ -10,6 +10,5 @@ namespace Lavender.Core.Entities
         public string Color { get; set; } = null!;
         public int ItemSizeId { get; set; }
         public ItemSize ItemSize { get; set; } = null!;
-        public ICollection<Plan> Plans { get; set; } = new List<Plan>();
     }
 }
