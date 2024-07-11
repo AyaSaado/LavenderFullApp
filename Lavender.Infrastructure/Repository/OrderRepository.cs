@@ -15,22 +15,32 @@ namespace Lavender.Infrastructure.Repository
         public override IQueryable<Order> Find(Expression<Func<Order, bool>> predicate)
         {
             return base.Find(predicate)
+                       .Include(o=>o.Consumings)
+                         .ThenInclude(c=>c.SItemType)
                        .Include(o => o.ItemSizes)
-                       .ThenInclude(i => i.ItemSizeWithColors);           ;
+                         .ThenInclude(i => i.ItemSizeWithColors);           
         }
 
         public override IQueryable<Order> GetAll(int pageNumber = 1, int pageSize = int.MaxValue)
         {
             return base.GetAll(pageNumber, pageSize)
+                       .Include(o => o.Consumings)
+                         .ThenInclude(c => c.SItemType)
                        .Include(o => o.ItemSizes)
-                       .ThenInclude(i => i.ItemSizeWithColors); 
+                         .ThenInclude(i => i.ItemSizeWithColors); 
         }
 
         public override Task<Order?> GetOneAsync(Expression<Func<Order, bool>> predicate , CancellationToken cancellationToken)
         {
             return base.Find(predicate)
+                       .Include(o => o.Consumings)
+                          .ThenInclude(c => c.SItemType)
+                          .ThenInclude(s=>s.StoreItem)
+                          .Include(o=>o.Consumings)
+                          .ThenInclude(c => c.SItemType)
+                          .ThenInclude(s => s.SType)
                        .Include(o => o.ItemSizes)
-                       .ThenInclude(i => i.ItemSizeWithColors)
+                          .ThenInclude(i => i.ItemSizeWithColors)
                        .FirstOrDefaultAsync(cancellationToken);
         }
     }

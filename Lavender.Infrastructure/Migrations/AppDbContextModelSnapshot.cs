@@ -54,7 +54,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<DateTime>("DateOfDemand")
                         .HasColumnType("date");
 
-                    b.Property<int>("DesignId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("QuantityOrdered")
@@ -68,7 +68,7 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DesignId");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("SItemTypeId");
 
@@ -128,9 +128,6 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ProductionLineId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("TailorId")
                         .HasColumnType("uniqueidentifier");
 
@@ -139,8 +136,6 @@ namespace Lavender.Infrastructure.Migrations
                     b.HasIndex("DesignerId");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductionLineId");
 
                     b.HasIndex("TailorId");
 
@@ -419,6 +414,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("OrderType")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("ProductionLineId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("date");
 
@@ -429,6 +427,8 @@ namespace Lavender.Infrastructure.Migrations
                     b.HasIndex("ItemId");
 
                     b.HasIndex("ItemTypeId");
+
+                    b.HasIndex("ProductionLineId");
 
                     b.ToTable("Order");
                 });
@@ -468,7 +468,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("ItemSizeWithColorId")
+                    b.Property<int>("ItemSizeId")
                         .HasColumnType("int");
 
                     b.Property<int>("StepId")
@@ -476,7 +476,7 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemSizeWithColorId");
+                    b.HasIndex("ItemSizeId");
 
                     b.HasIndex("StepId");
 
@@ -600,7 +600,7 @@ namespace Lavender.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("StepName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -906,9 +906,9 @@ namespace Lavender.Infrastructure.Migrations
 
             modelBuilder.Entity("Lavender.Core.Entities.Consuming", b =>
                 {
-                    b.HasOne("Lavender.Core.Entities.Design", "Design")
+                    b.HasOne("Lavender.Core.Entities.Order", "Order")
                         .WithMany("Consumings")
-                        .HasForeignKey("DesignId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -918,7 +918,7 @@ namespace Lavender.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Design");
+                    b.Navigation("Order");
 
                     b.Navigation("SItemType");
                 });
@@ -948,10 +948,6 @@ namespace Lavender.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavender.Core.Entities.ProductionEmp", "ProductionLine")
-                        .WithMany()
-                        .HasForeignKey("ProductionLineId");
-
                     b.HasOne("Lavender.Core.Entities.PatternMaker", "Tailor")
                         .WithMany()
                         .HasForeignKey("TailorId");
@@ -959,8 +955,6 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("Designer");
 
                     b.Navigation("Order");
-
-                    b.Navigation("ProductionLine");
 
                     b.Navigation("Tailor");
                 });
@@ -1059,11 +1053,17 @@ namespace Lavender.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Lavender.Core.Entities.ProductionEmp", "ProductionLine")
+                        .WithMany()
+                        .HasForeignKey("ProductionLineId");
+
                     b.Navigation("Actor");
 
                     b.Navigation("Item");
 
                     b.Navigation("ItemType");
+
+                    b.Navigation("ProductionLine");
                 });
 
             modelBuilder.Entity("Lavender.Core.Entities.Payment", b =>
@@ -1079,9 +1079,9 @@ namespace Lavender.Infrastructure.Migrations
 
             modelBuilder.Entity("Lavender.Core.Entities.Plan", b =>
                 {
-                    b.HasOne("Lavender.Core.Entities.ItemSizeWithColor", "ItemSizeWithColor")
+                    b.HasOne("Lavender.Core.Entities.ItemSize", "ItemSize")
                         .WithMany("Plans")
-                        .HasForeignKey("ItemSizeWithColorId")
+                        .HasForeignKey("ItemSizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1091,7 +1091,7 @@ namespace Lavender.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ItemSizeWithColor");
+                    b.Navigation("ItemSize");
 
                     b.Navigation("Step");
                 });
@@ -1222,8 +1222,6 @@ namespace Lavender.Infrastructure.Migrations
                 {
                     b.Navigation("Chats");
 
-                    b.Navigation("Consumings");
-
                     b.Navigation("DesignImages");
                 });
 
@@ -1240,10 +1238,7 @@ namespace Lavender.Infrastructure.Migrations
             modelBuilder.Entity("Lavender.Core.Entities.ItemSize", b =>
                 {
                     b.Navigation("ItemSizeWithColors");
-                });
 
-            modelBuilder.Entity("Lavender.Core.Entities.ItemSizeWithColor", b =>
-                {
                     b.Navigation("Plans");
                 });
 
@@ -1264,6 +1259,8 @@ namespace Lavender.Infrastructure.Migrations
 
             modelBuilder.Entity("Lavender.Core.Entities.Order", b =>
                 {
+                    b.Navigation("Consumings");
+
                     b.Navigation("ItemSizes");
 
                     b.Navigation("Payments");

@@ -750,7 +750,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int?>("StepId")
                         .HasColumnType("int");
 
-                    b.Property<string>("StepName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

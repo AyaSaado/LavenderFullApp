@@ -16,7 +16,6 @@ namespace Lavender.Infrastructure.Repository
         {
             return base.Find(predicate)
                        .Include(d => d.DesignImages)
-                       .Include(d => d.Consumings)
                        .Include(d => d.Chats);
                        
                    
@@ -26,7 +25,6 @@ namespace Lavender.Infrastructure.Repository
         {
             return base.GetAll(pageNumber, pageSize)
                        .Include(d => d.DesignImages)
-                       .Include(d => d.Consumings)
                        .Include(d => d.Chats);
         }
 
@@ -34,7 +32,6 @@ namespace Lavender.Infrastructure.Repository
         {
             return base.Find(predicate)
                        .Include(d => d.DesignImages)
-                       .Include(d => d.Consumings)
                        .Include(d => d.Chats)
                        .FirstOrDefaultAsync(cancellationToken);
         }

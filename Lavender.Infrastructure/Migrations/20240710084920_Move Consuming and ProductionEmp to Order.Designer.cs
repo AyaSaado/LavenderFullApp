@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lavender.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240501212029_add type of unit")]
-    partial class addtypeofunit
+    [Migration("20240710084920_Move Consuming and ProductionEmp to Order")]
+    partial class MoveConsumingandProductionEmptoOrder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,24 +25,7 @@ namespace Lavender.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Lavander.Core.Entities.Accessory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Accessory");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.Chat", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Chat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +46,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("Chat");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Consuming", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Consuming", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +57,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<DateTime>("DateOfDemand")
                         .HasColumnType("date");
 
-                    b.Property<int>("DesignId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("QuantityOrdered")
@@ -88,14 +71,14 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DesignId");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("SItemTypeId");
 
                     b.ToTable("Consuming");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Design", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.DailyProduction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,9 +86,38 @@ namespace Lavender.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Code")
-                        .IsRequired()
+                    b.Property<DateTime>("Day")
+                        .HasColumnType("date");
+
+                    b.Property<TimeSpan>("WorkHours")
+                        .HasColumnType("time");
+
+                    b.Property<int>("WorkQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkerId");
+
+                    b.ToTable("DailyProduction");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.Design", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("DesignPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("DesignerId")
                         .HasColumnType("uniqueidentifier");
@@ -119,15 +131,8 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ProductionLineId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("TailorId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -135,60 +140,18 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductionLineId");
-
                     b.HasIndex("TailorId");
 
                     b.ToTable("Design");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.DesignAccessory", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.DesignImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccessoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DesignId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeOfUnit")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccessoryId");
-
-                    b.HasIndex("DesignId");
-
-                    b.ToTable("DesignAccessory");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.DesignImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DesignId")
                         .HasColumnType("int");
@@ -207,7 +170,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("DesignImage");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.DesigningSection", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.DesigningSection", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -224,86 +187,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("DesigningSection");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.FabricDesign", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DesignId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("FabricHeight")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("FabricTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("FabricWidth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Purpose")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DesignId");
-
-                    b.HasIndex("FabricTypeId");
-
-                    b.ToTable("FabricDesign");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.FabricType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FabricType");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.Factory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Factory");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.InspirationImage", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.InspirationImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -325,7 +209,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("InspirationImage");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Item", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Item", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -342,17 +226,13 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("Item");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ItemSize", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ItemSize", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -367,7 +247,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("ItemSize");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ItemSizeWithColor", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ItemSizeWithColor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -382,14 +262,8 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("date");
-
                     b.Property<int>("ItemSizeId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -398,7 +272,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("ItemSizeWithColor");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ItemType", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ItemType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -415,7 +289,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("ItemType");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.LineType", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.LineType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -432,7 +306,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("LineType");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.MakerSection", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.MakerSection", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -455,7 +329,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("MakertSection");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Message", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -488,7 +362,24 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("Message");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Order", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ModelName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModelName");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -502,8 +393,14 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("date");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("date");
+
                     b.Property<string>("Feedback")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GalleryDesignId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
@@ -514,8 +411,17 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("date");
 
+                    b.Property<int>("OrderState")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderType")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("ProductionLineId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -525,10 +431,12 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.HasIndex("ItemTypeId");
 
+                    b.HasIndex("ProductionLineId");
+
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Payment", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -552,7 +460,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("Payment");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Plan", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Plan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -563,7 +471,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ItemSizeWithColorId")
+                    b.Property<int>("ItemSizeWithColorId")
                         .HasColumnType("int");
 
                     b.Property<int>("StepId")
@@ -578,39 +486,37 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("Plan");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Purchase", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.RefreshToken", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<decimal>("CostOfUnit")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("JwtId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FactoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("SItemTypeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FactoryId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("SItemTypeId");
-
-                    b.ToTable("Purchase");
+                    b.ToTable("RefreshToken");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.SItemType", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.SItemType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -625,17 +531,13 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("MinAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("STypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("StoreItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeOfUnit")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -647,7 +549,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("SItemType");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.SType", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.SType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -664,7 +566,36 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("SType");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Step", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.SewingMachine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ModelNameId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ProductionEmpId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModelNameId");
+
+                    b.HasIndex("ProductionEmpId");
+
+                    b.ToTable("SewingMachine");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.Step", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -681,13 +612,16 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("Step");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.StoreItem", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.StoreItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsFabric")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -698,7 +632,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("StoreItem");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.User", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -706,6 +640,9 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("date");
@@ -725,11 +662,7 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LName")
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -759,6 +692,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfileImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -784,33 +720,6 @@ namespace Lavender.Infrastructure.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
                     b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.Work", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DaysOnly")
-                        .HasColumnType("date");
-
-                    b.Property<Guid>("ProductionEmpId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("WorkHours")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WorkQuantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductionEmpId");
-
-                    b.ToTable("Work");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -944,9 +853,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Actor", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Actor", b =>
                 {
-                    b.HasBaseType("Lavander.Core.Entities.User");
+                    b.HasBaseType("Lavender.Core.Entities.User");
 
                     b.Property<bool>("VIP")
                         .HasColumnType("bit");
@@ -954,9 +863,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("Actor");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.PatternMaker", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.PatternMaker", b =>
                 {
-                    b.HasBaseType("Lavander.Core.Entities.User");
+                    b.HasBaseType("Lavender.Core.Entities.User");
 
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
@@ -964,15 +873,15 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", t =>
                         {
                             t.Property("Salary")
-                                .HasColumnName("PatternMaker_Sallary");
+                                .HasColumnName("PatternMaker_Salary");
                         });
 
                     b.HasDiscriminator().HasValue("PatternMaker");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ProductionEmp", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ProductionEmp", b =>
                 {
-                    b.HasBaseType("Lavander.Core.Entities.User");
+                    b.HasBaseType("Lavender.Core.Entities.User");
 
                     b.Property<Guid?>("HeadId")
                         .HasColumnType("uniqueidentifier");
@@ -990,9 +899,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("ProductionEmp");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Chat", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Chat", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.Design", "Design")
+                    b.HasOne("Lavender.Core.Entities.Design", "Design")
                         .WithMany("Chats")
                         .HasForeignKey("DesignId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1001,44 +910,51 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("Design");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Consuming", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Consuming", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.Design", "Design")
+                    b.HasOne("Lavender.Core.Entities.Order", "Order")
                         .WithMany("Consumings")
-                        .HasForeignKey("DesignId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.SItemType", "SItemType")
-                        .WithMany()
+                    b.HasOne("Lavender.Core.Entities.SItemType", "SItemType")
+                        .WithMany("Consumings")
                         .HasForeignKey("SItemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Design");
+                    b.Navigation("Order");
 
                     b.Navigation("SItemType");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Design", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.DailyProduction", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.PatternMaker", "Designer")
+                    b.HasOne("Lavender.Core.Entities.SewingMachine", "Worker")
+                        .WithMany("DailyProductions")
+                        .HasForeignKey("WorkerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Worker");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.Design", b =>
+                {
+                    b.HasOne("Lavender.Core.Entities.PatternMaker", "Designer")
                         .WithMany()
                         .HasForeignKey("DesignerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.Order", "Order")
+                    b.HasOne("Lavender.Core.Entities.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.ProductionEmp", "ProductionLine")
-                        .WithMany()
-                        .HasForeignKey("ProductionLineId");
-
-                    b.HasOne("Lavander.Core.Entities.PatternMaker", "Tailor")
+                    b.HasOne("Lavender.Core.Entities.PatternMaker", "Tailor")
                         .WithMany()
                         .HasForeignKey("TailorId");
 
@@ -1046,33 +962,12 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Navigation("Order");
 
-                    b.Navigation("ProductionLine");
-
                     b.Navigation("Tailor");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.DesignAccessory", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.DesignImage", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.Accessory", "Accessory")
-                        .WithMany("DesignAccessories")
-                        .HasForeignKey("AccessoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Lavander.Core.Entities.Design", "Design")
-                        .WithMany()
-                        .HasForeignKey("DesignId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Accessory");
-
-                    b.Navigation("Design");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.DesignImage", b =>
-                {
-                    b.HasOne("Lavander.Core.Entities.Design", "Design")
+                    b.HasOne("Lavender.Core.Entities.Design", "Design")
                         .WithMany("DesignImages")
                         .HasForeignKey("DesignId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1081,28 +976,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("Design");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.FabricDesign", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.InspirationImage", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.Design", "Design")
-                        .WithMany("Fabrics")
-                        .HasForeignKey("DesignId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Lavander.Core.Entities.FabricType", "FabricType")
-                        .WithMany("FabricDesigns")
-                        .HasForeignKey("FabricTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Design");
-
-                    b.Navigation("FabricType");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.InspirationImage", b =>
-                {
-                    b.HasOne("Lavander.Core.Entities.PatternMaker", "Designer")
+                    b.HasOne("Lavender.Core.Entities.PatternMaker", "Designer")
                         .WithMany("InspirationImages")
                         .HasForeignKey("DesignerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1111,9 +987,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("Designer");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ItemSize", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ItemSize", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.Order", "Order")
+                    b.HasOne("Lavender.Core.Entities.Order", "Order")
                         .WithMany("ItemSizes")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1122,9 +998,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ItemSizeWithColor", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ItemSizeWithColor", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.ItemSize", "ItemSize")
+                    b.HasOne("Lavender.Core.Entities.ItemSize", "ItemSize")
                         .WithMany("ItemSizeWithColors")
                         .HasForeignKey("ItemSizeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1133,15 +1009,15 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("ItemSize");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.MakerSection", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.MakerSection", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.DesigningSection", "DesigningSection")
+                    b.HasOne("Lavender.Core.Entities.DesigningSection", "DesigningSection")
                         .WithMany("MakerSections")
                         .HasForeignKey("DesigningSectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.PatternMaker", "PatternMaker")
+                    b.HasOne("Lavender.Core.Entities.PatternMaker", "PatternMaker")
                         .WithMany("MakerSections")
                         .HasForeignKey("PatternMakerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1152,9 +1028,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("PatternMaker");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Message", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Message", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.Chat", "Chat")
+                    b.HasOne("Lavender.Core.Entities.Chat", "Chat")
                         .WithMany("Messages")
                         .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1163,36 +1039,42 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("Chat");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Order", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Order", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.Actor", "Actor")
+                    b.HasOne("Lavender.Core.Entities.Actor", "Actor")
                         .WithMany("Orders")
                         .HasForeignKey("ActorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.Item", "Item")
+                    b.HasOne("Lavender.Core.Entities.Item", "Item")
                         .WithMany("Orders")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.ItemType", "ItemType")
+                    b.HasOne("Lavender.Core.Entities.ItemType", "ItemType")
                         .WithMany("Orders")
                         .HasForeignKey("ItemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Lavender.Core.Entities.ProductionEmp", "ProductionLine")
+                        .WithMany()
+                        .HasForeignKey("ProductionLineId");
 
                     b.Navigation("Actor");
 
                     b.Navigation("Item");
 
                     b.Navigation("ItemType");
+
+                    b.Navigation("ProductionLine");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Payment", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Payment", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.Order", "Order")
+                    b.HasOne("Lavender.Core.Entities.Order", "Order")
                         .WithMany("Payments")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1201,49 +1083,45 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Plan", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Plan", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.ItemSizeWithColor", null)
+                    b.HasOne("Lavender.Core.Entities.ItemSizeWithColor", "ItemSizeWithColor")
                         .WithMany("Plans")
-                        .HasForeignKey("ItemSizeWithColorId");
+                        .HasForeignKey("ItemSizeWithColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.Step", "Step")
+                    b.HasOne("Lavender.Core.Entities.Step", "Step")
                         .WithMany("Plans")
                         .HasForeignKey("StepId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("ItemSizeWithColor");
+
                     b.Navigation("Step");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Purchase", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.Factory", "Factory")
-                        .WithMany("Purchases")
-                        .HasForeignKey("FactoryId")
+                    b.HasOne("Lavender.Core.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.SItemType", "SItemType")
-                        .WithMany("Purchases")
-                        .HasForeignKey("SItemTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Factory");
-
-                    b.Navigation("SItemType");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.SItemType", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.SItemType", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.SType", "SType")
+                    b.HasOne("Lavender.Core.Entities.SType", "SType")
                         .WithMany("SItemTypes")
                         .HasForeignKey("STypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.StoreItem", "StoreItem")
+                    b.HasOne("Lavender.Core.Entities.StoreItem", "StoreItem")
                         .WithMany("SItemTypes")
                         .HasForeignKey("StoreItemId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1254,13 +1132,21 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("StoreItem");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Work", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.SewingMachine", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.ProductionEmp", "ProductionEmp")
-                        .WithMany("WorkDays")
+                    b.HasOne("Lavender.Core.Entities.ModelName", "ModelName")
+                        .WithMany("SewingMachines")
+                        .HasForeignKey("ModelNameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Lavender.Core.Entities.ProductionEmp", "ProductionEmp")
+                        .WithMany()
                         .HasForeignKey("ProductionEmpId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ModelName");
 
                     b.Navigation("ProductionEmp");
                 });
@@ -1276,7 +1162,7 @@ namespace Lavender.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.User", null)
+                    b.HasOne("Lavender.Core.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1285,7 +1171,7 @@ namespace Lavender.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.User", null)
+                    b.HasOne("Lavender.Core.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1300,7 +1186,7 @@ namespace Lavender.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lavander.Core.Entities.User", null)
+                    b.HasOne("Lavender.Core.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1309,20 +1195,20 @@ namespace Lavender.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.User", null)
+                    b.HasOne("Lavender.Core.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ProductionEmp", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ProductionEmp", b =>
                 {
-                    b.HasOne("Lavander.Core.Entities.ProductionEmp", "Head")
+                    b.HasOne("Lavender.Core.Entities.ProductionEmp", "Head")
                         .WithMany("MyEmployees")
                         .HasForeignKey("HeadId");
 
-                    b.HasOne("Lavander.Core.Entities.LineType", "LineType")
+                    b.HasOne("Lavender.Core.Entities.LineType", "LineType")
                         .WithMany("ProductionEmps")
                         .HasForeignKey("LineTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1333,111 +1219,102 @@ namespace Lavender.Infrastructure.Migrations
                     b.Navigation("LineType");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Accessory", b =>
-                {
-                    b.Navigation("DesignAccessories");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.Chat", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Chat", b =>
                 {
                     b.Navigation("Messages");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Design", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Design", b =>
                 {
                     b.Navigation("Chats");
 
-                    b.Navigation("Consumings");
-
                     b.Navigation("DesignImages");
-
-                    b.Navigation("Fabrics");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.DesigningSection", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.DesigningSection", b =>
                 {
                     b.Navigation("MakerSections");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.FabricType", b =>
-                {
-                    b.Navigation("FabricDesigns");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.Factory", b =>
-                {
-                    b.Navigation("Purchases");
-                });
-
-            modelBuilder.Entity("Lavander.Core.Entities.Item", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Item", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ItemSize", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ItemSize", b =>
                 {
                     b.Navigation("ItemSizeWithColors");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ItemSizeWithColor", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ItemSizeWithColor", b =>
                 {
                     b.Navigation("Plans");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ItemType", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ItemType", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.LineType", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.LineType", b =>
                 {
                     b.Navigation("ProductionEmps");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Order", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ModelName", b =>
                 {
+                    b.Navigation("SewingMachines");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.Order", b =>
+                {
+                    b.Navigation("Consumings");
+
                     b.Navigation("ItemSizes");
 
                     b.Navigation("Payments");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.SItemType", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.SItemType", b =>
                 {
-                    b.Navigation("Purchases");
+                    b.Navigation("Consumings");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.SType", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.SType", b =>
                 {
                     b.Navigation("SItemTypes");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Step", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.SewingMachine", b =>
+                {
+                    b.Navigation("DailyProductions");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.Step", b =>
                 {
                     b.Navigation("Plans");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.StoreItem", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.StoreItem", b =>
                 {
                     b.Navigation("SItemTypes");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.Actor", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.Actor", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.PatternMaker", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.PatternMaker", b =>
                 {
                     b.Navigation("InspirationImages");
 
                     b.Navigation("MakerSections");
                 });
 
-            modelBuilder.Entity("Lavander.Core.Entities.ProductionEmp", b =>
+            modelBuilder.Entity("Lavender.Core.Entities.ProductionEmp", b =>
                 {
                     b.Navigation("MyEmployees");
-
-                    b.Navigation("WorkDays");
                 });
 #pragma warning restore 612, 618
         }
