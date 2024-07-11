@@ -39,8 +39,6 @@
     <Folder Include="Actors\Queries\" />
     <Folder Include="SewingMachines\Command\" />
     <Folder Include="SewingMachines\Queries\" />
-    <Folder Include="Steps\Command\" />
-    <Folder Include="Steps\Queries\" />
   </ItemGroup>
 
 </Project>
