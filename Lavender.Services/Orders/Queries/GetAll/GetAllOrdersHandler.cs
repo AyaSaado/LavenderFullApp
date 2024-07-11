@@ -20,9 +20,17 @@ namespace Lavender.Services.Orders
                                                  .Select(OrdersResponse.Selector())
                                                  .ToListAsync(cancellationToken);
 
-             return orders;
-                                                       
+            foreach (var order in orders)
+            {
+                if (order.GalleryDesignId != 0)
+                {
+                    var design = await _unitOfWork.Designs.GetOneAsync(d => d.Id == order.GalleryDesignId, cancellationToken);
+                    order.DesignPrice = design!.DesignPrice - design.DesignPrice * (design.Discount / 100);
+                }
+            }
 
+            return orders;
+            
         }
     }
 }

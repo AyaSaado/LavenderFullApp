@@ -12,7 +12,7 @@ namespace Lavender.Services.Orders
 
       
     }  
-    public class OrdersResponse
+        public class OrdersResponse
         {
             public int Id { get; set; }
             public DateOnly OrderDate { get; set; }
@@ -22,10 +22,12 @@ namespace Lavender.Services.Orders
             public int ItemId { get; set; }
             public int ItemTypeId { get; set; }
             public string? FeedBack { get; set; }
+            public decimal DesignPrice { get; set; }
             public DateOnly StartDate { get; set; }
             public DateOnly EndDate { get; set; }
             public int GalleryDesignId { get; set; }
-        public static Expression<Func<Order, OrdersResponse>> Selector() => o
+          
+            public static Expression<Func<Order, OrdersResponse>> Selector() => o
              => new()
              {
                  Id = o.Id,
