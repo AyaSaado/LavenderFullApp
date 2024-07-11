@@ -23,9 +23,9 @@ namespace Lavender.Services.Designs
 
             if (entity == null) return Result.Failure(new Error("404" , "Entity Not Found"));
 
-            entity.Update(request.Description, request.Height, request.Discount,request.DesignPrice,
-                                        request.ProductionLineId, request.TailorId
-                                                  , request.DesignerId);
+            entity.Update(request.Description, request.Height, request.Discount,
+                                  request.DesignPrice,request.TailorId
+                                         , request.DesignerId);
 
             
             foreach (var image in request.DesignImageDtos)
@@ -37,7 +37,7 @@ namespace Lavender.Services.Designs
                 }
             }
 
-
+            entity.DesignImages = Mapping.Mapper.Map<List<DesignImage>>(request.DesignImageDtos);
 
             try
             {

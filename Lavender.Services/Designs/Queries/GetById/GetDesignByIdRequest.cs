@@ -21,6 +21,7 @@ namespace Lavender.Services.Designs
         public Guid DesignerId { get; set; }
         public Guid? TailorId { get; set; }
         public int OrderId { get; set; }
+        public List<string> UsedFabrics { get; set; } = new List<string>();
         public ICollection<DesignImageDto> DesignImageDtos { get; set; } = new List<DesignImageDto>();
         public ICollection<ItemSizeDto> ItemSizeDtos { get; set; } = new List<ItemSizeDto>();
 

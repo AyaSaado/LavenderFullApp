@@ -1,5 +1,4 @@
-﻿
-using Lavender.Core.EntityDto;
+﻿using Lavender.Core.EntityDto;
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +28,13 @@ namespace Lavender.Services.Designs
                 
                 result.ItemSizeDtos = Mapping.Mapper.Map<List<ItemSizeDto>>(order!.ItemSizes);
 
-            }               
-
+                result.UsedFabrics =  order.Consumings
+                                            .Select(c => c.SItemType)
+                                            .Where(s => s.StoreItem.Name.Equals("Fabric"))
+                                            .Select(s => s.SType.Name)
+                                            .ToList();
+            }      
+    
             return result;
         }
     }
