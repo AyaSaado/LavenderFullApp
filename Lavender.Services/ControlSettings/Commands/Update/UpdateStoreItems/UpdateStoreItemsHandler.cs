@@ -22,12 +22,13 @@ namespace Lavender.Services.ControlSettings
         {
             var a = request.StoreItemDtos.Select(f => f.Id);
             var entities = await _accessoryRepository.Find(d => a.Contains(d.Id))
-                                                            .ToListAsync(cancellationToken);
+                                                     .ToListAsync(cancellationToken);
 
             if (entities.Count() < request.StoreItemDtos.Count())
             {
                 return false;
             }
+          
             foreach(var e in request.StoreItemDtos) 
             {
                 Mapping.Mapper.Map(e,entities.Find(x => x.Id == e.Id));
@@ -35,12 +36,10 @@ namespace Lavender.Services.ControlSettings
 
             try
             {
-
                 _accessoryRepository.UpdateRange(entities);
                 await _unitOfWork.Save(cancellationToken);
 
                 return true;
-
             }
             catch (Exception)
             {

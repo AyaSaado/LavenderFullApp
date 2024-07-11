@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Lavender.Services.ControlSettings
 {
-    public class GetAllItemsHandler : IRequestHandler<GetAllItemsRequest, List<ItemsResponse>>
+    public class GetAllItemsHandler : IRequestHandler<GetAllItemsRequest, List<ItemResponse>>
     {
 
         private readonly ICRUDRepository<Item> _itemRepository;
@@ -16,10 +16,10 @@ namespace Lavender.Services.ControlSettings
             _itemRepository = itemRepository;
         }
 
-        public async Task<List<ItemsResponse>> Handle(GetAllItemsRequest request, CancellationToken cancellationToken)
+        public async Task<List<ItemResponse>> Handle(GetAllItemsRequest request, CancellationToken cancellationToken)
         {
             var result = await _itemRepository.Find(i=> (request.ItemName.IsNullOrEmpty() || i.Name.StartsWith(request.ItemName!)) )
-                                                  .Select(ItemsResponse.Selector())
+                                                  .Select(ItemResponse.Selector())
                                                   
                                                   .ToListAsync(cancellationToken);
             return result;

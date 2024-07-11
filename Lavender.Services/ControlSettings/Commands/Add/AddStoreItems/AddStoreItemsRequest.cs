@@ -1,5 +1,4 @@
-﻿
-using Lavender.Core.EntityDto;
+﻿using Lavender.Core.EntityDto;
 using MediatR;
 
 namespace Lavender.Services.ControlSettings
@@ -9,4 +8,5 @@ namespace Lavender.Services.ControlSettings
         public List<ControlData> StoreItemDtos{ get; set; } = new List<ControlData>();
 
     }
+
 }

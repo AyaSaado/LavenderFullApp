@@ -4,16 +4,16 @@ using System.Linq.Expressions;
 
 namespace Lavender.Services.ControlSettings
 {
-    public class GetAllItemsRequest : IRequest<List<ItemsResponse>>
+    public class GetAllItemsRequest : IRequest<List<ItemResponse>>
     {
         public string? ItemName { get; set; } 
     }  
-    public class ItemsResponse
+    public class ItemResponse
         {
             public int Id { get; set; }
             public string Name { get; set; } = null!;
            
-            public static Expression<Func<Item, ItemsResponse>> Selector() => c
+            public static Expression<Func<Item, ItemResponse>> Selector() => c
                 => new()
                 {
                     Id = c.Id,
