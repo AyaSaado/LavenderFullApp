@@ -16,11 +16,29 @@ namespace LavenderFullApp.Seed
 
             await SeedRoles(context, roleManager);
             await SeedUsers(context, userManager);
-            await SeedLineType(context);
-           
+            await SeedLineTypes(context);
+            await SeedProductionSteps(context);
+            
         }
 
-        private static async Task SeedLineType(AppDbContext context)
+        private static async Task SeedProductionSteps(AppDbContext context)
+        {
+            if (context.Step.Any()) return;
+
+            var steps = new List<Step>();
+
+            steps.Add(new Step { Name = "Fabric cutting" });
+            steps.Add(new Step { Name = "Sewing the parts" });
+            steps.Add(new Step { Name = "Finishing" });
+            steps.Add(new Step { Name = "Quality inspection" });
+            steps.Add(new Step { Name = "Packaging" });
+
+
+            await context.Step.AddRangeAsync(steps);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedLineTypes(AppDbContext context)
         {
             if (context.LineType.Any()) return;
 
@@ -37,7 +55,7 @@ namespace LavenderFullApp.Seed
             });
             lines.Add(new LineType()
             {
-                Name = "Cajwal"
+                Name = "Suit"
             });
 
             await context.LineType.AddRangeAsync(lines);
