@@ -1,4 +1,6 @@
-﻿using Lavender.Services.Orders;
+﻿using Lavender.Core.EntityDto;
+using Lavender.Services.Orders;
+using Lavender.Services.Payments;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +37,14 @@ namespace LavenderFullApp.Controllers.Common
         {
             var result = await _mediator.Send(request, cancellationToken);
             return result.IsSuccess ?  Ok(result.Value) : NotFound(result.Error);
+        }
+
+        [HttpGet("GetAllPaymentsOfOrder")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<PaymentDto>))]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllPaymentsOfOrderRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
         }
 
 
