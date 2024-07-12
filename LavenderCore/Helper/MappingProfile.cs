@@ -53,6 +53,9 @@ namespace Lavender.Core.Helper
 
                 CreateMap<Plan, PlanDto>().ReverseMap();
 
+                CreateMap<Payment, PaymentDto>().ReverseMap();
+
+
             }
         }
     }
