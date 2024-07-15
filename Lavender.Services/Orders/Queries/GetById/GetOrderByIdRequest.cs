@@ -25,6 +25,8 @@ namespace Lavender.Services.Orders
             public DateOnly EndDate { get; set; }
             public int GalleryDesignId { get; set; }
             public decimal DesignPrice { get; set; }
+            public decimal TotalPrice { get; set; }
+            public int ItemsCount { get; set; }
             public List<string> UsedFabrics { get; set; } = new List<string>();
             public ICollection<ItemSizeDto> ItemSizeDtos { get; set; } = new List<ItemSizeDto>();
             public static Expression<Func<Order, OrderResponse>> Selector() => o

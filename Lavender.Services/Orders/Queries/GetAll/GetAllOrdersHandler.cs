@@ -22,10 +22,17 @@ namespace Lavender.Services.Orders
 
             foreach (var order in orders)
             {
+                var entity = await _unitOfWork.Orders.GetOneAsync(o => o.Id == order.Id, cancellationToken);
+
                 if (order.GalleryDesignId != 0)
                 {
                     var design = await _unitOfWork.Designs.GetOneAsync(d => d.Id == order.GalleryDesignId, cancellationToken);
+                    
                     order.DesignPrice = design!.DesignPrice - design.DesignPrice * (design.Discount / 100);
+
+                    order.ItemsCount = entity!.ItemSizes.SelectMany(i => i.ItemSizeWithColors).Sum(i => i.Amount);
+                  
+                    order.TotalPrice = order.DesignPrice * order.ItemsCount;
                 }
             }
 

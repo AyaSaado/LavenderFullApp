@@ -23,6 +23,8 @@ namespace Lavender.Services.Orders
             public int ItemTypeId { get; set; }
             public string? FeedBack { get; set; }
             public decimal DesignPrice { get; set; }
+            public decimal TotalPrice { get; set; }
+            public int ItemsCount {  get; set; }
             public DateOnly StartDate { get; set; }
             public DateOnly EndDate { get; set; }
             public int GalleryDesignId { get; set; }
