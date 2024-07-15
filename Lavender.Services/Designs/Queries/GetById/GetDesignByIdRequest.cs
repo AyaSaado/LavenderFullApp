@@ -20,6 +20,7 @@ namespace Lavender.Services.Designs
         public decimal Height { get; set; }
         public Guid DesignerId { get; set; }
         public Guid? TailorId { get; set; }
+        public Guid? ProductionId { get; set; }
         public int OrderId { get; set; }
         public int OrdersOfDesignCount { get; set; }
         public List<string> UsedFabrics { get; set; } = new List<string>();
@@ -37,6 +38,7 @@ namespace Lavender.Services.Designs
                   Height = c.Height,
                   DesignerId = c.DesignerId,
                   TailorId = c.TailorId,
+                  ProductionId = c.Order.ProductionLineId ,
                   OrderId = c.OrderId,
                   DesignImageDtos = Mapping.Mapper.Map<List<DesignImageDto>>(c.DesignImages.Where(im => im.ImageType == ImageType.model)),
                  
