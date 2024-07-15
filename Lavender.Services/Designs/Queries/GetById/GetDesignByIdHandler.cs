@@ -1,4 +1,5 @@
-﻿using Lavender.Core.EntityDto;
+﻿using Lavender.Core.Entities;
+using Lavender.Core.EntityDto;
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,9 @@ namespace Lavender.Services.Designs
                                             .Where(s => s.StoreItem.Name.Equals("Fabric"))
                                             .Select(s => s.SType.Name)
                                             .ToList();
+              
+                result.OrdersOfDesignCount = await _unitOfWork.Orders.Find(o => o.GalleryDesignId == result.Id)
+                                                                     .CountAsync(cancellationToken);
             }      
     
             return result;

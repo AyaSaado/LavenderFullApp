@@ -21,12 +21,20 @@ namespace Lavender.Services.Designs
         {
             var user = await _userManager.GetUsersInRoleAsync(LavenderRoles.Admin.ToString());
          
-            return await _unitOfWork.Designs.Find(d => (user.Select(u=>u.Id).ToList().Contains(d.Order.ActorId)) &&
+            var result = await _unitOfWork.Designs.Find(d => (user.Select(u=>u.Id).ToList().Contains(d.Order.ActorId)) &&
                                                         ((request.ItemId == 0) || (d.Order.ItemId == request.ItemId)) &&
                                                         ((request.ItemTypeId == 0) || (d.Order.ItemTypeId == request.ItemTypeId)))
                                              .Select(AllDesignsResponse.Selector())
                                              .ToListAsync(cancellationToken);
 
+            foreach(var design in result)
+            {
+                design.OrdersOfDesignCount = await _unitOfWork.Orders.Find(o=>o.GalleryDesignId == design.Id)
+                                                                     .CountAsync(cancellationToken);  
+            }
+
+            return result.OrderByDescending(d=>d.OrdersOfDesignCount)
+                         .ToList(); 
         }
     }
 }

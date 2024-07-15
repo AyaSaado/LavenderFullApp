@@ -20,6 +20,7 @@ namespace Lavender.Services.Designs
         public string ItemName { get; set; } = null!;
         public int ItemId { get; set; } 
         public int ItemTypeId { get; set; }
+        public int OrdersOfDesignCount { get; set; }
 
 
         public static Expression<Func<Design, AllDesignsResponse>> Selector() => c
