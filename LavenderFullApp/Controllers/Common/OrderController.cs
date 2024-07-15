@@ -23,7 +23,7 @@ namespace LavenderFullApp.Controllers.Common
         }
 
         [HttpGet("GetAllOrders")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(OrdersResponse))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<OrdersResponse>))]
         public async Task<IActionResult> GetAll([FromQuery] GetAllOrdersRequest request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
@@ -37,6 +37,14 @@ namespace LavenderFullApp.Controllers.Common
         {
             var result = await _mediator.Send(request, cancellationToken);
             return result.IsSuccess ?  Ok(result.Value) : NotFound(result.Error);
+        }
+
+        [HttpGet("GetConsumingDetails")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ConsumingDto>))]
+        public async Task<IActionResult> GetAll([FromQuery] GetConsumingDetailsRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
         }
 
         [HttpGet("GetAllPaymentsOfOrder")]

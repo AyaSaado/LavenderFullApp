@@ -48,10 +48,11 @@ namespace LavenderFullApp.Controllers.Common
 
         [HttpGet("GetItemById")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(ItemResponse))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery] GetItemByIdRequest request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
-            return Ok(result);
+            return result is not null ? Ok(result) : NotFound();
         }
 
         [HttpGet("GetAllItemTypes")]
@@ -87,6 +88,15 @@ namespace LavenderFullApp.Controllers.Common
         {
             var result = await _mediator.Send(request, cancellationToken);
             return Ok(result);
+        }
+
+        [HttpGet("GetItemDetailsById")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(ItemDetailResponse))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAll([FromQuery] GetItemDetailsByIdRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return result is not null ? Ok(result) : NotFound();
         }
     }
 }
