@@ -28,4 +28,9 @@
     <ProjectReference Include="..\LavenderCore\Lavender.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="LavanderSignalR\Chat\" />
+    <Folder Include="LavanderSignalR\Notification\" />
+  </ItemGroup>
+
 </Project>
