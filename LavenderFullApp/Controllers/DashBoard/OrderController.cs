@@ -21,14 +21,7 @@ namespace LavenderFullApp.Controllers.DashBoard
         }
 
 
-        [HttpPut("AddFeedBack")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody] AddFeedBackRequest command, CancellationToken cancellationToken)
-        {
-            var result = await _mediator.Send(command, cancellationToken);
-            return result ? Ok() : BadRequest();
-        }
+        
 
         [HttpPost("AddRawItemsOfOrder")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
