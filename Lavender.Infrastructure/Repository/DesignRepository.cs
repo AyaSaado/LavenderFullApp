@@ -31,6 +31,7 @@ namespace Lavender.Infrastructure.Repository
         public override Task<Design?> GetOneAsync(Expression<Func<Design, bool>> predicate, CancellationToken cancellationToken)
         {
             return base.Find(predicate)
+                       .Include(d=>d.Order) 
                        .Include(d => d.DesignImages)
                        .Include(d => d.Chats)
                        .FirstOrDefaultAsync(cancellationToken);
