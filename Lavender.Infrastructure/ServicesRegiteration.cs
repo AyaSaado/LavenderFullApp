@@ -9,6 +9,7 @@ using Lavender.Infrastructure.Jwt;
 using Lavender.Infrastructure.Repository;
 using Lavender.Core.Helper;
 
+
 namespace Lavender.Infrastructure
 {
     public static class ServicesRegiteration
@@ -23,7 +24,7 @@ namespace Lavender.Infrastructure
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();
             builder.Services.AddTransient<IEmailRepository,EmailRepository>();
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-
+           // builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
             builder.Services.AddAuthentication(options =>
             {
@@ -34,6 +35,19 @@ namespace Lavender.Infrastructure
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context => {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken)
+                            && path.StartsWithSegments("/OrderHub"))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
         }
