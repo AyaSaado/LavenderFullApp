@@ -1,7 +1,6 @@
 ﻿using Lavender.Core.Entities;
 using MediatR;
 using System.Linq.Expressions;
-using static Lavender.Services.ControlSettings.GetAllItemTypesRequest;
 
 namespace Lavender.Services.ControlSettings
 {
@@ -22,5 +21,5 @@ namespace Lavender.Services.ControlSettings
                     Name = c.Name,
        
                 };
-        }
+       }
 }

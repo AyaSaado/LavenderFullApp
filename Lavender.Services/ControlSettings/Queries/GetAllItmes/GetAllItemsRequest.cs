@@ -9,7 +9,7 @@ namespace Lavender.Services.ControlSettings
         public string? ItemName { get; set; } 
     }  
     public class ItemResponse
-        {
+    {
             public int Id { get; set; }
             public string Name { get; set; } = null!;
            
@@ -20,5 +20,5 @@ namespace Lavender.Services.ControlSettings
                     Name = c.Name,
        
                 };
-        }
+    }
 }
