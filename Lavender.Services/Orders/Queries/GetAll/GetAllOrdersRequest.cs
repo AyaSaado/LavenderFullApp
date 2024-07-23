@@ -8,9 +8,10 @@ namespace Lavender.Services.Orders
     public class GetAllOrdersRequest : IRequest<List<OrdersResponse>>
     {
         public Guid ActorId { get; set; }
+        public Guid ProductionId { get; set; }
+        public bool CustomOrder { get; set; }
         public OrderState OrderState { get; set; }
-
-      
+    
     }  
         public class OrdersResponse
         {

@@ -1,4 +1,5 @@
-﻿using Lavender.Core.Interfaces.Repository;
+﻿using Lavender.Core.Enum;
+using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +16,10 @@ namespace Lavender.Services.Orders
 
         public async Task<List<OrdersResponse>> Handle(GetAllOrdersRequest request, CancellationToken cancellationToken)
         {
-            var orders = await _unitOfWork.Orders.Find(o => o.ActorId == request.ActorId
-                                                        && (o.OrderState == request.OrderState))
+            var orders = await _unitOfWork.Orders.Find(o => (request.ActorId == Guid.Empty || o.ActorId == request.ActorId )&&
+                                                           (request.ProductionId == Guid.Empty || o.ProductionLineId == request.ProductionId)
+                                                        && (o.OrderState == request.OrderState)
+                                                        && (request.CustomOrder ? o.OrderType.Equals(Ordertype.custom): true ))
                                                  .Select(OrdersResponse.Selector())
                                                  .ToListAsync(cancellationToken);
 
@@ -24,14 +27,14 @@ namespace Lavender.Services.Orders
             {
                 var entity = await _unitOfWork.Orders.GetOneAsync(o => o.Id == order.Id, cancellationToken);
 
+                order.ItemsCount = entity!.ItemSizes.SelectMany(i => i.ItemSizeWithColors).Sum(i => i.Amount);
+
                 if (order.GalleryDesignId != 0)
                 {
                     var design = await _unitOfWork.Designs.GetOneAsync(d => d.Id == order.GalleryDesignId, cancellationToken);
                     
                     order.DesignPrice = design!.DesignPrice - design.DesignPrice * (design.Discount / 100);
-
-                    order.ItemsCount = entity!.ItemSizes.SelectMany(i => i.ItemSizeWithColors).Sum(i => i.Amount);
-                  
+ 
                     order.TotalPrice = order.DesignPrice * order.ItemsCount;
                 }
             }

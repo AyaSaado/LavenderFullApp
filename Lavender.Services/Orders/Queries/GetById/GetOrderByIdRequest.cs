@@ -18,6 +18,7 @@ namespace Lavender.Services.Orders
             public DateOnly DeliveryDate { get; set; }
             public Ordertype OrderType { get; set; }
             public Guid ActorId { get; set; }
+            public Guid? ProductionLineId { get; set; }
             public OrderState OrderState { get; set; }
             public int ItemId { get; set; }
             public int ItemTypeId { get; set; }
@@ -34,6 +35,7 @@ namespace Lavender.Services.Orders
              {
                  Id = o.Id,
                  ActorId = o.ActorId,
+                 ProductionLineId = o.ProductionLineId,
                  DeliveryDate = o.DeliveryDate,
                  OrderDate = o.OrderDate,
                  OrderType = o.OrderType,
