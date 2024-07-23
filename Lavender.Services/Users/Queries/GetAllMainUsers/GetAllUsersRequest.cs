@@ -17,7 +17,7 @@ namespace Lavender.Services.Users
             public Guid Id { get; set; }
             public string? ProfileImageUrl { get; set; }
             public string FullName { get; set; } = null!;
-            public string Role { get; set; } = null!;
+            public string? Role { get; set; } 
 
             public static Expression<Func<User, AllUserResponse>> Selector() => p
                => new()

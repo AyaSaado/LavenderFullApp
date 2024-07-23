@@ -33,7 +33,7 @@ namespace Lavender.Services.Users
 
         private async Task<List<AllUserResponse>> getUsersByRoleAsync(string role , CancellationToken cancellationToken)
         {
-            IList<User> users ;
+            IList<User> users;
 
             if (!role.IsNullOrEmpty())
             {
@@ -49,7 +49,7 @@ namespace Lavender.Services.Users
                 Id = user.Id,
                 FullName = user.FullName,
                 ProfileImageUrl = user.ProfileImageUrl,
-                Role = _userManager.GetRolesAsync(user).Result.First(),
+                Role = _userManager.GetRolesAsync(user).Result.FirstOrDefault(),
             })
             .ToList();
 
