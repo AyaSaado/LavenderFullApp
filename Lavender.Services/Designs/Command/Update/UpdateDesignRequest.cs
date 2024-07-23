@@ -11,8 +11,7 @@ namespace Lavender.Services.Designs
         public decimal Height { get; set; }
         public decimal Discount { get; set; }
         public decimal DesignPrice { get; set; }
-        public Guid? ProductionLineId { get; set; }
-        public Guid? TailorId { get; set; }
+        public Guid? TailorId { get; set; } 
         public Guid DesignerId { get; set; }
         public ICollection<DesignImageDto> DesignImageDtos { get; set; } = new List<DesignImageDto>();
         

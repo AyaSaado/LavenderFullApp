@@ -1,4 +1,5 @@
 ﻿using Lavender.Core.Entities;
+using Lavender.Core.Enum;
 using Lavender.Core.Interfaces.Files;
 using Lavender.Core.Interfaces.Repository;
 using Lavender.Core.Shared;
@@ -26,8 +27,12 @@ namespace Lavender.Services.Designs
             entity.Update(request.Description, request.Height, request.Discount,
                                   request.DesignPrice,request.TailorId
                                          , request.DesignerId);
-
             
+            if(entity.Order.OrderType == Ordertype.custom)
+            {
+                entity.Order.OrderState = OrderState.underway;
+            }
+
             foreach (var image in request.DesignImageDtos)
             {
                 if (image.Image is not null)

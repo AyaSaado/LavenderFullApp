@@ -19,9 +19,11 @@ namespace Lavender.Services.Designs
 
         public async Task<List<AllDesignsResponse>> Handle(GetAllDesignsRequest request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.GetUsersInRoleAsync(LavenderRoles.Admin.ToString());
-         
-            var result = await _unitOfWork.Designs.Find(d => (user.Select(u=>u.Id).ToList().Contains(d.Order.ActorId)) &&
+            //var user = await _userManager.GetUsersInRoleAsync(LavenderRoles.Admin.ToString());
+            //(user.Select(u=>u.Id).ToList().Contains(d.Order.ActorId))
+           
+            
+            var result = await _unitOfWork.Designs.Find(d => (d.Order.OrderType == Ordertype.custom) &&
                                                         ((request.ItemId == 0) || (d.Order.ItemId == request.ItemId)) &&
                                                         ((request.ItemTypeId == 0) || (d.Order.ItemTypeId == request.ItemTypeId)))
                                              .Select(AllDesignsResponse.Selector())
