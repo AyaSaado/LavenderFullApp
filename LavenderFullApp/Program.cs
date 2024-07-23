@@ -9,6 +9,7 @@ using static Lavender.Core.Helper.MappingProfile;
 using Lavender.Services;
 using LavenderFullApp.Localization;
 using Microsoft.Extensions.Localization;
+using Lavender.Infrastructure.LavanderSignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,6 +85,8 @@ builder.Services.AddDbContext<AppDbContext>(o =>
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddSignalR(options => options.EnableDetailedErrors = true);
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(AssemblyReference).Assembly));
 
 builder.AddRegiteration();
@@ -134,6 +137,7 @@ app.UseAuthorization();
 app.UseEndpoints(end =>
 {
     end.MapControllers();
+    end.MapHub<OrderHub>("/OrderHub");
 });
 
 await SeedData.Seed(app);
