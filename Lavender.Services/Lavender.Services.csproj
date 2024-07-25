@@ -38,8 +38,6 @@
     <Folder Include="Constants\Command\" />
     <Folder Include="Constants\Queries\" />
     <Folder Include="Actors\Queries\" />
-    <Folder Include="SewingMachines\Command\" />
-    <Folder Include="SewingMachines\Queries\" />
   </ItemGroup>
 
 </Project>
