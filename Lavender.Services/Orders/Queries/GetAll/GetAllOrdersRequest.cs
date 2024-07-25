@@ -11,7 +11,9 @@ namespace Lavender.Services.Orders
         public Guid ProductionId { get; set; }
         public bool CustomOrder { get; set; }
         public OrderState OrderState { get; set; }
-    
+        public int ItemTypeId { get; set; } = 0;
+        public int ItemId { get; set; } = 0;
+
     }  
         public class OrdersResponse
         {

@@ -17,9 +17,11 @@ namespace Lavender.Services.Orders
         public async Task<List<OrdersResponse>> Handle(GetAllOrdersRequest request, CancellationToken cancellationToken)
         {
             var orders = await _unitOfWork.Orders.Find(o => (request.ActorId == Guid.Empty || o.ActorId == request.ActorId )&&
-                                                           (request.ProductionId == Guid.Empty || o.ProductionLineId == request.ProductionId)
-                                                        && (o.OrderState == request.OrderState)
-                                                        && (request.CustomOrder ? o.OrderType.Equals(Ordertype.custom): true ))
+                                                            (request.ProductionId == Guid.Empty || o.ProductionLineId == request.ProductionId)
+                                                        &&  (o.OrderState == request.OrderState)
+                                                        &&  (request.CustomOrder ? o.OrderType.Equals(Ordertype.custom): true )
+                                                        && ((request.ItemId == 0) || (o.ItemId == request.ItemId)) &&
+                                                           ((request.ItemTypeId == 0) || (o.ItemTypeId == request.ItemTypeId)))
                                                  .Select(OrdersResponse.Selector())
                                                  .ToListAsync(cancellationToken);
 
