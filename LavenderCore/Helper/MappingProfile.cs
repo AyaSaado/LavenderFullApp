@@ -55,6 +55,9 @@ namespace Lavender.Core.Helper
 
                 CreateMap<Payment, PaymentDto>().ReverseMap();
 
+                CreateMap<ModelName, ModelNameDto>().ReverseMap();
+
+                CreateMap<DailyProduction, DailyProductivityDto>().ReverseMap();
 
             }
         }
