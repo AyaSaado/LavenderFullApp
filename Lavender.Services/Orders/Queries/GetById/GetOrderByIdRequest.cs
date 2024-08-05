@@ -24,10 +24,12 @@ namespace Lavender.Services.Orders
             public int ItemTypeId { get; set; }
             public DateOnly StartDate { get; set; }
             public DateOnly EndDate { get; set; }
+            public decimal LastTotalPrice { get; set; }
             public int GalleryDesignId { get; set; }
             public decimal DesignPrice { get; set; }
             public decimal TotalPrice { get; set; }
             public int ItemsCount { get; set; }
+            public int CompletedItemsCount { get; set; }
             public List<string> UsedFabrics { get; set; } = new List<string>();
             public ICollection<ItemSizeDto> ItemSizeDtos { get; set; } = new List<ItemSizeDto>();
             public static Expression<Func<Order, OrderResponse>> Selector() => o
@@ -38,6 +40,7 @@ namespace Lavender.Services.Orders
                  ProductionLineId = o.ProductionLineId,
                  DeliveryDate = o.DeliveryDate,
                  OrderDate = o.OrderDate,
+                 LastTotalPrice = o.LastTotalPrice,
                  OrderType = o.OrderType,
                  OrderState = o.OrderState,
                  ItemId = o.ItemId,

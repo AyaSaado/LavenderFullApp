@@ -12,6 +12,7 @@ namespace Lavender.Core.Entities
         public DateOnly DeliveryDate { get; set; }
         public string? Feedback { get; set; }
         public Ordertype OrderType{ get; set; }
+        public decimal LastTotalPrice { get; set; }
         public Guid ActorId { get; set; }
         public int ItemId { get; set; }
         public int ItemTypeId { get; set; }

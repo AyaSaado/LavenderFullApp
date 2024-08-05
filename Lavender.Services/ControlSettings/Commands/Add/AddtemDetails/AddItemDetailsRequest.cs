@@ -15,6 +15,7 @@ namespace Lavender.Services.ControlSettings
         public ControlData stype { get; set; } = null!;
         public string Color { get; set; } = null!;
         public decimal Amount { get; set; }
+        public decimal Price { get; set; }
         public int StoreItemId { get; set; }
         public decimal MinAmount { get; set; }
 

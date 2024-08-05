@@ -1,20 +1,18 @@
-﻿using Lavender.Core.Entities;
-using Lavender.Core.Interfaces.Repository;
+﻿using Lavender.Core.Interfaces.Repository;
 using MediatR;
-using static Lavender.Core.Helper.MappingProfile;
 
 namespace Lavender.Services.Orders
 {
-    public class AddFeedBackHandler : IRequestHandler<AddFeedBackRequest, bool>
+    public class PutLastPriceOfOrderHandler : IRequestHandler<PutLastPriceOfOrderRequest, bool>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddFeedBackHandler(IUnitOfWork unitOfWork)
+        public PutLastPriceOfOrderHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> Handle(AddFeedBackRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(PutLastPriceOfOrderRequest request, CancellationToken cancellationToken)
         {
             var order = await _unitOfWork.Orders.GetOneAsync(o => o.Id == request.OrderId, cancellationToken);
 
@@ -23,7 +21,7 @@ namespace Lavender.Services.Orders
                 return false;
             }
 
-            order.Feedback = request.FeedBack;
+            order.LastTotalPrice = request.LastTotalPrice;
 
             try
             {

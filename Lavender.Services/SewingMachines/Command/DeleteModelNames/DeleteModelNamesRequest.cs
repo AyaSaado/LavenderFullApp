@@ -5,6 +5,6 @@ namespace Lavender.Services.SewingMachines
 {
     public class DeleteModelNamesRequest : IRequest<bool>
     {
-        public List<int> Ids { get; set; } = new List<int>();
+        public List<Guid> Ids { get; set; } = new List<Guid>();
     }
 }

@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Lavender.Core.Entities
 {
@@ -7,14 +6,15 @@ namespace Lavender.Core.Entities
     {
         [Key]
         public int Id { get; set; }
-        public string Color { get; set; } = null!;
         public decimal Amount {  get; set; }
+        public string Color { get; set; } = null!;
         public decimal MinAmount { get; set; }
+        public decimal Price { get; set; }
         public int STypeId { get; set; }
         public int StoreItemId { get; set; }
         public SType SType { get; set; } = null!;
         public StoreItem StoreItem { get; set; } = null!;
         public ICollection<Consuming> Consumings { get; set; } = new List<Consuming>();
-
+        
     }
 }

@@ -2,8 +2,7 @@
 {
     public class ProductionEmp : User
     {
-      
-        public decimal Salary { get; set; }
+     
         public int LineTypeId { get; set; }
         public Guid? HeadId { get; set; }
         public ProductionEmp? Head { get; set; }

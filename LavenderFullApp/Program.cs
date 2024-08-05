@@ -138,6 +138,7 @@ app.UseEndpoints(end =>
 {
     end.MapControllers();
     end.MapHub<OrderHub>("/OrderHub");
+    end.MapHub<ChatHub>("/ChatHub");
 });
 
 await SeedData.Seed(app);

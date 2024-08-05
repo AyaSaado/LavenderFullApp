@@ -2,9 +2,9 @@
 
 namespace Lavender.Services.Orders
 {
-    public class AddFeedBackRequest : IRequest<bool>
+    public class PutLastPriceOfOrderRequest : IRequest<bool>
     {
         public int OrderId { get; set; }    
-        public string? FeedBack { get; set; }
+        public decimal LastTotalPrice { get; set; }
     }
 }

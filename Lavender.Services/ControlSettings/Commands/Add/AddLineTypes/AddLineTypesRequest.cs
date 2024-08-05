@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using Lavender.Core.EntityDto;
+using MediatR;
 
 namespace Lavender.Services.ControlSettings
 {
     public class AddLineTypesRequest : IRequest<bool>
     {
-        public List<string> LineTypesName { get; set; } = null!;
+        public List<LineTypeDto> LineTypeDtos { get; set; } = new List<LineTypeDto>();
     }
+
 }

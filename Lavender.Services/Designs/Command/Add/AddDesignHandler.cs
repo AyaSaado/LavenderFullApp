@@ -36,6 +36,7 @@ namespace Lavender.Services.Designs
              
             };
 
+           
             var order = await _unitOfWork.Orders.GetOneAsync(o => o.Id == design.OrderId, cancellationToken);
             
             order!.OrderState = OrderState.underway;
@@ -47,6 +48,8 @@ namespace Lavender.Services.Designs
                 await _unitOfWork.Designs.AddAsync(design);
                 await _unitOfWork.Save(cancellationToken);
                 
+                //send to Designer
+
                 return true;
             }
 

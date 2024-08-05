@@ -18,8 +18,11 @@ namespace Lavender.Services.SewingMachines
 
         public async Task<List<SewingMachineResponse>> Handle(GetAllSewingMachinesRequest request, CancellationToken cancellationToken)
         {
-           return await _sewingMachineRepository.Find(s=>( request.MachineNameId == 0 ||s.ModelNameId == request.MachineNameId)
-                                                                &&(request.ProductionEmpId == null || s.ProductionEmpId == request.ProductionEmpId) )
+            if (request.ModelNameId == Guid.Empty) request.ModelNameId = null;
+
+           return await _sewingMachineRepository.Find(s=>  ((request.Code == 0) || (s.Code == request.Code))
+                                                         &&((request.ModelNameId == null )||(s.ModelNameId == request.ModelNameId))
+                                                         &&((s.ProductionEmp.HeadId == request.ProductionEmpId)||(s.ProductionEmpId == request.ProductionEmpId)))
                                                         .Select(SewingMachineResponse.Selector())  
                                                         .ToListAsync(cancellationToken);
 

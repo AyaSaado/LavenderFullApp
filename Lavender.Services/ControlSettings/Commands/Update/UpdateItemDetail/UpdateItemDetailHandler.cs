@@ -27,6 +27,7 @@ namespace Lavender.Services.ControlSettings
             entity.Amount = request.ItemDetail.Amount;
             entity.Color  = request.ItemDetail.Color;
             entity.MinAmount = request.ItemDetail.MinAmount;
+            entity.Price = request.ItemDetail.Price;
 
             try
             {

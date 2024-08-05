@@ -7,6 +7,8 @@ namespace Lavender.Services.Users
     public class GetAllUsersRequest : IRequest<List<AllUserResponse>>
     {
         public string Role { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
 

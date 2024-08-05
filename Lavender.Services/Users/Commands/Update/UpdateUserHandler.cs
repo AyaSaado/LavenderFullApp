@@ -31,7 +31,7 @@ namespace Lavender.Services.Users
                   $"The User with this Id was not found"));
             }
 
-            entity.Update(request.FullName, request.PhoneNumber, request.NationalNumber
+            entity.Update(request.FullName, request.PhoneNumber, request.Salary, request.NationalNumber
                           , request.BirthDay, request.Address);
 
             if (request.ProfileImage != null)

@@ -33,10 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Actors\Command\Update\" />
-    <Folder Include="Chats\Command\" />
-    <Folder Include="Chats\Queries\" />
     <Folder Include="Constants\Command\" />
-    <Folder Include="Constants\Queries\" />
     <Folder Include="Actors\Queries\" />
   </ItemGroup>
 

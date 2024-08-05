@@ -19,9 +19,9 @@ namespace Lavender.Services.ControlSettings
         {
             var entities = new List<Item>();
 
-            foreach (var name in request.ItemsName)
+            foreach (var item in request.Items)
             {
-                entities.Add(new Item() { Name = name });
+                entities.Add(new Item() { Name = item.Name , Discount = item.Discount });
             }
 
             try

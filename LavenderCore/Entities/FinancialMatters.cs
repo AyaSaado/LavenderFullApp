@@ -8,12 +8,10 @@ namespace Lavender.Core.Entities
     {
         [Key]
         public int Id { get; set; }
-        public decimal PieceProfit { get; set; }
-        public decimal Executive_Wage { get; set; }
+        public decimal Executive_Salary { get; set; }
         public decimal Executive_Profit { get; set; }
-        public decimal Worker_Wage { get; set; }
-        public decimal ProductionManager_Wage { get; set; }
-
-
+        public decimal Designer_Salary{ get; set; }
+        public decimal Tailor_Salary { get; set; }
+        public ICollection<DisscountRange> Disscount_Range { get; set; } = new List<DisscountRange>();  
     }
 }

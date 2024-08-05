@@ -4,6 +4,7 @@ using Lavender.Services.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace LavenderFullApp.Controllers.Common
@@ -48,6 +49,16 @@ namespace LavenderFullApp.Controllers.Common
         {
             var result = await _mediator.Send(command, cancellationToken);
             return result.IsSuccess ? Ok() : BadRequest(_localization[result.Error.Message]);
+        }
+
+        [HttpGet("ForgetPassword")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(string))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ForgetPassword([FromQuery] ForgetPasswordRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+
+            return result.IsNullOrEmpty() ? BadRequest() : Ok(result);
         }
 
 

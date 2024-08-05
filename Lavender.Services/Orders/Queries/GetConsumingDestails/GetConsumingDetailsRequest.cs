@@ -7,6 +7,6 @@ namespace Lavender.Services.Orders
 {
     public class GetConsumingDetailsRequest  : IRequest<List<ConsumingDto>?>
     {
-        public int OrderId { get; set; }
+        public int OrderId { get; set; } = 0;
     }
 }

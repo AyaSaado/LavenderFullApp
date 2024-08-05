@@ -11,11 +11,11 @@ namespace Lavender.Infrastructure.LavanderSignalR
 
         public static Dictionary<string, string> _userConnectionMap = new Dictionary<string, string>();
         public static ConcurrentDictionary<string, List<string>> _runtimeAddObjects = new ConcurrentDictionary<string, List<string>>();
+        public static ConcurrentDictionary<string, Dictionary<int,string>> _runtimeAddFeedBack = new ConcurrentDictionary<string, Dictionary<int, string>>();
         public static ConcurrentDictionary<string, List<string>> _runtimeAddObjectsToProd = new ConcurrentDictionary<string, List<string>>();
-        public static ConcurrentDictionary<string, List<string>> _runtimeAddFeedBack = new ConcurrentDictionary<string, List<string>>();
         public static ConcurrentDictionary<string, List<string>> _runtimeUpdateObjects = new ConcurrentDictionary<string, List<string>>();
         public static ConcurrentDictionary<string, List<string>> _runtimeDeleteObjects = new ConcurrentDictionary<string, List<string>>();
-
+        public static ConcurrentDictionary<string, Dictionary<int, string>> _runtimeFinishedObjects = new ConcurrentDictionary<string, Dictionary<int, string>>();
 
         public override async Task OnConnectedAsync()
         {
@@ -42,12 +42,12 @@ namespace Lavender.Infrastructure.LavanderSignalR
                     _runtimeAddObjects.TryRemove(userId!, out _);
                 }
 
-                if (_runtimeAddFeedBack.TryGetValue(userId!, out List<string>? feedbacks))
+                if (_runtimeAddFeedBack.TryGetValue(userId!, out Dictionary<int,string>? feedbacks))
                 {
                     // Send the feedbacks to the connected user
                     foreach (var feedback in feedbacks)
                     {
-                        await Clients.Client(Context.ConnectionId).ReceiveFeedBackOfOrder(feedback);
+                        await Clients.Client(Context.ConnectionId).ReceiveFeedBackOfOrder(feedback.Key , feedback.Value);
                     }
 
                     // Remove the orders from _runtimeAddFeedBack since they have been received
@@ -90,6 +90,19 @@ namespace Lavender.Infrastructure.LavanderSignalR
                     _runtimeDeleteObjects.TryRemove(userId!, out _);
                 }
 
+
+                if (_runtimeFinishedObjects.TryGetValue(userId!, out Dictionary<int,string>? messages))
+                {
+                    // Send the messages to the connected user
+                    foreach (var deletemessage in messages)
+                    {
+                        await Clients.Client(Context.ConnectionId).ReceiveOrderFinished(deletemessage.Key , deletemessage.Value);
+                    }
+
+                    // Remove the orders from _runtimeFinishedObjects since they have been received
+                    _runtimeFinishedObjects.TryRemove(userId!, out _);
+                }
+
                 await base.OnConnectedAsync();
             }
         }
@@ -113,42 +126,50 @@ namespace Lavender.Infrastructure.LavanderSignalR
                 await base.OnDisconnectedAsync(exception);
             }
         }
-        // Not Accessed ^_^
-        public async Task SendOrderCreated(string groupName,string order)
-        {
-            await Clients.Group(groupName).ReceiveOrderCreated(order);
-        }
+        //// Not Accessed ^_^
+        //public async Task SendOrderCreated(string groupName,string order)
+        //{
+        //    await Clients.Group(groupName).ReceiveOrderCreated(order);
+        //}
 
-        public async Task SendOrderUpdated(string groupName,string productionId, string order)
-        {
-            await Clients.Group(groupName).ReceiveOrderCreated(order);
+        //public async Task SendOrderUpdated(string groupName,string productionId, string order)
+        //{
+        //    await Clients.Group(groupName).ReceiveOrderCreated(order);
 
-            if (_userConnectionMap.TryGetValue(productionId, out var connectionId))
-            {
-                await Clients.Client(connectionId).ReceiveOrderToProduction(order);
-            }
-        }
+        //    if (_userConnectionMap.TryGetValue(productionId, out var connectionId))
+        //    {
+        //        await Clients.Client(connectionId).ReceiveOrderToProduction(order);
+        //    }
+        //}
 
-        public async Task SendOrderToProduction(string userId, string order)
-        {
-            if (_userConnectionMap.TryGetValue(userId, out var connectionId))
-            {
-                await Clients.Client(connectionId).ReceiveOrderToProduction(order);
-            }
-        }
+        //public async Task SendOrderToProduction(string userId, string order)
+        //{
+        //    if (_userConnectionMap.TryGetValue(userId, out var connectionId))
+        //    {
+        //        await Clients.Client(connectionId).ReceiveOrderToProduction(order);
+        //    }
+        //}
 
-        public async Task SendFeedBackOfOrder(string userId ,string groupName ,string message)
-        {
-            if (_userConnectionMap.TryGetValue(userId, out var connectionId))
-            {
-                await Clients.Client(connectionId).ReceiveFeedBackOfOrder(message);
-            }
-                await Clients.Group(groupName).ReceiveFeedBackOfOrder(message);
-        }
+        //public async Task SendFeedBackOfOrder(string userId ,string groupName ,string message)
+        //{
+        //    if (_userConnectionMap.TryGetValue(userId, out var connectionId))
+        //    {
+        //        await Clients.Client(connectionId).ReceiveFeedBackOfOrder(message);
+        //    }
+        //        await Clients.Group(groupName).ReceiveFeedBackOfOrder(message);
+        //}
 
-        public async Task SendOrderDeleted(string groupName , string message)
-        {
-            await Clients.Group(groupName).ReceiveOrderDeleted(message);
-        }
+        //public async Task SendOrderDeleted(string groupName , string message)
+        //{
+        //    await Clients.Group(groupName).ReceiveOrderDeleted(message);
+        //}
+
+        //public async Task SendOrderFinished(string userId, string message)
+        //{
+        //    if (_userConnectionMap.TryGetValue(userId, out var connectionId))
+        //    {
+        //        await Clients.Client(connectionId).ReceiveOrderFinished(message);
+        //    }
+        //}
     }
 }

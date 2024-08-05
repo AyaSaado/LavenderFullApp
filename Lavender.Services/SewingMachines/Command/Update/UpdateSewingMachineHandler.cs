@@ -24,11 +24,13 @@ namespace Lavender.Services.SewingMachines
                 return false;
             }
 
+            if (request.ModelNameId == Guid.Empty) request.ModelNameId = null;
+
             entity.Code = request.Code;
             entity.Active = request.Active;
             entity.PurchaseDate = request.PurchaseDate;
             entity.ProductionEmpId = request.ProductionEmpId;
-            entity.ModelName = Mapping.Mapper.Map<ModelName>(request.ModelNameDto);
+            entity.ModelNameId = request.ModelNameId;
 
             try
             {

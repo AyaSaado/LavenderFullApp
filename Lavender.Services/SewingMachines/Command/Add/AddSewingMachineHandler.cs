@@ -1,6 +1,7 @@
 ﻿using Lavender.Core.Entities;
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static Lavender.Core.Helper.MappingProfile;
 
 namespace Lavender.Services.SewingMachines 
@@ -21,11 +22,12 @@ namespace Lavender.Services.SewingMachines
             var sewingmachine = new SewingMachine()
             {
                 Code = request.Code,
-                Active = true,
+                Active = false,
                 PurchaseDate = request.PurchaseDate,
-                ProductionEmpId = request.ProductionEmpId,
-                ModelNameId =  request.ModelNameId
+                ProductionEmpId = request.ProductionEmpId,   
+                ModelNameId = request.ModelNameId
             };
+  
 
             try
             {

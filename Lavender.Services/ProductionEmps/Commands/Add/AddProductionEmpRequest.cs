@@ -9,7 +9,7 @@ namespace Lavender.Services.ProductionEmps
         public Guid Id { get; set; }
         public IFormFile? ProfileImage { get; set; }
         public string FullName { get; set; } = null!;
-        public string Email { get; set; } = null!;
+        public string? Email { get; set; }
         public string? UserName { get; set; } 
         public string? Password { get; set; } 
         public Guid? HeadId { get; set; }

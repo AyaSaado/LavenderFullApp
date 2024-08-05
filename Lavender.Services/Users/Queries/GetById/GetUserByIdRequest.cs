@@ -12,7 +12,7 @@ namespace Lavender.Services.Users
     
     }
     public class UserResponse
-        {
+    {
             public Guid Id { get; set; }
             public string? ProfileImageUrl { get; set; }
             public string FullName { get; set; } = null!;
@@ -20,10 +20,11 @@ namespace Lavender.Services.Users
             public string UserName { get; set; } = null!;
             public string? PhoneNumber { get; set; } = null!;
             public string? NationalNumber { get; set; }
+            public decimal Salary { get; set; }
             public string? Address { get; set; }
             public DateOnly BirthDay { get; set; }
 
-            public static Expression<Func<User?, UserResponse>> Selector() => p
+            public static Expression<Func<User, UserResponse>> Selector() => p
                => new()
                {
                    Id = p.Id,
@@ -34,6 +35,7 @@ namespace Lavender.Services.Users
                    NationalNumber = p.NationalNumber,
                    PhoneNumber = p.PhoneNumber,
                    Address = p.Address,
+                   Salary = p.Salary,
                    ProfileImageUrl = p.ProfileImageUrl,
 
                };

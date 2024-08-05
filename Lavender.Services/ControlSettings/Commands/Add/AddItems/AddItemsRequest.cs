@@ -4,7 +4,7 @@ namespace Lavender.Services.ControlSettings
 {
     public class AddItemsRequest : IRequest<bool>
     {
-        public  List<string> ItemsName { get; set; } = new List<string>();
+        public  List<ItemDto> Items { get; set; } = new List<ItemDto>();
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using Lavender.Services.ControlSettings;
+﻿using Lavender.Services.Constants;
+using Lavender.Services.ControlSettings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,24 @@ namespace LavenderFullApp.Controllers.DashBoard
         public ControlSettingsController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("HomeReport")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(HomeResponse))]
+        public async Task<IActionResult> Get([FromQuery] HomeReportRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+
+
+        [HttpPost("UpsertFinancialMatters")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Add([FromBody] UpsertFinancialMattersRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? Ok() : BadRequest();
         }
 
 
@@ -87,6 +106,14 @@ namespace LavenderFullApp.Controllers.DashBoard
             return result ? Ok() : BadRequest();
         }
 
+        [HttpPut("UpdateItems")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update([FromBody] UpdateItemsRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? Ok() : NotFound();
+        }
 
         [HttpDelete("DeleteItems")]
         [SwaggerResponse(StatusCodes.Status204NoContent)]

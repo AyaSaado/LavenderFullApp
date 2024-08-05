@@ -2,6 +2,7 @@
 using Lavender.Core.Entities;
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
+using static Lavender.Core.Helper.MappingProfile;
 
 namespace Lavender.Services.ControlSettings
 {
@@ -9,6 +10,7 @@ namespace Lavender.Services.ControlSettings
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICRUDRepository<LineType> _lineTyperepository;
+
 
         public AddLineTypesHandler(IUnitOfWork unitOfWork, ICRUDRepository<LineType> lineTyperepository)
         {
@@ -18,12 +20,7 @@ namespace Lavender.Services.ControlSettings
 
         public async  Task<bool> Handle(AddLineTypesRequest request, CancellationToken cancellationToken)
         {
-            var entities = new List<LineType>();
-
-            foreach (var entity in request.LineTypesName)
-            {
-                entities.Add(new LineType() { Name = entity });
-            }
+            var entities = Mapping.Mapper.Map<List<LineType>>(request.LineTypeDtos);
 
             try
             {

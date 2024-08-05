@@ -51,6 +51,7 @@ namespace Lavender.Services.Users
                    BirthDay = request.BirthDay,
                    NationalNumber = request.NationalNumber,
                    PhoneNumber = request.PhoneNumber,
+                   Salary = request.Salary,
                    Address = request.Address,
                };
        

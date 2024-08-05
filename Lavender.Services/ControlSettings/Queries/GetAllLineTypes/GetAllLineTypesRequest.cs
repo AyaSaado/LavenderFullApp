@@ -13,12 +13,15 @@ namespace Lavender.Services.ControlSettings
         {
             public int Id { get; set; }
             public string Name { get; set; } = null!;
-           
+            public decimal Worker_Wage_EachHour { get; set; }
+            public decimal ProductionManager_Salary { get; set; }
             public static Expression<Func<LineType, LineTypeResponse>> Selector() => c
                 => new()
                 {
                     Id = c.Id,
                     Name = c.Name,
+                    ProductionManager_Salary = c.ProductionManager_Salary,
+                    Worker_Wage_EachHour = c.Worker_Wage_EachHour
        
                 };
         }

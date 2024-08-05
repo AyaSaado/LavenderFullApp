@@ -74,10 +74,10 @@ namespace LavenderFullApp.Controllers.Common
             return result ? Ok() : BadRequest();
         }
 
-        [HttpPut("UpdateOrderWithAddingFeedBack")]
+        [HttpPut("PutLastPriceOfOrder")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody] AddFeedBackRequest command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update([FromBody] PutLastPriceOfOrderRequest command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
             return result ? Ok() : BadRequest();

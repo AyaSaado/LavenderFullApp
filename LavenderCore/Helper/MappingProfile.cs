@@ -29,6 +29,7 @@ namespace Lavender.Core.Helper
                 CreateMap<DesigningSection, DesignSectionDto>().ReverseMap();
 
                 CreateMap<LineType, LineTypeDto>().ReverseMap();
+
                 CreateMap<ProductionEmp, ProductionHeadDto>().ReverseMap();
 
                 CreateMap<ItemSizeWithColor, ItemSizeWithColorDto>().ReverseMap();

@@ -10,5 +10,6 @@ namespace Lavender.Core.EntityDto
         public DateOnly DateOfDemand { get; set; }
         public int OrderId { get; set; }
         public int SItemTypeId { get; set; }
+        public List<string>? Colors { get; set; }
     }
 }

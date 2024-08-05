@@ -63,6 +63,11 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("SItemTypeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("SerializedColors")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Colors");
+
                     b.Property<int>("TypeOfUnit")
                         .HasColumnType("int");
 
@@ -184,6 +189,58 @@ namespace Lavender.Infrastructure.Migrations
                     b.ToTable("DesigningSection");
                 });
 
+            modelBuilder.Entity("Lavender.Core.Entities.DisscountRange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Disscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("FinancialMattersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FromQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToQuantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FinancialMattersId");
+
+                    b.ToTable("DisscountRange");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.FinancialMatters", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Designer_Salary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Executive_Profit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Executive_Salary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Tailor_Salary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FinancialMatter");
+                });
+
             modelBuilder.Entity("Lavender.Core.Entities.InspirationImage", b =>
                 {
                     b.Property<int>("Id")
@@ -213,6 +270,9 @@ namespace Lavender.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -298,6 +358,12 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("ProductionManager_Salary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Worker_Wage_EachHour")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.ToTable("LineType");
@@ -343,8 +409,8 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<bool>("IsSeen")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Sender_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Sender_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("SentTime")
                         .HasColumnType("datetime2");
@@ -361,11 +427,9 @@ namespace Lavender.Infrastructure.Migrations
 
             modelBuilder.Entity("Lavender.Core.Entities.ModelName", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -407,6 +471,9 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<int>("ItemTypeId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("LastTotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("date");
@@ -534,6 +601,9 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<decimal>("MinAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("STypeId")
                         .HasColumnType("int");
 
@@ -580,8 +650,8 @@ namespace Lavender.Infrastructure.Migrations
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
-                    b.Property<int>("ModelNameId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ModelNameId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductionEmpId")
                         .HasColumnType("uniqueidentifier");
@@ -694,6 +764,9 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<string>("ProfileImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Salary")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -867,15 +940,6 @@ namespace Lavender.Infrastructure.Migrations
                 {
                     b.HasBaseType("Lavender.Core.Entities.User");
 
-                    b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.ToTable("AspNetUsers", t =>
-                        {
-                            t.Property("Salary")
-                                .HasColumnName("PatternMaker_Salary");
-                        });
-
                     b.HasDiscriminator().HasValue("PatternMaker");
                 });
 
@@ -888,9 +952,6 @@ namespace Lavender.Infrastructure.Migrations
 
                     b.Property<int>("LineTypeId")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasIndex("HeadId");
 
@@ -974,6 +1035,13 @@ namespace Lavender.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Design");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.DisscountRange", b =>
+                {
+                    b.HasOne("Lavender.Core.Entities.FinancialMatters", null)
+                        .WithMany("Disscount_Range")
+                        .HasForeignKey("FinancialMattersId");
                 });
 
             modelBuilder.Entity("Lavender.Core.Entities.InspirationImage", b =>
@@ -1136,9 +1204,7 @@ namespace Lavender.Infrastructure.Migrations
                 {
                     b.HasOne("Lavender.Core.Entities.ModelName", "ModelName")
                         .WithMany("SewingMachines")
-                        .HasForeignKey("ModelNameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ModelNameId");
 
                     b.HasOne("Lavender.Core.Entities.ProductionEmp", "ProductionEmp")
                         .WithMany()
@@ -1234,6 +1300,11 @@ namespace Lavender.Infrastructure.Migrations
             modelBuilder.Entity("Lavender.Core.Entities.DesigningSection", b =>
                 {
                     b.Navigation("MakerSections");
+                });
+
+            modelBuilder.Entity("Lavender.Core.Entities.FinancialMatters", b =>
+                {
+                    b.Navigation("Disscount_Range");
                 });
 
             modelBuilder.Entity("Lavender.Core.Entities.Item", b =>

@@ -10,6 +10,7 @@ namespace Lavender.Services.Orders
         public Guid ActorId { get; set; }
         public Guid ProductionId { get; set; }
         public bool CustomOrder { get; set; }
+        public bool All { get; set; }
         public OrderState OrderState { get; set; }
         public int ItemTypeId { get; set; } = 0;
         public int ItemId { get; set; } = 0;
@@ -22,12 +23,15 @@ namespace Lavender.Services.Orders
             public DateOnly DeliveryDate { get; set; }
             public Ordertype OrderType { get; set; }
             public Guid ActorId { get; set; }
+            public OrderState OrderState { get; set; }
             public int ItemId { get; set; }
             public int ItemTypeId { get; set; }
             public string? FeedBack { get; set; }
+            public decimal LastTotalPrice { get; set; }
             public decimal DesignPrice { get; set; }
             public decimal TotalPrice { get; set; }
             public int ItemsCount {  get; set; }
+            public int CompletedItemsCount { get; set; }
             public DateOnly StartDate { get; set; }
             public DateOnly EndDate { get; set; }
             public int GalleryDesignId { get; set; }
@@ -40,6 +44,8 @@ namespace Lavender.Services.Orders
                  DeliveryDate = o.DeliveryDate,
                  OrderDate = o.OrderDate,
                  OrderType = o.OrderType,
+                 OrderState = o.OrderState,
+                 LastTotalPrice = o.LastTotalPrice,
                  ItemId = o.ItemId,
                  ItemTypeId = o.ItemTypeId,
                  FeedBack = o.Feedback,

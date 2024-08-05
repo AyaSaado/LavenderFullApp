@@ -5,6 +5,7 @@ using Lavender.Core.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Net.Mail;
 
 namespace Lavender.Services.ProductionEmps
@@ -12,45 +13,50 @@ namespace Lavender.Services.ProductionEmps
     public class AddProductionEmpHandler : IRequestHandler<AddProductionEmpRequest, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ICRUDRepository<LineType> _lineTypeRepository;
         private readonly IFileServices _fileServices;
 
-        public AddProductionEmpHandler(IUnitOfWork unitOfWork, IFileServices fileServices, ICRUDRepository<LineType> lineTypeRepository)
+        public AddProductionEmpHandler(IUnitOfWork unitOfWork, IFileServices fileServices)
         {
             _unitOfWork = unitOfWork;
             _fileServices = fileServices;
-            _lineTypeRepository = lineTypeRepository;
+          
         }
 
 
         public async Task<Result> Handle(AddProductionEmpRequest request, CancellationToken cancellationToken)
         {
-            try
+
+            if (!request.Email.IsNullOrEmpty())
             {
-                var email = new MailAddress(request.Email);
+                try
+                {
+                    var email = new MailAddress(request.Email!);
+                }
+                catch (Exception)
+                {
+                    return Result.Failure(new Error("400", "Invalid Email Address"));
+                }
+
             }
-            catch (Exception)
+            if (!request.UserName.IsNullOrEmpty())
             {
-                return Result.Failure(new Error("400", "Invalid Email Address"));
+                var UsersWithUserRequest = await _unitOfWork.Users.Find((u => u.UserName == request.UserName))
+                                                              .ToListAsync(cancellationToken);
+
+                if (UsersWithUserRequest.Count() > 0)
+                {
+                    return Result.Failure(new Error(
+                       "400",
+                       $"The UserName is already exist"));
+                }
+
             }
-
-
-            var UsersWithUserRequest = await _unitOfWork.Users.Find((u => u.UserName == request.UserName))
-                                                          .ToListAsync(cancellationToken);
-
-            if (UsersWithUserRequest.Count() > 0)
-            {
-                return Result.Failure(new Error(
-                   "400",
-                   $"The UserName is already exist"));
-            }
-
 
             var productionemp = new ProductionEmp()
             {
                 FullName = request.FullName,
                 Email = request.Email,
-                UserName = request.UserName,
+                UserName = !request.UserName.IsNullOrEmpty() ? request.UserName:(request.FullName + Guid.NewGuid().ToString()[..15]),
                 HeadId = request.HeadId,
                 LineTypeId = request.LineTypeId,
                 BirthDay = request.BirthDay,
@@ -61,7 +67,15 @@ namespace Lavender.Services.ProductionEmps
                 Salary = request.Salary
             };
 
-            IdentityResult IsAdd = await _unitOfWork.Users.AddWithRole(productionemp, request.Role, request.Password);
+            IdentityResult IsAdd;
+            if (!request.Password.IsNullOrEmpty())
+            {
+                 IsAdd = await _unitOfWork.Users.AddWithRole(productionemp, request.Role, request.Password!);
+            }else
+            {
+                var roles = new List<string>() { request.Role };
+                IsAdd = await _unitOfWork.Users.AddWithRole(productionemp, roles);
+            }
 
             if (IsAdd.Succeeded)
             {

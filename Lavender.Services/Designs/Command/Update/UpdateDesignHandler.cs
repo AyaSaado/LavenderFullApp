@@ -28,10 +28,7 @@ namespace Lavender.Services.Designs
                                   request.DesignPrice,request.TailorId
                                          , request.DesignerId);
             
-            if(entity.Order.OrderType == Ordertype.custom)
-            {
-                entity.Order.OrderState = OrderState.underway;
-            }
+         
 
             foreach (var image in request.DesignImageDtos)
             {
@@ -44,8 +41,16 @@ namespace Lavender.Services.Designs
 
             entity.DesignImages = Mapping.Mapper.Map<List<DesignImage>>(request.DesignImageDtos);
 
+         
+            var order = await _unitOfWork.Orders.GetOneAsync(o => o.Id == entity.OrderId, cancellationToken);
+
+            if (entity.DesignImages.Where(d => d.ImageType == ImageType.model).Any())
+            {
+                order!.OrderState = OrderState.outlet;
+            }
             try
             {
+                _unitOfWork.Orders.Update(order!);
                 _unitOfWork.Designs.Update(entity);
                 await _unitOfWork.Save(cancellationToken);
 

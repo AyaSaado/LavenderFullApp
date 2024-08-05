@@ -1,5 +1,6 @@
 ﻿using Lavender.Core.EntityDto;
 using Lavender.Services.Plans;
+using Lavender.Services.SewingMachines;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,16 @@ namespace LavenderFullApp.Controllers.MobileApp
         {
             _mediator = mediator;
         }
+       
+        
+        [HttpGet("GetFullReport")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(ProductionReport))]
+        public async Task<IActionResult> GetAll([FromQuery] GetFullReportRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+
 
         [HttpGet("GetProductionSteps")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ControlData>))]

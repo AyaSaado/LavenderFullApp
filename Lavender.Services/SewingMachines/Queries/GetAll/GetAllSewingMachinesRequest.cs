@@ -8,8 +8,9 @@ namespace Lavender.Services.SewingMachines
 {
     public class GetAllSewingMachinesRequest : IRequest<List<SewingMachineResponse>>
     {
+        public int Code { get; set; }
         public Guid? ProductionEmpId { get; set; }
-        public int MachineNameId { get; set; }
+        public Guid? ModelNameId { get; set; }
     }
     public class SewingMachineResponse
     {

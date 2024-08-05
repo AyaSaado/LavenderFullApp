@@ -1,6 +1,4 @@
 ﻿using Lavender.Core.EntityDto;
-using Lavender.Services.ControlSettings;
-using Lavender.Services.Orders;
 using Lavender.Services.SewingMachines;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -53,6 +51,7 @@ namespace LavenderFullApp.Controllers.Common
             var result = await _mediator.Send(request, cancellationToken);
             return Ok(result);
         }
+
 
         [HttpPost("AddSewingMachine")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]

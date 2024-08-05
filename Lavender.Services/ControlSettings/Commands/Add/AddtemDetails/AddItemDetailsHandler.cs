@@ -28,7 +28,8 @@ namespace Lavender.Services.ControlSettings
                     Color = e.Color,
                     Amount = e.Amount,
                     StoreItemId = e.StoreItemId,
-                    MinAmount = e.MinAmount
+                    MinAmount = e.MinAmount,
+                    Price = e.Price
                 });
 
                 if(stype.Id == 0)

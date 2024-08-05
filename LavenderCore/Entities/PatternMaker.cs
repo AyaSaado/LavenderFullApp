@@ -3,7 +3,6 @@ namespace Lavender.Core.Entities
 {
     public class PatternMaker : User
     {
-        public decimal Salary { get; set; }
         public ICollection<InspirationImage> InspirationImages { get; set; } = new List<InspirationImage>();
         public ICollection<MakerSection> MakerSections { get; set; } = new List<MakerSection>();
 

@@ -19,26 +19,35 @@ namespace Lavender.Services.SewingMachines
 
         public async Task<List<DailyProductivityDto>> Handle(GetDailyProductivityOfEmpRequest request, CancellationToken cancellationToken)
         {
-            DateOnly firstDayOfMonth, lastDayOfMonth;
+            DateOnly startDate;
+            DateOnly endDate;
+
+            // Determine the date range based on request parameters
           
-            if (request.Date == DateOnly.MinValue)
+            if (request.FromDate != DateOnly.MinValue && request.ToDate != DateOnly.MinValue)
             {
-                firstDayOfMonth = DateOnly.MinValue;
-                lastDayOfMonth = DateOnly.MaxValue;
+                startDate = request.FromDate;
+                endDate = request.ToDate;
+            }
+            else if (request.Date != DateOnly.MinValue)
+            {
+                startDate = request.Date;
+                endDate = request.Date;
             }
             else
             {
-               firstDayOfMonth = new DateOnly(request.Date.Year, request.Date.Month, 1);
-               lastDayOfMonth = new DateOnly(request.Date.Year, request.Date.Month, DateTime.DaysInMonth(request.Date.Year, request.Date.Month));
+                // Fallback in case no valid filters are provided
+                endDate = DateOnly.FromDateTime(DateTime.Today);
+                startDate = endDate.AddDays(-7); // Default to last week
             }
 
             var entities = await _dailyProductionRepository
-                          .Find(d => (d.WorkerId == request.WorkerId) &&
-                          (d.Day >= firstDayOfMonth && d.Day <= lastDayOfMonth))
-                         .ToListAsync(cancellationToken);
+                          .Find(d => d.WorkerId == request.WorkerId &&
+                                      (d.Day >= startDate && d.Day <= endDate))
+                          .OrderByDescending(d => d.Day)
+                          .ToListAsync(cancellationToken);
 
             return Mapping.Mapper.Map<List<DailyProductivityDto>>(entities);
-                     
         }
     }
 }

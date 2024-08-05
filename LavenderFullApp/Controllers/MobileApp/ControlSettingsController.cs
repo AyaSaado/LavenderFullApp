@@ -66,7 +66,37 @@ namespace LavenderFullApp.Controllers.MobileApp
             var result = await _mediator.Send(command, cancellationToken);
             return result ? Ok() : NotFound();
         }
-     
+
+
+
+        [HttpDelete("DeleteItemDetails")]
+        [SwaggerResponse(StatusCodes.Status204NoContent)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete([FromBody] DeleteItemDetailsRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? NoContent() : BadRequest();
+        }
+
+
+        [HttpPost("AddSTypes")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Add([FromBody] AddSTypesRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? Ok() : BadRequest();
+        }
+
+
+        [HttpPut("UpdateSTypes")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update([FromBody] UpdateSTypesRequest command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return result ? Ok() : NotFound();
+        }
 
 
         [HttpDelete("DeleteSTypes")]

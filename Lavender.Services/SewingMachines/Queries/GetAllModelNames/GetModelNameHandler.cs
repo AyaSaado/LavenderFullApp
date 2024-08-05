@@ -3,6 +3,7 @@ using Lavender.Core.EntityDto;
 using Lavender.Core.Interfaces.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using static Lavender.Core.Helper.MappingProfile;
 
 namespace Lavender.Services.SewingMachines
@@ -18,7 +19,8 @@ namespace Lavender.Services.SewingMachines
 
         public async Task<List<ModelNameDto>> Handle(GetModelNameRequest request, CancellationToken cancellationToken)
         {
-            var entities = await _modelNameRepository.Find(m=>( request.Id == 0 || m.Id== request.Id))
+            var entities = await _modelNameRepository.Find(m=>( request.Id == Guid.Empty || m.Id == request.Id)
+                                                             &&(request.Name.IsNullOrEmpty() || m.Name.ToLower().StartsWith(request.Name!)))
                                                      .ToListAsync(cancellationToken);
 
             return Mapping.Mapper.Map<List<ModelNameDto>>(entities);

@@ -1,6 +1,4 @@
-﻿
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Lavender.Core.Entities
 {
@@ -8,7 +6,7 @@ namespace Lavender.Core.Entities
     {
         [Key]
         public int Id { get; set; }
-        public int Sender_Id {  get; set; }
+        public Guid Sender_Id { get; set; }
         public string? Content { get; set; } 
         public string? URL { get; set; } 
         public DateTime SentTime { get; set; }

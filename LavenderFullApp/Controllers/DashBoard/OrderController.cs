@@ -20,18 +20,6 @@ namespace LavenderFullApp.Controllers.DashBoard
             _mediator = mediator;
         }
 
-
-        
-
-        [HttpPost("AddRawItemsOfOrder")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Add([FromBody] AddRawItemsOfOrderRequest command, CancellationToken cancellationToken)
-        {
-            var result = await _mediator.Send(command, cancellationToken);
-            return result ? Ok() : BadRequest();
-        }
-
         [HttpPost("UpsertPaymentsOfOrder")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(bool))]
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
@@ -40,6 +28,7 @@ namespace LavenderFullApp.Controllers.DashBoard
             var result = await _mediator.Send(command, cancellationToken);
             return result ? Ok() : BadRequest();
         }
+
 
         [HttpDelete("DeletePaymentsOfOrder")]
         [SwaggerResponse(StatusCodes.Status204NoContent, null, typeof(bool))]

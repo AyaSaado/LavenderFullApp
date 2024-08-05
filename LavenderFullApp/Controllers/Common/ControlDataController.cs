@@ -1,4 +1,5 @@
-﻿using Lavender.Core.EntityDto;
+﻿using Lavender.Core.Entities;
+using Lavender.Core.EntityDto;
 using Lavender.Services.ControlSettings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -21,6 +22,15 @@ namespace LavenderFullApp.Controllers.Common
         }
 
 
+        [HttpGet("GetFinancialMatters")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(FinancialMatters))]
+        [Authorize]
+        public async Task<IActionResult> GetAll([FromQuery] GetFinancialMattersRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+
         [HttpGet("GetAllDesignSections")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(DesignSectionResponse))]
         [Authorize]
@@ -41,7 +51,7 @@ namespace LavenderFullApp.Controllers.Common
         }
 
         [HttpGet("GetAllItems")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ItemResponse>))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ItemDto>))]
         [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] GetAllItemsRequest request, CancellationToken cancellationToken)
         {
@@ -50,7 +60,7 @@ namespace LavenderFullApp.Controllers.Common
         }
 
         [HttpGet("GetItemById")]
-        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(ItemResponse))]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(ItemDto))]
         [SwaggerResponse(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
         public async Task<IActionResult> Get([FromQuery] GetItemByIdRequest request, CancellationToken cancellationToken)
@@ -116,6 +126,15 @@ namespace LavenderFullApp.Controllers.Common
         {
             var result = await _mediator.Send(request, cancellationToken);
             return result is not null ? Ok(result) : NotFound();
+        }
+
+        [HttpGet("GetColorsAndQuantities")]
+        [SwaggerResponse(StatusCodes.Status200OK, null, typeof(List<ColorsAndQuantities>))]
+        [Authorize]
+        public async Task<IActionResult> GetAll([FromQuery] GetColorsAndQuantitiesRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
         }
     }
 }

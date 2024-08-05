@@ -7,7 +7,7 @@ namespace Lavender.Services.SewingMachines
         public int Code { get; set; }
         public DateOnly PurchaseDate { get; set; }
         public Guid ProductionEmpId { get; set; }
-        public int ModelNameId { get; set; } 
+        public Guid ModelNameId { get; set; } 
     }
   
 }

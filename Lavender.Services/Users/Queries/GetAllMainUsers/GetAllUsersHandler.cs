@@ -23,15 +23,17 @@ namespace Lavender.Services.Users
             return request.Role switch
             {
                 "ProductionManager" => await _unitOfWork.ProductionEmps
-                                                             .Find(p => p.Head == null)
+                                                             .Find(p => (p.Head == null )
+                                                                    && ((request.Name.IsNullOrEmpty()) 
+                                                                    || (p.FullName.ToLower().StartsWith(request.Name.ToLower()))))
                                                              .Select(AllUserResponse.Selector())
                                                              .ToListAsync(cancellationToken),
 
-                _ => await getUsersByRoleAsync(request.Role , cancellationToken),
+                _ => await getUsersByRoleAsync(request.Role, request.Name , cancellationToken),
             };
         }
 
-        private async Task<List<AllUserResponse>> getUsersByRoleAsync(string role , CancellationToken cancellationToken)
+        private async Task<List<AllUserResponse>> getUsersByRoleAsync(string role,string name, CancellationToken cancellationToken)
         {
             IList<User> users;
 
@@ -42,18 +44,19 @@ namespace Lavender.Services.Users
             else
             {
                 users = await _userManager.Users.ToListAsync(cancellationToken);
-            } 
+            }
 
-            var allUsersResponse = users.Select( user => new AllUserResponse
-            {
-                Id = user.Id,
-                FullName = user.FullName,
-                ProfileImageUrl = user.ProfileImageUrl,
-                Role = _userManager.GetRolesAsync(user).Result.FirstOrDefault(),
-            })
-            .ToList();
+            var filteredUsers = users.Where(user => string.IsNullOrEmpty(name) || user.FullName.ToLower().StartsWith(name.ToLower()))
+                              .Select(user => new AllUserResponse
+                              {
+                                  Id = user.Id,
+                                  FullName = user.FullName,
+                                  ProfileImageUrl = user.ProfileImageUrl,
+                                  Role = _userManager.GetRolesAsync(user).Result.FirstOrDefault(),
+                              })
+                              .ToList();
 
-            return allUsersResponse;
+            return filteredUsers;
         }
        
     }

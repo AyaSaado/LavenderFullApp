@@ -14,6 +14,7 @@ namespace Lavender.Services.Users
         public  string UserName { get; set; } = null!;
         public  string Password { get; set; } = null!;
         public string? PhoneNumber { get; set; }
+        public decimal Salary { get; set; }
         public string? NationalNumber { get; set; }
         public DateOnly BirthDay { get; set; }
         public string? Address { get; set; }
